@@ -1544,28 +1544,30 @@ try{ new MutationObserver(PH_sched).observe(document.documentElement,{childList:
 PH_sched();
 </script>
 
-<!-- ═══ AWARD ROOMS v2 — tempel sebelum </body> ═══ -->
+<!-- ═══ AWARD ROOMS v3 — tempel sebelum </body> ═══ -->
 <style>
-.phx-room{display:none;padding-top:8px}
+.phx-room{display:none;padding-top:4px}
 .phx-room.on{display:block;animation:pin .55s cubic-bezier(.22,.8,.3,1)}
-#page-bdor .bd-card.big .plaque .ph.slot,#page-wc .bd-card.big .plaque .ph.slot{aspect-ratio:16/10}
-#page-bdor .plaque .ph.slot,#page-wc .plaque .ph.slot{margin:2px 0 10px}
-#page-wc .plaque .ph.slot{aspect-ratio:4/3}
-.plq-label.phx-lbl{letter-spacing:.14em;font-size:10.5px;line-height:1.55}
-.phx-room .rail-wrap{margin-top:10px}
+.phx-btns{margin-left:auto;display:flex;gap:10px;padding-left:12px}
+.phx-btns .rbtn{width:42px;height:42px;border-radius:50%;border:1px solid var(--line);background:transparent;color:var(--cream);cursor:pointer;display:grid;place-items:center;transition:.25s}
+.phx-btns .rbtn:hover{border-color:var(--acc);color:var(--acc)}
+.phx-room .plaque .ph.slot{aspect-ratio:var(--phx-slot-ratio,4/5);margin:2px 0 10px}
+.phx-room .ph.slot img{object-fit:contain;background:#0f0c08}
+.phx-room .plq-label.phx-lbl{letter-spacing:.14em;font-size:10.5px;line-height:1.55}
+.phx-room .rail{user-select:none;-webkit-user-select:none}
+.phx-room .rail img{-webkit-user-drag:none}
+.phx-room .rail.grabbing{cursor:grabbing}
 .phx-room .backln{margin-top:26px}
 </style>
 <script>
 (function(){
 'use strict';
-/* ---- bendera tambahan (Polandia, Norwegia, Swedia, Senegal, Kolombia, Rusia) ---- */
 try{Object.assign(FLAGS,{
  pol:{t:'h',c:['#fff','#dc143c']},
  nor:{t:'nordic',bg:'#ba0c2f',cr:'#00205b'},
  swe:{t:'nordic',bg:'#006aa7',cr:'#fecc00'},
  sen:{t:'h',c:['#00853f','#fdef42','#e31b23']},
- col:{t:'h',c:['#fcd116','#003893','#ce1126'],w:[50,25,25]},
- rus:{t:'h',c:['#fff','#0039a6','#d52b1e']}})}catch(e){}
+ col:{t:'h',c:['#fcd116','#003893','#ce1126'],w:[50,25,25]}})}catch(e){}
 
 /* ═══════════ DATA — SEMUA PEMENANG ═══════════ */
 var PRIX=[
@@ -1677,43 +1679,44 @@ function plq(o){
 }
 var VOID='<div class="bd-card big">'+chain()+'<div class="plaque void"><span class="cn tl"></span><span class="cn tr"></span><span class="cn bl"></span><span class="cn br"></span><div class="void-year">2020</div><div class="void-x">The pandemic erased the 2020 ceremony \u2014 no Kopa Trophy, exactly like the Ballon d\u2019Or itself.</div></div></div>';
 var BACK='<span class="backln phx-back">\u2039 BACK TO THE HALL</span>';
-function railOf(cards){return '<div class="rail-wrap"><div class="rail-btns"><button class="rbtn" aria-label="left">\u2039</button><button class="rbtn" aria-label="right">\u203A</button></div><div class="rail">'+cards.join('')+'</div><div class="rprog"><i></i></div></div>'}
+function railOf(cards){return '<div class="rail-wrap"><div class="rail">'+cards.join('')+'</div><div class="rprog"><i></i></div></div>'}
+function secHead(t,btns){return '<div class="sec-t"><span class="dia"></span>'+t+'<span class="dia"></span>'+(btns?'<span class="phx-btns"><button type="button" class="rbtn phx-l" aria-label="scroll left">\u2039</button><button type="button" class="rbtn phx-r" aria-label="scroll right">\u203A</button></span>':'')+'</div>'}
 function o4(a,pre,lab){return {k:pre+':'+a[0],y:a[0],l:lab,n:a[1],c:a[2],f:a[3],g:a[4]}}
 
 var DEFS={
  bdor:{
   prix:{btn:"PRIX D'HONNEUR",html:function(){
-   return '<div class="sec-t"><span class="dia"></span>PRIX D\u2019HONNEUR<span class="dia"></span></div>'
+   return secHead('PRIX D\u2019HONNEUR',false)
    +'<div class="super-wrap">'+PRIX.map(plq).join('')
    +'<div class="super-note"><h4>WHEN THE GOLD BOWED TO THE KING</h4><p>For 39 years the Ballon d\u2019Or belonged to Europe alone \u2014 Pel\u00E9, the greatest of them all, could never win it. So in <em>1995</em>, as the door finally opened to the whole world, France Football crowned him with the honorary <em>Ballon d\u2019Or d\u2019Honneur</em> \u2014 and in <em>2013</em> FIFA followed with its own <em>Prix d\u2019Honneur</em>. No votes. No debate. Just the golden ball, finally, bowing to the King.</p></div></div>'+BACK}},
   puskas:{btn:'PUSK\u00C1S AWARD',html:function(){
-   return '<div class="sec-t"><span class="dia"></span>FIFA PUSK\u00C1S AWARD<span class="dia"></span></div>'
+   return secHead('FIFA PUSK\u00C1S AWARD',true)
    +'<p class="sub">The most beautiful goal on earth, every year since 2009 \u2014 named after the galloping major, Ferenc Pusk\u00E1s.</p>'
    +railOf(PUSKAS.map(function(a){return plq(o4(a,'puskas','PUSK\u00C1S AWARD'))}))+BACK}},
   gmuller:{btn:'GERD M\u00DCLLER TROPHY',html:function(){
-   return '<div class="sec-t"><span class="dia"></span>GERD M\u00DCLLER TROPHY<span class="dia"></span></div>'
+   return secHead('GERD M\u00DCLLER TROPHY',true)
    +'<p class="sub">Named after Der Bomber \u2014 the most lethal No.9 the game has seen. Given to the sharpest scorer on the planet.</p>'
    +railOf(GMULLER.map(function(a){return plq(o4(a,'gmuller','GERD M\u00DCLLER TROPHY'))}))+BACK}},
   socrates:{btn:'S\u00D3CRATES AWARD',html:function(){
-   return '<div class="sec-t"><span class="dia"></span>S\u00D3CRATES AWARD<span class="dia"></span></div>'
+   return secHead('S\u00D3CRATES AWARD',true)
    +'<p class="sub">For football with a conscience \u2014 the player whose greatest work happens off the pitch, in the spirit of Doctor S\u00F3crates.</p>'
    +railOf(SOCRATES.map(function(a){return plq(o4(a,'socrates','S\u00D3CRATES AWARD'))}))+BACK}},
   kopa:{btn:'KOPA TROPHY',html:function(){
    var cards=KOPA.map(function(a){return plq(o4(a,'kopa','KOPA TROPHY'))});cards.splice(2,0,VOID);
-   return '<div class="sec-t"><span class="dia"></span>KOPA TROPHY<span class="dia"></span></div>'
+   return secHead('KOPA TROPHY',true)
    +'<p class="sub">The under-21 crown, voted by the Ballon d\u2019Or winners themselves \u2014 named after Raymond Kopa.</p>'
    +railOf(cards)+BACK}},
   thebest:{btn:'THE BEST \u2014 MEN',html:function(){
-   return '<div class="sec-t"><span class="dia"></span>THE BEST FIFA MEN\u2019S PLAYER<span class="dia"></span></div>'
+   return secHead('THE BEST FIFA MEN\u2019S PLAYER',true)
    +'<p class="sub">FIFA\u2019s own crown since 2016 \u2014 voted by fans, captains, coaches and journalists across the planet.</p>'
-   +railOf(BEST.map(function(a){return plq(o4(a,'thebest',"THE BEST FIFA MEN'S PLAYER"))}))+BACK}}},
+   +railOf(BEST.map(function(a){return plq(o4(a,'thebest',"THE BEST FIFA MEN\u2019S PLAYER"))}))+BACK}}},
  wc:{
   gboot:{btn:'GOLDEN BOOT',html:function(){
-   return '<div class="sec-t"><span class="dia"></span>WORLD CUP GOLDEN BOOT<span class="dia"></span></div>'
+   return secHead('WORLD CUP GOLDEN BOOT',true)
    +'<p class="sub">Every World Cup top scorer since Uruguay 1930 \u2014 from St\u00E1bile\u2019s eight to Fontaine\u2019s untouchable thirteen.</p>'
    +railOf(GBOOT.map(function(a){return plq({k:'gboot:'+a[0],y:a[0],l:'GOLDEN BOOT',n:a[1],c:a[2],f:a[3],g:a[4]})}))+BACK}},
   gglove:{btn:'GOLDEN GLOVE',html:function(){
-   return '<div class="sec-t"><span class="dia"></span>WORLD CUP GOLDEN GLOVE<span class="dia"></span></div>'
+   return secHead('WORLD CUP GOLDEN GLOVE',true)
    +'<p class="sub">The goalkeeper of the tournament \u2014 the Lev Yashin Award until 2006, the Golden Glove ever since.</p>'
    +railOf(GGLOVE.map(function(a){return plq({k:'gglove:'+a[0],y:a[0],l:a[4],n:a[1],c:a[2],f:a[3],g:a[5]})}))+BACK}}}
 };
@@ -1722,8 +1725,9 @@ var DEFS={
 var STATE={bdor:{active:null,hidden:[],last:null},wc:{active:null,hidden:[],last:null}};
 function pageEl(p){return document.getElementById('page-'+p)}
 function chipsEl(p){var pg=pageEl(p);return pg?(pg.querySelector('.chips')||pg.querySelector('.tabs')):null}
-function applyMap(root){var map;try{map=PHOTO_MAP}catch(e){map=window.PHOTO_MAP||{}}
- root.querySelectorAll('img[data-key]').forEach(function(im){
+function getMap(){try{return PHOTO_MAP}catch(e){return window.PHOTO_MAP||null}}
+function applyMap(root){var map=getMap();if(!map)return;
+ (root||document).querySelectorAll('img[data-key]').forEach(function(im){
   var src=map[im.getAttribute('data-key')];
   if(src){im.style.display='';if(im.getAttribute('src')!==src){im.onerror=function(){im.style.display='none'};im.setAttribute('src',src)}}
   else if(im.style.display!=='none')im.style.display='none';});}
@@ -1738,17 +1742,28 @@ function hideOthers(pid){
  if(room)room.classList.add('on');}
 function bindRoom(room){
  if(room.dataset.bound)return;room.dataset.bound='1';
- var rail=room.querySelector('.rail'),bar=room.querySelector('.rprog i');
- var btns=room.querySelectorAll('.rbtn');
- if(btns.length===2){btns[0].addEventListener('click',function(){rail.scrollBy({left:-room.clientWidth*0.8,behavior:'smooth'})});
-  btns[1].addEventListener('click',function(){rail.scrollBy({left:room.clientWidth*0.8,behavior:'smooth'})});}
- var upd=function(){if(!bar||!rail.scrollWidth)return;
-  var w=Math.max(12,rail.clientWidth/rail.scrollWidth*100);
-  var p=rail.scrollWidth>rail.clientWidth?rail.scrollLeft/(rail.scrollWidth-rail.clientWidth):0;
-  bar.style.width=w+'%';bar.style.left=(p*(100-w))+'%';};
- rail.addEventListener('scroll',upd,{passive:true});setTimeout(upd,80);
+ var rail=room.querySelector('.rail');
+ var l=room.querySelector('.phx-l'),r=room.querySelector('.phx-r'),bar=room.querySelector('.rprog i');
+ function go(d){if(rail)rail.scrollBy({left:d*room.clientWidth*.8,behavior:'smooth'})}
+ if(l)l.addEventListener('click',function(){go(-1)});
+ if(r)r.addEventListener('click',function(){go(1)});
+ if(rail){
+  var down=false,sx=0,sl=0;
+  rail.addEventListener('pointerdown',function(e){if(e.pointerType&&e.pointerType!=='mouse')return;if(e.button)return;down=true;sx=e.clientX;sl=rail.scrollLeft;rail.classList.add('grabbing')});
+  window.addEventListener('pointermove',function(e){if(!down)return;rail.scrollLeft=sl-(e.clientX-sx)});
+  window.addEventListener('pointerup',function(){down=false;rail.classList.remove('grabbing')});
+  rail.addEventListener('dragstart',function(e){e.preventDefault()});
+  var upd=function(){if(!bar||!rail.scrollWidth)return;
+   var w=Math.max(12,rail.clientWidth/rail.scrollWidth*100);
+   var p=rail.scrollWidth>rail.clientWidth+4?rail.scrollLeft/(rail.scrollWidth-rail.clientWidth):0;
+   bar.style.width=w+'%';bar.style.left=(p*(100-w))+'%'};
+  rail.addEventListener('scroll',upd,{passive:true});
+  window.addEventListener('resize',upd);
+  [80,300,900,2000].forEach(function(t){setTimeout(upd,t)});
+ }
  var back=room.querySelector('.phx-back');
- if(back)back.addEventListener('click',function(){deactivate(room.id.split('-')[1])});}
+ if(back)back.addEventListener('click',function(){deactivate(room.getAttribute('data-page')||'bdor')});
+}
 function activate(pid,rid){
  var st=STATE[pid],chips=chipsEl(pid);if(!pageEl(pid))return;
  st.active=rid;st.last=null;
@@ -1791,7 +1806,7 @@ function ensure(pid){
   var def=DEFS[pid][rid];
   if(!document.getElementById('phx-room-'+pid+'-'+rid)){
    var r=document.createElement('div');r.className='phx-room';r.id='phx-room-'+pid+'-'+rid;
-   r.innerHTML=def.html();wrap.appendChild(r);}
+   r.setAttribute('data-page',pid);r.innerHTML=def.html();wrap.appendChild(r);}
   if(!chips.querySelector('[data-room-btn="'+rid+'"]')){
    var b=document.createElement('button');b.className='chip';b.setAttribute('data-room-btn',rid);
    b.textContent=def.btn;
@@ -1806,13 +1821,62 @@ function ensure(pid){
    var ac=chips.querySelector('[data-room-btn="'+STATE[pid].active+'"]');
    if(ac&&!ac.classList.contains('on'))ac.classList.add('on');}}
  applyMap(pg);}
+
+/* ═══ SALIN UKURAN FRAME DARI PLAKAT BALLON D'OR ═══ */
+var measured=false;
+function measure(){
+ if(measured)return;
+ var pg=pageEl('bdor');if(!pg)return;
+ var s=pg.querySelector('.plaque .ph.slot:not(.ply)')||pg.querySelector('.plaque .ph');
+ if(!s)return;
+ var r=s.getBoundingClientRect();
+ if(r.width>50&&r.height>50){
+  var ratio=r.width/r.height;
+  if(ratio>0.45&&ratio<1.5){
+   document.documentElement.style.setProperty('--phx-slot-ratio',ratio.toFixed(4));measured=true}}}
+
+/* ═══ FOTO FILTER OTOMATIS — player:KEY memakai foto terbaru pemain ═══ */
+var PERS={bdor:1,yashin:1,super:1,prix:1,puskas:1,gmuller:1,socrates:1,kopa:1,thebest:1,gboot:1,gglove:1};
+var IDX={};
+function mk(s){return String(s).toLowerCase().replace(/[^a-z0-9]+/g,'-').replace(/^-+|-+$/g,'')}
+function fold(s){try{return s.normalize('NFD').replace(/[\u0300-\u036f]/g,'')}catch(e){return s}}
+function addIdx(name,year,key){
+ name=String(name).replace(/\s+/g,' ').trim();if(!name)return;
+ var v=mk(name);if(!v)return;
+ var vs=[v,v.replace(/-/g,'')],vf=fold(v);
+ if(vf!==v){vs.push(vf,vf.replace(/-/g,''))}
+ vs.forEach(function(s){var cur=IDX[s];if(!cur||year>cur.y)IDX[s]={y:year,k:key}});}
+function nameOf(im){
+ var host=im.closest('.plaque,.bd-card,.mo-box,.nat-card');
+ if(host){var n=host.querySelector('.plq-name,.mo-name,.rk-name,.nat-name');if(n)return n.textContent}
+ return im.getAttribute('alt')||'';}
+function buildIdx(){
+ document.querySelectorAll('img[data-key]').forEach(function(im){
+  var k=im.getAttribute('data-key')||'',p=k.split(':');
+  if(!PERS[p[0]])return;
+  var year=parseInt(p[1],10)||0,name=nameOf(im);
+  if(name)addIdx(name,year,k);});}
+function resolvePhotos(){
+ var map=getMap();if(!map)return;
+ buildIdx();
+ document.querySelectorAll('img[data-key]').forEach(function(im){
+  var k=im.getAttribute('data-key')||'';
+  if(k.slice(0,7)!=='player:')return;
+  if(map[k])return;
+  var s=k.slice(7);if(!s)return;
+  var hit=IDX[s]||IDX[s.replace(/-/g,'')]||IDX[fold(s)]||IDX[fold(s).replace(/-/g,'')];
+  if(hit&&map[hit.k])map[k]=map[hit.k];});}
+
+/* ═══ LOOP ═══ */
 var pend=false;
 function sched(){if(pend)return;pend=true;
  (window.requestAnimationFrame||function(f){setTimeout(f,60)})(function(){pend=false;
-  try{ensure('bdor');ensure('wc')}catch(e){}})}
+  try{ensure('bdor');ensure('wc')}catch(e){}
+  try{measure()}catch(e){}
+  try{resolvePhotos()}catch(e){}
+  try{applyMap(document)}catch(e){}})}
 if('MutationObserver' in window)new MutationObserver(sched).observe(document.documentElement,{childList:true,subtree:true});
 else setInterval(sched,1500);
-/* keluar dari room saat pindah halaman / klik chip asli */
 document.addEventListener('click',function(e){
  var t=e.target;if(!t||!t.closest)return;
  var nav=t.closest('[data-go]');
