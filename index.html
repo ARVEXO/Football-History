@@ -1,0 +1,1189 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>FOOTBALL HISTORY — The Golden Archive</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700;900&family=Cormorant+Garamond:ital,wght@1,500;1,600&family=Jost:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+:root{
+  --bg:#0c0a07; --panel:#151109; --panel2:#1a150c; --line:#2b2314;
+  --gold:#c9a227; --gold2:#e8c96a; --gold3:#8a6f1f;
+  --cream:#efe4c8; --muted:#9a8c6b; --ink:#0c0a07;
+  --acc:var(--gold);
+}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--cream);font-family:'Jost',sans-serif;overflow-x:hidden;min-height:100vh}
+body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;
+  background:radial-gradient(1100px 480px at 50% -12%,rgba(201,162,39,.07),transparent 70%)}
+#grain{position:fixed;inset:0;pointer-events:none;z-index:2000;opacity:.55;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2'/%3E%3CfeColorMatrix values='0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.05 0'/%3E%3C/filter%3E%3Crect width='160' height='160' filter='url(%23n)'/%3E%3C/svg%3E")}
+::selection{background:var(--gold);color:var(--ink)}
+button{font-family:inherit}
+
+/* ---------- SPLASH ---------- */
+#splash{position:fixed;inset:0;z-index:1500;background:var(--bg);display:grid;place-items:center;text-align:center;
+  transition:opacity .9s ease,visibility .9s}
+body.opened #splash{opacity:0;visibility:hidden;pointer-events:none}
+.splash-in{padding:24px}
+.splash-ball{width:clamp(130px,20vw,200px);margin:0 auto 30px;animation:spin 46s linear infinite;display:block}
+@keyframes spin{to{transform:rotate(360deg)}}
+.splash-title{font-family:Cinzel,serif;font-weight:700;font-size:clamp(32px,8vw,92px);letter-spacing:.14em;line-height:1.12;color:var(--cream)}
+.splash-title span{display:inline-block;opacity:0;animation:lrise .9s cubic-bezier(.2,.7,.3,1) forwards}
+@keyframes lrise{from{opacity:0;transform:translateY(28px)}to{opacity:1;transform:none}}
+.splash-rule{width:120px;height:1px;background:var(--gold);margin:26px auto;position:relative}
+.splash-rule::after{content:'';position:absolute;left:50%;top:-3px;width:7px;height:7px;background:var(--gold);transform:translateX(-50%) rotate(45deg)}
+.splash-sub{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:clamp(16px,2.4vw,21px);color:var(--muted);letter-spacing:.06em}
+#openBtn{margin-top:46px;padding:17px 58px;background:none;border:1px solid var(--gold);color:var(--gold2);
+  font-family:Cinzel,serif;letter-spacing:.5em;text-indent:.5em;font-size:13px;cursor:pointer;transition:.3s}
+#openBtn:hover{background:var(--gold);color:var(--ink);box-shadow:0 0 0 4px rgba(201,162,39,.14)}
+
+/* ---------- NAV ---------- */
+#topnav{position:fixed;top:0;left:0;right:0;z-index:900;display:flex;align-items:center;justify-content:space-between;
+  padding:0 clamp(14px,3.5vw,46px);height:62px;border-bottom:1px solid var(--line);
+  background:rgba(12,10,7,.85);backdrop-filter:blur(12px);transform:translateY(-100%);transition:transform .6s ease}
+body.opened #topnav{transform:none}
+.nav-logo{font-family:Cinzel,serif;font-weight:700;letter-spacing:.2em;font-size:14px;display:flex;align-items:center;gap:10px;cursor:pointer;user-select:none}
+.nav-logo i{width:6px;height:6px;background:var(--gold);transform:rotate(45deg)}
+.nav-links{display:flex;gap:2px}
+.nav-links a{padding:8px 13px;font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--muted);
+  cursor:pointer;border-bottom:1px solid transparent;transition:.25s;user-select:none}
+.nav-links a:hover{color:var(--cream)}
+.nav-links a.on{color:var(--gold2);border-color:var(--gold)}
+#burger{display:none;width:42px;height:42px;border:1px solid var(--line);background:none;color:var(--cream);cursor:pointer;place-items:center}
+#drawer{position:fixed;top:0;right:-300px;width:280px;height:100vh;background:var(--panel);z-index:1100;
+  transition:right .4s;border-left:1px solid var(--line);padding:84px 30px}
+#drawer.on{right:0}
+#drawer a{display:block;padding:16px 0;border-bottom:1px solid var(--line);font-family:Cinzel,serif;letter-spacing:.14em;font-size:14px;cursor:pointer;color:var(--cream)}
+@media(max-width:960px){.nav-links{display:none}#burger{display:grid}}
+
+/* ---------- LAYOUT ---------- */
+main{position:relative;z-index:1;padding-top:62px}
+.page{display:none;min-height:calc(100vh - 62px)}
+.page.on{display:block;animation:pin .55s cubic-bezier(.22,.8,.3,1)}
+@keyframes pin{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:none}}
+.wrap{max-width:1280px;margin:0 auto;padding:0 clamp(16px,4vw,48px)}
+.page-head{padding:58px 0 34px}
+.kicker{font-size:11px;letter-spacing:.44em;text-transform:uppercase;color:var(--acc);display:flex;align-items:center;gap:14px}
+.kicker::before{content:'';width:5px;height:5px;background:var(--acc);transform:rotate(45deg)}
+.kicker::after{content:'';height:1px;flex:0 0 64px;background:var(--acc);opacity:.45}
+h1.title{font-family:Cinzel,serif;font-weight:700;font-size:clamp(32px,6vw,70px);line-height:1.05;margin:16px 0 12px}
+.sub{color:var(--muted);font-weight:300;font-size:clamp(14px,1.6vw,17px);max-width:660px;line-height:1.75}
+.dia{display:inline-block;width:5px;height:5px;background:currentColor;transform:rotate(45deg);flex:none}
+.sec-t{display:flex;align-items:center;gap:12px;font-family:Cinzel,serif;letter-spacing:.3em;font-size:13px;color:var(--acc);margin:44px 0 6px}
+.backln{display:inline-flex;align-items:center;gap:8px;color:var(--muted);font-size:12px;letter-spacing:.18em;text-transform:uppercase;cursor:pointer;margin-top:34px;transition:.25s}
+.backln:hover{color:var(--gold2)}
+
+/* ---------- HOME ---------- */
+.door{display:flex;align-items:center;gap:clamp(14px,3vw,36px);padding:clamp(20px,3vw,32px) 10px;border-top:1px solid var(--line);cursor:pointer;transition:.3s}
+.door:last-of-type{border-bottom:1px solid var(--line)}
+.door .num{font-family:Cinzel,serif;color:var(--gold);font-size:clamp(13px,1.6vw,17px);letter-spacing:.2em;min-width:52px}
+.door h3{font-family:Cinzel,serif;font-weight:600;font-size:clamp(22px,4.4vw,52px);letter-spacing:.02em;transition:.35s}
+.door p{color:var(--muted);font-size:14px;margin-top:6px;font-weight:300;max-width:640px}
+.door .arr{margin-left:auto;color:var(--muted);transition:.35s;flex:none}
+.door:hover{background:rgba(201,162,39,.05)}
+.door:hover h3{color:var(--gold2);transform:translateX(10px)}
+.door:hover .arr{color:var(--gold2);transform:translateX(10px)}
+.statline{display:flex;flex-wrap:wrap;border-top:1px solid var(--line);border-bottom:1px solid var(--line);margin-top:60px}
+.stat{flex:1 1 200px;padding:26px 20px;border-left:1px solid var(--line)}
+.stat:first-child{border-left:none}
+.stat b{font-family:Cinzel,serif;font-weight:700;font-size:clamp(26px,3.4vw,40px);color:var(--gold2);display:block}
+.stat span{font-size:10px;letter-spacing:.28em;text-transform:uppercase;color:var(--muted)}
+.marquee{overflow:hidden;border-top:1px solid var(--line);padding:20px 0;margin-top:64px}
+.mq-in{display:flex;gap:46px;width:max-content;animation:mq 70s linear infinite;font-family:Cinzel,serif;
+  font-size:14px;letter-spacing:.28em;color:var(--muted);white-space:nowrap;align-items:center}
+@keyframes mq{to{transform:translateX(-50%)}}
+.mq-in i{width:5px;height:5px;background:var(--gold);transform:rotate(45deg);flex:none}
+.homefoot{color:var(--muted);font-size:12px;letter-spacing:.1em;padding:26px 0 44px;font-weight:300}
+
+/* ---------- LIST ROWS (leagues & clubs) ---------- */
+.lg-row,.cl-row{display:flex;align-items:center;gap:clamp(14px,3vw,30px);padding:20px 10px;border-top:1px solid var(--line);cursor:pointer;transition:.3s}
+.lg-row:last-child,.cl-row:last-child{border-bottom:1px solid var(--line)}
+.lg-row:hover,.cl-row:hover{background:rgba(201,162,39,.05)}
+.lg-crest{width:58px;flex:none;filter:drop-shadow(0 8px 16px rgba(0,0,0,.5))}
+.cl-crest{width:46px;flex:none}
+.lg-name{font-family:Cinzel,serif;font-size:clamp(19px,2.6vw,28px);transition:.3s}
+.lg-sub,.cl-sub{color:var(--muted);font-size:13px;margin-top:3px;font-weight:300;letter-spacing:.04em}
+.row-arr{margin-left:auto;color:var(--muted);transition:.3s}
+.lg-row:hover .lg-name,.cl-row:hover .cl-name{color:var(--gold2)}
+.lg-row:hover .row-arr,.cl-row:hover .row-arr{color:var(--gold2);transform:translateX(8px)}
+.cl-right{margin-left:auto;text-align:right;flex:none}
+.cl-right b{font-family:Cinzel,serif;font-size:22px;color:var(--gold2);font-weight:700}
+.cl-right span{display:block;font-size:9px;letter-spacing:.3em;color:var(--muted)}
+
+/* ---------- RAIL ---------- */
+.rail-wrap{position:relative}
+.rail{display:flex;gap:24px;overflow-x:auto;padding:14px 0 34px;scrollbar-width:none;cursor:grab;align-items:flex-start}
+.rail::-webkit-scrollbar{display:none}
+.rail.grabbing{cursor:grabbing}
+.rail-btns{position:absolute;right:0;top:-56px;display:flex;gap:10px;z-index:5}
+.rbtn{width:42px;height:42px;border-radius:50%;border:1px solid var(--line);background:transparent;color:var(--cream);cursor:pointer;display:grid;place-items:center;transition:.25s}
+.rbtn:hover{border-color:var(--acc);color:var(--acc)}
+.rprog{position:relative;height:2px;background:var(--line);margin-top:2px}
+.rprog i{position:absolute;left:0;top:0;height:100%;background:var(--acc);width:20%}
+.rail-empty{padding:70px 0;font-family:'Cormorant Garamond',serif;font-style:italic;font-size:21px;color:var(--muted)}
+
+/* ---------- CHIPS / TABS / SEARCH ---------- */
+.chips{display:flex;gap:8px;flex-wrap:wrap;padding:4px 0 6px}
+.chip{border:1px solid var(--line);color:var(--muted);background:transparent;font-size:11px;letter-spacing:.16em;
+  text-transform:uppercase;padding:9px 16px;border-radius:999px;cursor:pointer;transition:.25s}
+.chip:hover{color:var(--cream);border-color:var(--acc)}
+.chip.on{background:var(--acc);border-color:var(--acc);color:var(--ink);font-weight:600}
+.tabs{display:flex;border:1px solid var(--line);border-radius:999px;overflow:hidden;width:max-content;max-width:100%;margin:8px 0 20px}
+.tab{padding:11px 22px;font-size:11px;letter-spacing:.18em;cursor:pointer;color:var(--muted);text-transform:uppercase;transition:.25s;background:transparent;border:none}
+.tab.on{background:var(--acc);color:var(--ink);font-weight:600}
+.tsearch{display:flex;align-items:center;gap:10px;border:1px solid var(--line);border-radius:999px;padding:11px 20px;width:min(430px,100%);background:rgba(255,255,255,.02);margin:14px 0}
+.tsearch svg{color:var(--muted);flex:none}
+.tsearch input{background:none;border:none;outline:none;color:var(--cream);font-family:Jost;font-size:14px;width:100%;letter-spacing:.04em}
+.tsearch input::placeholder{color:#6a5f49}
+
+/* ---------- BALLON D'OR PLAQUE ---------- */
+#page-bdor,#page-wc{background:radial-gradient(1000px 420px at 50% -8%,rgba(201,162,39,.09),transparent 70%)}
+#page-euro{background:radial-gradient(1000px 420px at 50% -8%,rgba(205,212,222,.07),transparent 70%)}
+#page-nations{background:radial-gradient(1000px 420px at 50% -8%,rgba(192,141,90,.08),transparent 70%)}
+.bd-card{flex:0 0 auto;width:238px;position:relative;padding-top:60px;transform-origin:top center}
+.bd-card.big{width:330px}
+.bd-chain{position:absolute;top:-2px;left:50%;transform:translateX(-50%);z-index:3;transform-origin:top center}
+.bd-card:hover .bd-chain{animation:swing 1.7s ease-in-out}
+@keyframes swing{0%,100%{transform:translateX(-50%) rotate(0)}30%{transform:translateX(-50%) rotate(4deg)}65%{transform:translateX(-50%) rotate(-3deg)}}
+.plaque{background:linear-gradient(180deg,#20180a,#130f09);border:1px solid var(--gold3);padding:14px;position:relative;
+  box-shadow:0 26px 54px rgba(0,0,0,.6),inset 0 1px 0 rgba(232,201,106,.16)}
+.plaque::before{content:'';position:absolute;inset:5px;border:1px solid rgba(201,162,39,.32);pointer-events:none}
+.cn{position:absolute;width:10px;height:10px;border:0 solid var(--gold2);z-index:2}
+.cn.tl{top:1px;left:1px;border-top-width:2px;border-left-width:2px}
+.cn.tr{top:1px;right:1px;border-top-width:2px;border-right-width:2px}
+.cn.bl{bottom:1px;left:1px;border-bottom-width:2px;border-left-width:2px}
+.cn.br{bottom:1px;right:1px;border-bottom-width:2px;border-right-width:2px}
+.plq-label{text-align:center;font-size:9px;letter-spacing:.4em;color:var(--gold2);margin-bottom:11px;text-transform:uppercase}
+.plq-year{text-align:center;font-family:Cinzel,serif;font-size:31px;color:var(--gold2);margin:12px 0 2px}
+.plq-name{text-align:center;font-family:Cinzel,serif;font-size:15px;line-height:1.35;margin-bottom:4px}
+.plq-win{text-align:center;font-size:9px;letter-spacing:.3em;color:var(--muted);margin-bottom:9px}
+.plq-club{display:flex;align-items:center;justify-content:center;gap:7px;font-size:12px;color:var(--muted);font-weight:300;border-top:1px solid var(--line);padding-top:10px}
+.plq-wins{text-align:center;font-family:Cinzel,serif;font-size:38px;color:var(--gold2);margin:10px 0 2px}
+.plq-wins span{display:block;font-family:Jost;font-size:9px;letter-spacing:.34em;color:var(--muted);margin-top:2px}
+.yrchips{display:flex;gap:5px;justify-content:center;flex-wrap:wrap;padding:10px 2px 4px}
+.yrchips b{font-size:9px;font-weight:500;letter-spacing:.08em;border:1px solid var(--gold3);color:var(--gold2);padding:3px 6px}
+.crown{position:absolute;top:10px;right:10px;color:var(--gold2);z-index:4;filter:drop-shadow(0 2px 6px rgba(0,0,0,.6))}
+.plaque.void{background:#100d09}
+.void-year{text-align:center;font-family:Cinzel,serif;font-size:40px;color:#5c5342;margin:16px 0 8px}
+.void-x{text-align:center;font-size:12.5px;color:var(--muted);font-weight:300;line-height:1.6;padding:0 6px 12px}
+.soon-badge{display:block;text-align:center;font-size:10px;letter-spacing:.34em;color:var(--gold2);border:1px solid var(--gold3);padding:9px 0;margin-top:12px}
+.plaque.soon svg{display:block;margin:14px auto 0;color:var(--gold3)}
+.pr .plq-label{margin-top:2px}
+.super-wrap{display:flex;gap:clamp(24px,4vw,54px);align-items:center;flex-wrap:wrap;padding:16px 0 30px}
+.super-note{flex:1 1 380px;max-width:620px}
+.super-note h4{font-family:Cinzel,serif;font-size:clamp(20px,3vw,30px);margin-bottom:14px;color:var(--cream)}
+.super-note p{color:var(--muted);font-weight:300;line-height:1.85;font-size:15px}
+.super-note em{color:var(--gold2);font-style:normal}
+
+/* ---------- PHOTO PLACEHOLDER ---------- */
+.ph{position:relative;overflow:hidden;background:#0f0c08;border:1px solid rgba(201,162,39,.38);display:block}
+.ph img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:2}
+.ph-fb{position:absolute;inset:0}
+.ph-fb svg{width:100%;height:100%;display:block}
+.flag{height:13px;width:auto;border:1px solid rgba(255,255,255,.18);border-radius:1px;vertical-align:middle}
+.flag.big{height:30px}
+.flag.sm{height:11px}
+
+/* ---------- NATIONS (WC / EURO / NL) ---------- */
+.nat-card{flex:0 0 auto;width:clamp(290px,74vw,450px)}
+.nat-top{display:flex;justify-content:space-between;align-items:flex-end;margin-bottom:13px;gap:12px}
+.nat-year{font-family:Cinzel,serif;font-weight:700;font-size:clamp(40px,5.5vw,62px);color:var(--acc);line-height:1}
+.nat-photo{position:relative;border:1px solid var(--acc);display:block}
+.nat-photo::after{content:'';position:absolute;inset:8px;border:1px solid rgba(255,255,255,.12);pointer-events:none;z-index:3}
+.nat-info{padding:16px 2px 0}
+.nat-lb{font-size:10px;letter-spacing:.36em;color:var(--acc);text-transform:uppercase}
+.nat-name{font-family:Cinzel,serif;font-size:clamp(23px,3vw,33px);margin:9px 0 10px}
+.nat-row{display:flex;align-items:center;gap:9px;font-size:11.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);margin:5px 0}
+.nat-row svg{color:var(--acc);flex:none}
+.nat-hostflags{display:inline-flex;gap:5px;margin-left:2px}
+.nat-note{margin-top:13px;color:var(--muted);font-weight:300;line-height:1.7;font-size:14px;border-top:1px solid var(--line);padding-top:12px}
+.th-wc{--acc:#dfb64f}.th-euro{--acc:#cdd4de}.th-nl{--acc:#c08d5a}
+.nat-card.soone{--acc:var(--muted)}
+.nat-photo.soonph{border-style:solid;opacity:.55}
+
+/* ---------- CLUB PAGE ---------- */
+.club-hero{display:flex;gap:clamp(20px,3.5vw,40px);align-items:center;padding:54px 0 26px;flex-wrap:wrap}
+.club-crest{width:clamp(96px,13vw,152px);filter:drop-shadow(0 20px 34px rgba(0,0,0,.55))}
+.club-meta h1{font-family:Cinzel,serif;font-weight:700;font-size:clamp(28px,5vw,56px);line-height:1.05}
+.club-facts{display:flex;gap:26px;flex-wrap:wrap;margin-top:14px}
+.club-facts div span{display:block;font-size:9px;letter-spacing:.3em;color:var(--muted);text-transform:uppercase;margin-bottom:4px}
+.club-facts div b{font-weight:500;font-size:15px;letter-spacing:.03em}
+.tr-card{flex:0 0 auto;width:214px;background:var(--panel);border:1px solid var(--line);transition:.3s;cursor:pointer}
+.tr-card:hover{transform:translateY(-6px);border-color:var(--acc)}
+.tr-card:hover .tr-year{color:var(--acc)}
+.tr-body{padding:13px 15px;border-top:1px solid var(--line)}
+.tr-comp{font-size:9px;letter-spacing:.26em;color:var(--acc);text-transform:uppercase}
+.tr-year{font-family:Cinzel,serif;font-size:26px;margin:4px 0 3px;transition:.3s}
+.tr-win{font-size:10px;letter-spacing:.22em;color:var(--muted)}
+.tr-count{font-size:12px;color:var(--muted);margin:2px 0 8px;letter-spacing:.08em}
+.ym{border:1px solid var(--line);background:var(--panel);padding:clamp(20px,4vw,46px);margin:10px 0 70px;position:relative}
+.ym-hint{font-size:11px;letter-spacing:.22em;text-transform:uppercase;color:var(--muted);display:flex;align-items:center;gap:10px;margin-bottom:8px}
+.ym-year{font-family:Cinzel,serif;font-weight:700;font-size:clamp(54px,9vw,108px);line-height:.95;color:var(--gold2)}
+.ym input[type=range]{width:100%;-webkit-appearance:none;appearance:none;height:2px;background:var(--line);margin:36px 0 4px;outline:none}
+.ym input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:18px;height:18px;border-radius:50%;background:var(--gold);border:3px solid var(--bg);cursor:pointer;box-shadow:0 0 0 1px var(--gold)}
+.ym input[type=range]::-moz-range-thumb{width:14px;height:14px;border-radius:50%;background:var(--gold);border:3px solid var(--bg);cursor:pointer}
+.ym-dots{position:relative;height:20px}
+.ym-dot{position:absolute;top:4px;width:8px;height:8px;transform:translateX(-50%) rotate(45deg);background:var(--gold3);cursor:pointer;border:none;padding:0;transition:.2s}
+.ym-dot:hover{background:var(--gold2);transform:translateX(-50%) rotate(45deg) scale(1.3)}
+.ym-body{display:grid;grid-template-columns:1fr 280px;gap:30px;margin-top:30px}
+@media(max-width:900px){.ym-body{grid-template-columns:1fr}}
+.ym-m{border-left:2px solid var(--gold);padding-left:22px}
+.ym-tag{font-size:9px;letter-spacing:.34em;color:var(--acc);text-transform:uppercase;margin-bottom:8px}
+.ym-m h4{font-family:Cinzel,serif;font-size:clamp(20px,2.6vw,30px);margin-bottom:10px;font-weight:600}
+.ym-m p{color:var(--muted);font-weight:300;line-height:1.8;font-size:15px}
+.ym-players{display:flex;gap:8px;flex-wrap:wrap;margin-top:18px}
+.tagp{font-size:11px;letter-spacing:.12em;text-transform:uppercase;border:1px solid var(--line);padding:6px 13px;color:var(--cream)}
+.ym-side{border:1px solid var(--line);padding:20px;align-self:start}
+.ym-side .lb{font-size:9px;letter-spacing:.32em;color:var(--acc);text-transform:uppercase}
+.ym-side .nm{font-family:Cinzel,serif;font-size:19px;margin:10px 0 5px;cursor:pointer;transition:.25s}
+.ym-side .nm:hover{color:var(--gold2)}
+.ym-side .cl{color:var(--muted);font-size:13px;display:flex;align-items:center;gap:7px;font-weight:300}
+.ym-side .none{color:var(--muted);font-size:13px;font-weight:300;margin-top:10px;line-height:1.6}
+.ym-empty{padding:26px 0;color:var(--muted);font-weight:300;font-size:15px}
+.ym-near{display:flex;gap:8px;margin-top:16px;flex-wrap:wrap}
+
+/* ---------- MODAL ---------- */
+#modal{position:fixed;inset:0;z-index:1200;display:none;place-items:center;background:rgba(5,4,2,.8);backdrop-filter:blur(6px);padding:20px}
+#modal.on{display:grid}
+.mo-box{width:min(440px,94vw);max-height:88vh;overflow:auto;background:linear-gradient(180deg,#20180a,#130f09);border:1px solid var(--gold3);padding:28px;position:relative;animation:pin .35s}
+.mo-x{position:absolute;top:14px;right:14px;background:none;border:1px solid var(--line);color:var(--cream);width:36px;height:36px;cursor:pointer;display:grid;place-items:center;transition:.25s;z-index:5}
+.mo-x:hover{border-color:var(--gold);color:var(--gold2)}
+.mo-name{font-family:Cinzel,serif;font-size:24px;margin:14px 0 6px}
+.mo-meta{color:var(--muted);font-size:14px;display:flex;align-items:center;gap:8px;font-weight:300}
+.mo-win{margin-top:14px;font-size:11px;letter-spacing:.2em;color:var(--gold2);text-transform:uppercase;line-height:1.9}
+</style>
+</head>
+<body>
+<div id="grain"></div>
+
+<!-- ============ SPLASH ============ -->
+<div id="splash">
+  <div class="splash-in">
+    <svg class="splash-ball" viewBox="0 0 200 200" fill="none" stroke="#c9a227" stroke-width="1.4">
+      <circle cx="100" cy="100" r="96"/><circle cx="100" cy="100" r="62"/>
+      <path d="M100 42 L150 79 L131 137 L69 137 L50 79 Z"/>
+      <path d="M100 42 L100 6 M150 79 L184 66 M131 137 L154 168 M69 137 L46 168 M50 79 L16 66"/>
+    </svg>
+    <div class="splash-title" id="splashTitle"></div>
+    <div class="splash-rule"></div>
+    <div class="splash-sub">The golden archive of world football &middot; 1956 &mdash; today</div>
+    <button id="openBtn">OPEN</button>
+  </div>
+</div>
+
+<!-- ============ NAV ============ -->
+<nav id="topnav">
+  <div class="nav-logo" data-go="home"><i></i>FOOTBALL HISTORY</div>
+  <div class="nav-links">
+    <a data-go="home">Home</a>
+    <a data-go="leagues">Clubs</a>
+    <a data-go="bdor">Ballon d'Or</a>
+    <a data-go="wc">World Cup</a>
+    <a data-go="euro">Euro</a>
+    <a data-go="nations">Nations League</a>
+  </div>
+  <button id="burger" aria-label="menu"></button>
+</nav>
+<div id="drawer">
+  <a data-go="home">HOME</a>
+  <a data-go="leagues">CLUBS</a>
+  <a data-go="bdor">BALLON D'OR</a>
+  <a data-go="wc">WORLD CUP</a>
+  <a data-go="euro">EURO</a>
+  <a data-go="nations">NATIONS LEAGUE</a>
+</div>
+
+<main>
+  <section id="page-home" class="page on">
+    <div class="wrap">
+      <div class="page-head">
+        <div class="kicker">The Golden Archive</div>
+        <h1 class="title">Choose Your<br>Gateway to History</h1>
+        <p class="sub">Four halls, one archive: clubs and leagues, the golden Ballon d’Or hall of fame, every World Cup champion since 1930, and Europe’s international honours.</p>
+      </div>
+      <div class="door" data-go="leagues">
+        <div class="num">I</div>
+        <div><h3>CLUBS &amp; LEAGUES</h3><p>From the Premier League to LaLiga — pick a league, pick a club, and trace trophies and legends year by year. Type "UCL" into the trophy search to reveal every year a club conquered Europe.</p></div>
+        <div class="row-arr"></div>
+      </div>
+      <div class="door" data-go="bdor">
+        <div class="num">II</div>
+        <div><h3>BALLON D'OR</h3><p>The golden hall of fame: 69 plaques hanging from chains, from Sir Stanley Matthews to the next October night — with the Super Ballon d’Or and the Yashin Trophy too.</p></div>
+        <div class="row-arr"></div>
+      </div>
+      <div class="door" data-go="wc">
+        <div class="num">III</div>
+        <div><h3>WORLD CUP</h3><p>Every world champion since Uruguay 1930 — with hosts, final scores, and oversized team photographs, scrolled from west to east.</p></div>
+        <div class="row-arr"></div>
+      </div>
+      <div class="door" data-go="euro">
+        <div class="num">IV</div>
+        <div><h3>INTERNATIONAL HONOURS</h3><p>EURO (since 1960) and the UEFA Nations League (since 2019): the champions of Europe, scrolled year by year.</p></div>
+        <div class="row-arr"></div>
+      </div>
+      <div class="statline">
+        <div class="stat"><b>69</b><span>Ballon d’Or editions</span></div>
+        <div class="stat"><b>22</b><span>World Cup finals</span></div>
+        <div class="stat"><b>17</b><span>EURO titles</span></div>
+        <div class="stat"><b>5</b><span>Major European leagues</span></div>
+      </div>
+      <div class="marquee"><div class="mq-in" id="mqIn"></div></div>
+      <p class="homefoot">FOOTBALL HISTORY — a private archive. Winners’ photos can be attached via the PHOTO_MAP inside the code.</p>
+    </div>
+  </section>
+
+  <section id="page-leagues" class="page"></section>
+  <section id="page-clubs" class="page"></section>
+  <section id="page-club" class="page"></section>
+  <section id="page-bdor" class="page"></section>
+  <section id="page-wc" class="page"></section>
+  <section id="page-euro" class="page"></section>
+  <section id="page-nations" class="page"></section>
+</main>
+
+<div id="modal"><div id="moInner"></div></div>
+
+<script>
+/* =====================================================================
+   PHOTOS — SWAP THEM HERE, ONE PLACE ONLY
+   =====================================================================
+   Every winner photo is currently an elegant placeholder. To attach
+   real images of your own, fill PHOTO_MAP below with file paths:
+
+     PHOTO_MAP['bdor:1956']  = 'photos/matthews.jpg'     → Ballon d'Or 1956
+     PHOTO_MAP['wc:1958']    = 'photos/brazil-1958.jpg'  → World Cup winner
+     PHOTO_MAP['euro:1988']  = 'photos/ned-1988.jpg'     → EURO winner
+     PHOTO_MAP['nl:2019']    = 'photos/por-2019.jpg'     → Nations League
+     PHOTO_MAP['yashin:2019']= 'photos/alisson.jpg'      → Yashin Trophy
+     PHOTO_MAP['super:1989'] = 'photos/distefano.jpg'    → Super Ballon d'Or
+     PHOTO_MAP['player:lionel-messi'] = 'photos/messi.jpg' → ranking player card
+     PHOTO_MAP['t:realmadrid:ucl:1956'] = 'photos/rm56.jpg' → club trophy (format: t:clubId:trophyId:year)
+
+   If a photo file is missing or fails to load, the elegant placeholder
+   simply stays in place.
+   ===================================================================== */
+const PHOTO_MAP = {
+  // example:  'bdor:1956': 'photos/stanley-matthews.jpg',
+};
+
+/* ================= UTIL ================= */
+const $=(s,c=document)=>c.querySelector(s), $$=(s,c=document)=>[...c.querySelectorAll(s)];
+function ic(n){const P={
+  arr:'<path d="M4 12h15M13 6l6 6-6 6"/>',
+  chl:'<path d="M15 5l-7 7 7 7"/>',
+  chr:'<path d="M9 5l7 7-7 7"/>',
+  sch:'<circle cx="11" cy="11" r="7"/><path d="M16.5 16.5L21 21"/>',
+  pin:'<path d="M12 21s-7-5.2-7-11a7 7 0 1 1 14 0c0 5.8-7 11-7 11z"/><circle cx="12" cy="10" r="2.6"/>',
+  cup:'<path d="M7 4h10v5a5 5 0 0 1-10 0V4z"/><path d="M7 6H4c0 3 1.4 4.6 3.4 4.9M17 6h3c0 3-1.4 4.6-3.4 4.9"/><path d="M12 14v4M8 21h8M9 18h6"/>',
+  crown:'<path d="M3 17l1.8-8.5L10 12l2-6.5L14 12l5.2-3.5L21 17H3z"/><path d="M5 20h14"/>',
+  lock:'<rect x="5" y="11" width="14" height="9" rx="1.5"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/>',
+  cal:'<rect x="4" y="5" width="16" height="15" rx="2"/><path d="M4 10h16M9 3v4M15 3v4"/>',
+  x:'<path d="M6 6l12 12M18 6L6 18"/>',
+  menu:'<path d="M4 7h16M4 12h16M4 17h16"/>'};
+  return '<svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">'+P[n]+'</svg>'}
+function slug(s){return s.toLowerCase().replace(/[^a-z0-9]+/g,'-').replace(/^-|-$/g,'')}
+
+/* ================= FLAGS (generative SVG) ================= */
+function starPts(cx,cy,R){let p=[];for(let i=0;i<10;i++){const r=i%2?R*.42:R,a=-Math.PI/2+i*Math.PI/5;p.push((cx+r*Math.cos(a)).toFixed(2)+','+(cy+r*Math.sin(a)).toFixed(2))}return p.join(' ')}
+const FLAGS={
+  arg:{t:'h',c:['#74acdf','#fff','#74acdf'],sun:1},
+  bra:{t:'bra'},
+  eng:{t:'cross',bg:'#fff',cr:'#ce1124'},
+  esp:{t:'h',c:['#aa151b','#f1bf00','#aa151b'],w:[25,50,25]},
+  fra:{t:'v',c:['#0055a4','#fff','#ef4135']},
+  ger:{t:'h',c:['#000','#dd0000','#ffce00']},
+  ita:{t:'v',c:['#009246','#fff','#ce2b37']},
+  ned:{t:'h',c:['#ae1c28','#fff','#21468b']},
+  por:{t:'por'},
+  uru:{t:'uru'},
+  ussr:{t:'solid',c:'#c8102e',star:1},
+  cze:{t:'cze'},
+  sco:{t:'saltire'},
+  hun:{t:'h',c:['#ce2939','#fff','#477050']},
+  nir:{t:'nir'},
+  den:{t:'nordic',bg:'#c8102e',cr:'#fff'},
+  bul:{t:'h',c:['#00966e','#d62612','#fff']},
+  lbr:{t:'lbr'},
+  ukr:{t:'h',c:['#0057b7','#ffd700']},
+  cro:{t:'cro'},
+  gre:{t:'gre'},
+  bel:{t:'v',c:['#000','#fdda24','#ef3340']},
+  usa:{t:'usa'},
+  can:{t:'can'},
+  mex:{t:'v',c:['#006847','#fff','#ce1126'],disc:'#6b4f2a'},
+  irl:{t:'v',c:['#169b62','#fff','#ff883e']}
+};
+function flag(code,cls=''){
+  const S=FLAGS[code];if(!S)return '';
+  const W=60,H=40,r=(x,y,w,h,f)=>'<rect x="'+x+'" y="'+y+'" width="'+w+'" height="'+h+'" fill="'+f+'"/>';
+  let b='';
+  const hh=(cs,ws)=>{let x=0;cs.forEach((f,i)=>{const w=ws?ws[i]/100*W:W/cs.length;b+=r(x,0,w,H,f);x+=w})};
+  const vv=(cs)=>{let y=0;cs.forEach(f=>{b+=r(0,y,W,H/cs.length,f);y+=H/cs.length})};
+  switch(S.t){
+    case 'h':hh(S.c,S.w);if(S.sun)b+='<circle cx="30" cy="20" r="4.5" fill="#f6b40e"/>';break;
+    case 'v':vv(S.c);if(S.disc)b+='<circle cx="30" cy="20" r="5" fill="'+S.disc+'"/>';break;
+    case 'cross':b+=r(0,0,W,H,S.bg)+r(24,0,12,H,S.cr)+r(0,14,W,12,S.cr);break;
+    case 'nordic':b+=r(0,0,W,H,S.bg)+r(16,0,8,H,S.cr)+r(0,16,W,8,S.cr);break;
+    case 'saltire':b+=r(0,0,W,H,'#0065bf')+'<path d="M0 0L60 40M60 0L0 40" stroke="#fff" stroke-width="7"/>';break;
+    case 'solid':b+=r(0,0,W,H,S.c);if(S.star)b+='<polygon points="'+starPts(17,12,7)+'" fill="#fcd116"/>';break;
+    case 'uru':{for(let i=0;i<9;i++)b+=r(0,i*H/9,W,H/9+.3,i%2?'#5aa0d8':'#fff');b+=r(0,0,24,22.2,'#fff')+'<circle cx="12" cy="11" r="4.6" fill="#f0b23e"/>';break}
+    case 'cze':b+=r(0,0,W,H/2,'#fff')+r(0,H/2,W,H/2,'#d7141a')+'<path d="M0 0L26 20L0 40Z" fill="#11457e"/>';break;
+    case 'por':b+=r(0,0,24,H,'#046a38')+r(24,0,36,H,'#da291c')+'<circle cx="24" cy="20" r="8" fill="none" stroke="#ffe700" stroke-width="2.4"/><circle cx="24" cy="20" r="3.6" fill="#da291c"/>';break;
+    case 'bra':b+=r(0,0,W,H,'#009739')+'<polygon points="30,4 54,20 30,36 6,20" fill="#fedd00"/><circle cx="30" cy="20" r="8" fill="#012169"/>';break;
+    case 'gre':{for(let i=0;i<9;i++)b+=r(0,i*H/9,W,H/9+.3,i%2?'#fff':'#0d5eaf');b+=r(0,0,26,22.2,'#0d5eaf')+r(10.5,0,5,22.2,'#fff')+r(0,8.6,26,5,'#fff');break}
+    case 'usa':{for(let i=0;i<13;i++)b+=r(0,i*H/13,W,H/13+.3,i%2?'#fff':'#b22234');b+=r(0,0,26,21.5,'#3c3b6e');break}
+    case 'lbr':{for(let i=0;i<6;i++)b+=r(0,i*H/6,W,H/6+.3,i%2?'#fff':'#bf0a30');b+=r(0,0,22,20,'#002868')+'<polygon points="'+starPts(11,10,6)+'" fill="#fff"/>';break}
+    case 'nir':b+=r(0,0,W,H,'#fff')+r(26,0,8,H,'#c8102e')+r(0,16,W,8,'#c8102e')+'<polygon points="'+starPts(30,20,9)+'" fill="none" stroke="#c8102e" stroke-width="1.6"/>';break;
+    case 'cro':b+=r(0,0,W,H,'#ff0000')+r(0,H/3,W,H/3+.3,'#fff')+r(0,2*H/3,W,H/3,'#171796')+'<circle cx="30" cy="20" r="9" fill="#fff"/><rect x="24" y="14" width="4" height="4" fill="#e03c31"/><rect x="32" y="14" width="4" height="4" fill="#e03c31"/><rect x="28" y="18" width="4" height="4" fill="#e03c31"/><rect x="24" y="22" width="4" height="4" fill="#e03c31"/><rect x="32" y="22" width="4" height="4" fill="#e03c31"/>';break;
+    case 'can':b+=r(0,0,15,H,'#d80621')+r(45,0,15,H,'#d80621')+r(15,0,30,H,'#fff')+'<polygon points="30,10 32,15 36,13.5 34,19 38.5,21 31.5,28.5 30.8,32 29.2,32 28.5,28.5 21.5,21 26,19 24,13.5 28,15" fill="#d80621"/>';break;
+  }
+  return '<svg class="flag '+cls+'" viewBox="0 0 60 40" preserveAspectRatio="xMidYMid meet">'+b+'</svg>';
+}
+
+/* ================= PHOTO PLACEHOLDER ================= */
+function phFb(lbl='PHOTO'){
+  return '<div class="ph-fb"><svg viewBox="0 0 100 100" preserveAspectRatio="xMidYMid slice">'
+   +'<defs><pattern id="dgn" width="9" height="9" patternUnits="userSpaceOnUse" patternTransform="rotate(45)">'
+   +'<rect width="9" height="9" fill="transparent"/><line x1="0" y1="0" x2="0" y2="9" stroke="rgba(201,162,39,.10)" stroke-width="1"/></pattern></defs>'
+   +'<rect width="100" height="100" fill="url(#dgn)"/>'
+   +'<g fill="rgba(201,162,39,.18)"><circle cx="50" cy="37" r="14"/><path d="M21 88c0-19 13-28 29-28s29 9 29 28z"/></g>'
+   +'<text x="50" y="97" text-anchor="middle" font-size="7" letter-spacing="3.5" fill="rgba(201,162,39,.5)" font-family="Jost">'+lbl+'</text>'
+   +'</svg></div>';
+}
+function applyPhotos(root=document){
+  $$('img[data-key]',root).forEach(im=>{
+    const k=PHOTO_MAP[im.dataset.key];
+    if(k){im.style.display='';im.onerror=()=>{im.style.display='none'};im.src=k}
+    else im.style.display='none';
+  });
+}
+
+/* ================= CLUB & LEAGUE CRESTS (generative SVG) ================= */
+const SHIELD='M50 6 L90 19 V52 C90 76 73 92 50 104 C27 92 10 76 10 52 V19 Z';
+function uclCount(c){const t=(c.trophies||[]).find(t=>t.id==='ucl');return t?t.years.length:0}
+function crest(c,w=100){
+  const [c1,c2]=c.colors,pat=c.pat||'plain',ink=c.ink||'#f5f2ea';
+  let body='<path d="'+SHIELD+'" fill="'+c1+'"/>';
+  if(pat==='stripes'){for(let i=0;i<4;i++){if(i%2)body+='<rect x="'+(10+i*20)+'" y="0" width="20" height="110" fill="'+c2+'"/>'}}
+  else if(pat==='half'){body+='<path d="M50 6 L90 19 V52 C90 76 73 92 50 104 Z" fill="'+c2+'"/>'}
+  else if(pat==='sash'){body+='<path d="M2 66 L66 2 L86 2 L2 86 Z" fill="'+c2+'" opacity=".92"/>'}
+  else {body+='<circle cx="50" cy="50" r="34" fill="none" stroke="'+c2+'" stroke-width="2.4" opacity=".8"/>'}
+  let stars='';
+  const n=uclCount(c);
+  if(n>0&&n<=5){const sx=50-(n-1)*8/2;for(let i=0;i<n;i++)stars+='<polygon points="'+starPts(sx+i*8,79,3.4)+'" fill="#e8c96a"/>'}
+  else if(n>5){stars+='<text x="50" y="83" text-anchor="middle" font-size="11" font-family="Cinzel" fill="#e8c96a">'+n+' TIMES</text>'}
+  const fs=c.ini.length>=3?21:27;
+  return '<svg viewBox="0 0 100 112" style="width:'+w+'%;height:auto;display:block">'
+   +'<defs><clipPath id="shp"><path d="'+SHIELD+'"/></clipPath></defs>'
+   +'<g clip-path="url(#shp)">'+body+'</g>'
+   +'<path d="'+SHIELD+'" fill="none" stroke="'+(c.border||'rgba(0,0,0,.45)')+'" stroke-width="3"/>'
+   +'<path d="'+SHIELD+'" fill="none" stroke="rgba(255,255,255,.22)" stroke-width="1" transform="translate(0,0)" style="transform-box:fill-box;transform-origin:center" />'
+   +stars
+   +'<text x="50" y="56" text-anchor="middle" dominant-baseline="central" font-family="Cinzel" font-weight="700" font-size="'+fs+'" fill="'+ink+'"'+(c.ts?' stroke="'+c.ts+'" stroke-width="2.5" paint-order="stroke"':'')+'>'+c.ini+'</text>'
+   +'</svg>';
+}
+function lgCrest(l){
+  const c=l.color;let shape='';
+  switch(l.shape){
+    case 'diamond':shape='<path d="M50 10 L94 54 L50 98 L6 54 Z" fill="'+c+'"/>';break;
+    case 'roundel':shape='<circle cx="50" cy="54" r="46" fill="'+c+'"/><circle cx="50" cy="54" r="35" fill="none" stroke="rgba(255,255,255,.35)" stroke-width="2.5"/>';break;
+    case 'shield':shape='<path d="M50 8 L90 22 V55 C90 78 72 90 50 100 C28 90 10 78 10 55 V22 Z" fill="'+c+'"/>';break;
+    case 'bar':shape='<rect x="12" y="24" width="76" height="60" rx="9" fill="'+c+'"/>';break;
+    case 'hex':shape='<path d="M50 8 L90 30 V78 L50 100 L10 78 V30 Z" fill="'+c+'"/>';break;
+  }
+  let extra='';
+  if(l.id==='seriea')extra='<rect x="28" y="76" width="14" height="5" fill="#009246"/><rect x="43" y="76" width="14" height="5" fill="#fff"/><rect x="58" y="76" width="14" height="5" fill="#ce2b37"/>';
+  return '<svg viewBox="0 0 100 108" style="width:100%;height:auto;display:block">'+shape
+   +'<path d="'+(l.shape==='diamond'?'M50 10 L94 54 L50 98 L6 54 Z':l.shape==='roundel'?'':'')+'" fill="none" stroke="rgba(255,255,255,.28)" stroke-width="2"/>'
+   +extra
+   +'<text x="50" y="56" text-anchor="middle" dominant-baseline="central" font-family="Cinzel" font-weight="700" font-size="28" fill="#f3ecd8">'+l.badge+'</text></svg>';
+}
+function chainSVG(){
+  return '<svg class="bd-chain" viewBox="0 0 44 66" width="44" height="66" fill="none">'
+   +'<line x1="22" y1="0" x2="22" y2="6" stroke="#8a6f1f" stroke-width="2"/>'
+   +'<ellipse cx="22" cy="14" rx="8" ry="10" stroke="#8a6f1f" stroke-width="4"/>'
+   +'<ellipse cx="22" cy="31" rx="8" ry="10" stroke="#c9a227" stroke-width="4"/>'
+   +'<ellipse cx="22" cy="48" rx="8" ry="10" stroke="#8a6f1f" stroke-width="4"/>'
+   +'<ellipse cx="22" cy="59" rx="15" ry="6" stroke="#e8c96a" stroke-width="2.4"/></svg>';
+}
+
+/* ================= DATA ================= */
+const LEAGUES=[
+ {id:'epl',name:'Premier League',country:'England',color:'#38003c',shape:'diamond',badge:'PL',clubs:['manutd','liverpool','arsenal','chelsea','mancity','tottenham']},
+ {id:'laliga',name:'LaLiga',country:'Spain',color:'#d5342c',shape:'roundel',badge:'LL',clubs:['realmadrid','barcelona','atletico','athletic','valencia']},
+ {id:'seriea',name:'Serie A',country:'Italy',color:'#0b2545',shape:'shield',badge:'SA',clubs:['juventus','acmilan','inter','napoli']},
+ {id:'bund',name:'Bundesliga',country:'Germany',color:'#d20515',shape:'bar',badge:'BL',clubs:['bayern','dortmund','leverkusen']},
+ {id:'ligue1',name:'Ligue 1',country:'France',color:'#0e2a47',shape:'hex',badge:'L1',clubs:['psg','marseille','monaco','lyon']}
+];
+const T=(id,name,short,years)=>({id,name,short,years});
+
+const CLUBS={
+ manutd:{id:'manutd',name:'Manchester United',lg:'epl',city:'Manchester',founded:1878,stadium:'Old Trafford',colors:['#b3122e','#f7c948'],pat:'plain',ink:'#f5f2ea',ac:'#d9404f',ini:'MU',
+  trophies:[T('ucl','UEFA Champions League','UCL',[1968,1999,2008]),T('lg','Premier League','LEAGUE',[1908,1911,1952,1957,1965,1967,1993,1994,1996,1997,1999,2000,2001,2003,2007,2008,2009,2011,2013]),T('fa','FA Cup','FA CUP',[1909,1948,1963,1977,1983,1985,1990,1994,1996,1999,2004,2016,2024]),T('uel','UEFA Europa League','EUROPA',[2017]),T('wc','Intercontinental & Club World Cup','WORLD',[1999,2008])],
+  moments:[
+   {year:1968,t:'Kings of Europe',x:'Ten years after the Munich tragedy, Sir Matt Busby rebuilt his side and lifted the European Cup at Wembley.',p:['Charlton','Best','Kidd']},
+   {year:1993,t:'First Premier League',x:'Cantona inspired the first league title in twenty-six years.',p:['Cantona','Hughes','Keane']},
+   {year:1999,t:'The Treble',x:'Two stoppage-time goals against Bayern completed league, cup, and Champions League in a single season.',p:['Beckham','Keane','Solskjaer']},
+   {year:2008,t:'Night in Moscow',x:'Van der Sar saved Anelka’s penalty; a third European star was pinned to United’s chest.',p:['Ronaldo','Rooney','Van der Sar']},
+   {year:2013,t:'Ferguson’s Final Curtain',x:'A 13th league title closed the greatest managerial career in English football history.',p:['Van Persie','Rooney','Carrick']}]},
+ liverpool:{id:'liverpool',name:'Liverpool',lg:'epl',city:'Liverpool',founded:1892,stadium:'Anfield',colors:['#c8102e','#00b2a9'],pat:'plain',ink:'#f5f2ea',ac:'#d9404f',ini:'LFC',
+  trophies:[T('ucl','UEFA Champions League','UCL',[1977,1978,1981,1984,2005,2019]),T('lg','Premier League','LEAGUE',[1901,1906,1922,1923,1947,1964,1966,1973,1976,1977,1979,1980,1982,1983,1984,1986,1988,1990,2020,2025]),T('fa','FA Cup','FA CUP',[1965,1974,1986,1989,1992,2001,2006,2022]),T('uel','UEFA Cup / Europa League','EUROPA',[1973,1976,2001]),T('wc','Club World Cup','WORLD',[2019])],
+  moments:[
+   {year:1965,t:'First FA Cup',x:'Bill Shankly guided Liverpool to their first-ever FA Cup.',p:['St John','Callaghan','Yeats']},
+   {year:1977,t:'Kings of Europe in Rome',x:'The first European Cup, won in Rome against Borussia Mönchengladbach.',p:['Keegan','Dalglish','Hughes']},
+   {year:1984,t:'The Rome Shootout',x:'A fourth European Cup won on penalties, in the very same stadium.',p:['Dalglish','Rush','Grobbelaar']},
+   {year:2005,t:'The Miracle of Istanbul',x:'Three goals down at half-time against Milan — and the fifth European Cup still won on penalties.',p:['Gerrard','Smicer','Dudek']},
+   {year:2019,t:'The Sixth in Madrid',x:'Salah and Origi sank Tottenham for a sixth European star.',p:['Salah','Origi','Van Dijk']},
+   {year:2020,t:'After Thirty Years',x:'Klopp ended a three-decade wait for a 19th league title.',p:['Salah','Van Dijk','Henderson']}]},
+ arsenal:{id:'arsenal',name:'Arsenal',lg:'epl',city:'London',founded:1886,stadium:'Emirates Stadium',colors:['#d4021d','#ffffff'],pat:'sash',ink:'#f5f2ea',ac:'#e0483e',ini:'AFC',
+  trophies:[T('lg','Premier League','LEAGUE',[1931,1933,1934,1935,1938,1948,1953,1971,1989,1991,1998,2002,2004]),T('fa','FA Cup','FA CUP',[1930,1936,1950,1971,1979,1993,1998,2002,2003,2005,2014,2015,2017,2020]),T('cwc','European Cup Winners Cup','CWC',[1994])],
+  moments:[
+   {year:1933,t:'The Chapman Machine',x:'Arsenal ruled the thirties with three straight league titles.',p:['Bastin','James','Hulme']},
+   {year:1971,t:'First Double',x:'League and FA Cup in one season, for the first time.',p:['Kennedy','Radford','McLintock']},
+   {year:1989,t:'Anfield, The Last Second',x:'Michael Thomas scored in the final seconds at Anfield and stole the title.',p:['Thomas','Smith','Adams']},
+   {year:1998,t:'Wenger’s First Double',x:'Bergkamp and Anelka delivered a second double.',p:['Bergkamp','Anelka','Adams']},
+   {year:2004,t:'The Invincibles',x:'49 league games unbeaten; Henry led a side that never once fell all season.',p:['Henry','Vieira','Bergkamp']}]},
+ chelsea:{id:'chelsea',name:'Chelsea',lg:'epl',city:'London',founded:1905,stadium:'Stamford Bridge',colors:['#034694','#dba111'],pat:'plain',ink:'#f5f2ea',ac:'#4d7fce',ini:'CFC',
+  trophies:[T('ucl','UEFA Champions League','UCL',[2012,2021]),T('lg','Premier League','LEAGUE',[1955,2005,2006,2010,2015,2017]),T('fa','FA Cup','FA CUP',[1970,1997,2000,2007,2009,2010,2012,2018]),T('uel','UEFA Europa League','EUROPA',[2013,2019]),T('cwc','European Cup Winners Cup','CWC',[1971,1998]),T('wc','Club World Cup','WORLD',[2021])],
+  moments:[
+   {year:1955,t:'First Champions',x:'Ted Drake built the first league title in club history.',p:['Harris','Bentley','Saunders']},
+   {year:2005,t:'Mourinho Arrives',x:'A record points haul brought the first league title in fifty years.',p:['Drogba','Lampard','Terry']},
+   {year:2012,t:'The Munich Miracle',x:'Down to ten men in Bayern’s own backyard, Drogba equalised and won it on penalties.',p:['Drogba','Lampard','Cech']},
+   {year:2021,t:'Champions Again',x:'Kanté covered every blade of grass as Havertz struck the winning goal.',p:['Kante','Havertz','Mount']}]},
+ mancity:{id:'mancity',name:'Manchester City',lg:'epl',city:'Manchester',founded:1880,stadium:'Etihad Stadium',colors:['#6cabdd','#00285e'],pat:'plain',ink:'#0b2a4a',ac:'#7db8e8',ini:'MCFC',
+  trophies:[T('ucl','UEFA Champions League','UCL',[2023]),T('lg','Premier League','LEAGUE',[1937,1968,2012,2014,2018,2019,2021,2022,2023,2024]),T('fa','FA Cup','FA CUP',[1904,1934,1956,1969,2011,2019,2023]),T('wc','Club World Cup','WORLD',[2023])],
+  moments:[
+   {year:1968,t:'The Bell & Lee Era',x:'City pipped United on the final day to lift the league.',p:['Bell','Lee','Summerbee']},
+   {year:2012,t:'93:20',x:'Agüero struck in the fourth minute of stoppage time — the title won with the very last kick.',p:['Aguero','Kompany','Silva']},
+   {year:2019,t:'Domestic Treble',x:'League, FA Cup, and League Cup in a single season — an English first.',p:['De Bruyne','Bernardo','Sterling']},
+   {year:2023,t:'The Treble',x:'Haaland’s goals and Rodri’s finish delivered a first Champions League in Istanbul.',p:['Haaland','De Bruyne','Rodri']},
+   {year:2024,t:'Four in a Row',x:'No English club had ever won four straight league titles before.',p:['Foden','Haaland','Rodri']}]},
+ tottenham:{id:'tottenham',name:'Tottenham Hotspur',lg:'epl',city:'London',founded:1882,stadium:'Tottenham Hotspur Stadium',colors:['#132257','#ffffff'],pat:'half',ink:'#f5f2ea',ac:'#7c8fc9',ini:'THFC',
+  trophies:[T('lg','Premier League','LEAGUE',[1951,1961]),T('fa','FA Cup','FA CUP',[1901,1921,1961,1962,1967,1981,1982,1991]),T('cwc','European Cup Winners Cup','CWC',[1963]),T('uel','UEFA Cup / Europa League','EUROPA',[1972,1984])],
+  moments:[
+   {year:1961,t:'The Spurs Double',x:'League and FA Cup together — the first English club to do it in the twentieth century.',p:['Blanchflower','Greaves','Mackay']},
+   {year:1963,t:'First English Club in Europe',x:'Tottenham beat Atlético Madrid 5-1 to lift the European Cup Winners’ Cup.',p:['Greaves','Smith','Blanchflower']},
+   {year:1984,t:'The White Hart Lane Shootout',x:'The UEFA Cup won on penalties against Anderlecht.',p:['Hoddle','Burkinshaw','Falco']}]},
+ realmadrid:{id:'realmadrid',name:'Real Madrid',lg:'laliga',city:'Madrid',founded:1902,stadium:'Santiago Bernabeu',colors:['#f5f2ea','#c9a227'],pat:'plain',ink:'#1d1d1b',border:'#c9a227',ac:'#d8b45a',ini:'RM',
+  trophies:[T('ucl','UEFA Champions League','UCL',[1956,1957,1958,1959,1960,1966,1998,2000,2002,2014,2016,2017,2018,2022,2024]),T('lg','La Liga','LEAGUE',[1932,1933,1954,1955,1957,1958,1961,1962,1963,1964,1965,1967,1968,1969,1972,1975,1976,1978,1979,1980,1986,1987,1988,1989,1990,1995,1997,2001,2003,2007,2008,2012,2017,2020,2024]),T('cdr','Copa del Rey','COPA',[1905,1936,1946,1962,1975,1980,1989,1993,2011,2014,2023]),T('wc','Intercontinental & Club World Cup','WORLD',[1960,1998,2002,2014,2016,2017,2018,2022])],
+  moments:[
+   {year:1956,t:'The First European Crown',x:'Real Madrid lift the very first European Cup in Paris — the start of the greatest dynasty there has ever been.',p:['Di Stefano','Rial','Gento']},
+   {year:1960,t:'Wembley 7-3',x:'The most explosive final in European Cup history; Eintracht Frankfurt torn apart at Wembley.',p:['Di Stefano','Puskas','Gento']},
+   {year:1966,t:'The Ye-yé Generation',x:'An all-Spanish XI lifted a sixth European Cup in Brussels.',p:['Amancio','Gento','Pirri']},
+   {year:1998,t:'After 32 Years',x:'Mijatović’s strike past Juventus delivered a seventh European star.',p:['Mijatovic','Redondo','Raul']},
+   {year:2002,t:'The Hampden Volley',x:'Zidane struck one of the greatest final goals of all time; La Novena landed in Glasgow.',p:['Zidane','Raul','Figo']},
+   {year:2014,t:'La Décima',x:'Sergio Ramos scored in the 93rd minute and the dream of a tenth European Cup finally came true in Lisbon.',p:['Ramos','Bale','Ronaldo']},
+   {year:2018,t:'Three in a Row',x:'Three straight Champions Leagues under Zidane — untouched in the modern era.',p:['Ronaldo','Modric','Ramos']},
+   {year:2024,t:'La Decimoquinta',x:'Borussia Dortmund fell at Wembley; a fifteenth European Cup rose over the Madrid sky.',p:['Vinicius','Bellingham','Carvajal']}]},
+ barcelona:{id:'barcelona',name:'FC Barcelona',lg:'laliga',city:'Barcelona',founded:1899,stadium:'Camp Nou',colors:['#a50044','#004d98'],pat:'stripes',ink:'#f2c14e',ac:'#c04a68',ini:'FCB',
+  trophies:[T('ucl','UEFA Champions League','UCL',[1992,2006,2009,2011,2015]),T('lg','La Liga','LEAGUE',[1929,1945,1948,1949,1952,1953,1959,1960,1974,1985,1991,1992,1993,1994,1998,1999,2005,2006,2009,2010,2011,2013,2015,2016,2018,2019,2023,2025]),T('cdr','Copa del Rey','COPA',[1912,1920,1925,1928,1942,1951,1957,1959,1963,1968,1971,1978,1981,1983,1988,1990,1997,1998,2009,2012,2015,2016,2017,2018,2021,2025]),T('cwc','European Cup Winners Cup','CWC',[1979,1982,1989,1997]),T('wc','Club World Cup','WORLD',[2009,2011,2015])],
+  moments:[
+   {year:1929,t:'First Champions of Spain',x:'Barcelona won the very first Spanish national championship season.',p:['Samitier','Alcantara','Platko']},
+   {year:1950,t:'The Kubala Era',x:'Ladislao Kubala changed the face of the club; four league titles landed in the fifties.',p:['Kubala','Cesar','Basora']},
+   {year:1974,t:'Cruyff Arrives',x:'Cruyff led a 5-0 rout at the Bernabéu and the league returned after fourteen years.',p:['Cruyff','Asensi','Sotil']},
+   {year:1992,t:'At Last, Wembley',x:'Koeman’s extra-time free kick delivered the first European Cup.',p:['Koeman','Laudrup','Zubizarreta']},
+   {year:2009,t:'The Sextuple',x:'Guardiola’s magical side won six trophies in a single calendar year — never repeated.',p:['Messi','Xavi','Iniesta']},
+   {year:2011,t:'The Perfect Final',x:'A masterclass over Manchester United at Wembley crowned the best side of its era.',p:['Messi','Xavi','Iniesta']},
+   {year:2015,t:'The MSN Trio',x:'Messi, Suárez and Neymar swept the Champions League, the league, and the cup.',p:['Messi','Suarez','Neymar']},
+   {year:2025,t:'The Lamine Dawn',x:'A new generation carried the league, the cup, and the supercup back to Barcelona.',p:['Yamal','Raphinha','Pedri']}]},
+ atletico:{id:'atletico',name:'Atlético Madrid',lg:'laliga',city:'Madrid',founded:1903,stadium:'Metropolitano',colors:['#cb3524','#f5f2ea'],pat:'stripes',ink:'#1b3a6b',ac:'#e0564a',ini:'ATM',
+  trophies:[T('lg','La Liga','LEAGUE',[1940,1941,1950,1966,1970,1973,1977,1996,2014,2021]),T('cdr','Copa del Rey','COPA',[1960,1961,1965,1972,1976,1985,1991,1992,1996,2013]),T('uel','UEFA Cup / Europa League','EUROPA',[2010,2012,2018]),T('cwc','European Cup Winners Cup','CWC',[1962]),T('wc','Intercontinental Cup','WORLD',[1974])],
+  moments:[
+   {year:1974,t:'The Final Wound',x:'A last-minute goal against Bayern in Brussels — then defeat in the replay — became the greatest heartbreak of all.',p:['Luis Aragones','Adelardo']},
+   {year:1996,t:'El Cholo’s Double',x:'League and cup won with Simeone patrolling midfield.',p:['Simeone','Penev','Kiko']},
+   {year:2014,t:'The Simeone Revolution',x:'Godín’s header at the Camp Nou stole the league from two giants.',p:['Godin','Griezmann','Courtois']},
+   {year:2021,t:'Back on Top',x:'Suárez’s goals decided a two-team race down to the final second.',p:['Suarez','Llorente','Oblak']}]},
+ athletic:{id:'athletic',name:'Athletic Club',lg:'laliga',city:'Bilbao',founded:1898,stadium:'San Mames',colors:['#ee2523','#f5f2ea'],pat:'stripes',ink:'#f5f2ea',ac:'#e35b4d',ini:'ATH',
+  trophies:[T('lg','La Liga','LEAGUE',[1930,1931,1934,1936,1943,1956,1983,1984]),T('cdr','Copa del Rey','COPA',[1903,1904,1910,1911,1913,1914,1915,1916,1921,1923,1930,1931,1932,1933,1943,1944,1945,1950,1955,1956,1958,1969,1973,1984,2024])],
+  moments:[
+   {year:1943,t:'The Zarra Era',x:'Three straight league titles in the forties with the great Basque legend, Telmo Zarra.',p:['Zarra','Gainza','Iriondo']},
+   {year:1984,t:'The Last Double',x:'League and cup together — still their last league title to this day.',p:['Goikoetxea','Zubizarreta','De Andres']},
+   {year:2024,t:'The Brothers’ Cup',x:'Iñaki and Nico Williams won the Copa del Rey, a first major trophy in forty years.',p:['I. Williams','N. Williams','Sancet']}]},
+ valencia:{id:'valencia',name:'Valencia CF',lg:'laliga',city:'Valencia',founded:1919,stadium:'Mestalla',colors:['#f7f4ec','#f5820d'],pat:'plain',ink:'#1d1d1b',ac:'#f0a04a',ini:'VCF',
+  trophies:[T('lg','La Liga','LEAGUE',[1942,1944,1947,1971,2002,2004]),T('cdr','Copa del Rey','COPA',[1941,1949,1954,1967,1971,1979,1999,2008,2019]),T('cwc','European Cup Winners Cup','CWC',[1980]),T('uel','UEFA Cup','EUROPA',[2004])],
+  moments:[
+   {year:1942,t:'The First Crown',x:'The Mundo era brought the first league title to Mestalla.',p:['Mundo','Epi','Gorostiza']},
+   {year:2002,t:'31 Years Later',x:'Aimar’s magic and Cañizares’ calm delivered the fifth title.',p:['Aimar','Canizares','Rufete']},
+   {year:2004,t:'Benítez’s Double',x:'The league and the UEFA Cup won in the same season.',p:['Vicente','Mista','Baraja']}]},
+ juventus:{id:'juventus',name:'Juventus',lg:'seriea',city:'Turin',founded:1897,stadium:'Allianz Stadium',colors:['#f5f2ea','#141414'],pat:'stripes',ink:'#f5f2ea',ts:'#141414',ac:'#e8e4d8',ini:'JUV',
+  trophies:[T('ucl','UEFA Champions League','UCL',[1985,1996]),T('lg','Serie A','LEAGUE',[1905,1926,1931,1932,1933,1934,1935,1950,1952,1958,1960,1961,1967,1972,1973,1975,1977,1978,1981,1982,1984,1986,1995,1997,1998,2002,2003,2012,2013,2014,2015,2016,2017,2018,2019,2020]),T('ci','Coppa Italia','COPPA',[1938,1942,1959,1960,1965,1979,1983,1990,1995,2015,2016,2017,2018,2021,2024]),T('uel','UEFA Cup','EUROPA',[1977,1990,1993]),T('wc','Intercontinental & Club World Cup','WORLD',[1985,1996])],
+  moments:[
+   {year:1934,t:'Il Quinquennio',x:'Five straight league titles — the first great dynasty of Italian football.',p:['Orsi','Caligaris','Combi']},
+   {year:1982,t:'Rossi’s Golden Year',x:'World Cup hero Paolo Rossi led the way to a 20th Scudetto.',p:['Rossi','Platini','Gentile']},
+   {year:1985,t:'Platini’s Peak',x:'A first European Cup, taken in the final against Liverpool in Brussels.',p:['Platini','Boniek','Scirea']},
+   {year:1996,t:'Rome, Past Ajax',x:'Del Piero and Vialli overcame Ajax on penalties for a second European crown.',p:['Del Piero','Vialli','Peruzzi']},
+   {year:2020,t:'Nine in a Row',x:'A ninth straight Scudetto completed the longest streak in Serie A history.',p:['Ronaldo','Buffon','Dybala']}]},
+ acmilan:{id:'acmilan',name:'AC Milan',lg:'seriea',city:'Milan',founded:1899,stadium:'San Siro',colors:['#fb090b','#141414'],pat:'stripes',ink:'#f5f2ea',ac:'#e8484d',ini:'ACM',
+  trophies:[T('ucl','UEFA Champions League','UCL',[1963,1969,1989,1990,1994,2003,2007]),T('lg','Serie A','LEAGUE',[1901,1906,1907,1951,1955,1957,1959,1962,1968,1979,1988,1992,1993,1994,1996,1999,2004,2011,2022]),T('ci','Coppa Italia','COPPA',[1967,1972,1973,1977,2003]),T('wc','Intercontinental & Club World Cup','WORLD',[1969,1989,1990,2007])],
+  moments:[
+   {year:1963,t:'First European Star',x:'Rivera pulled the strings in the Wembley final against Benfica.',p:['Rivera','Altafini','Trapattoni']},
+   {year:1969,t:'Prati’s Hat-trick',x:'Four goals beat Ajax for a second European Cup.',p:['Rivera','Prati','Sormani']},
+   {year:1989,t:'Sacchi’s Total Football',x:'Gullit struck twice in the final; the Dutch trio and Baresi redefined the game.',p:['Gullit','Van Basten','Baresi']},
+   {year:1994,t:'Athens 4-0',x:'Capello’s side demolished Barcelona in the most one-sided final of the modern era.',p:['Maldini','Massaro','Savicevic']},
+   {year:2007,t:'The Athens Revenge',x:'Two years after Istanbul, Kaká and Inzaghi downed Liverpool for a seventh star.',p:['Kaka','Inzaghi','Maldini']},
+   {year:2022,t:'The Pioli Revival',x:'Leão inspired a 19th Scudetto, eleven years after the last.',p:['Leao','Tonali','Giroud']}]},
+ inter:{id:'inter',name:'Inter Milan',lg:'seriea',city:'Milan',founded:1908,stadium:'San Siro',colors:['#0068a8','#141414'],pat:'stripes',ink:'#f5f2ea',ac:'#4d9fe0',ini:'INT',
+  trophies:[T('ucl','UEFA Champions League','UCL',[1964,1965,2010]),T('lg','Serie A','LEAGUE',[1910,1920,1930,1938,1940,1953,1954,1963,1965,1966,1971,1980,1989,2006,2007,2008,2009,2010,2021,2024]),T('ci','Coppa Italia','COPPA',[1939,1978,1982,2005,2006,2010,2011,2022,2023]),T('uel','UEFA Cup','EUROPA',[1991,1994,1998]),T('wc','Intercontinental Cup','WORLD',[1964,1965])],
+  moments:[
+   {year:1965,t:'La Grande Inter',x:'Herrera’s catenaccio won back-to-back European Cups in Milan.',p:['Facchetti','Suarez','Picchi']},
+   {year:2010,t:'The Mourinho Treble',x:'Milito scored in all three finals; Italy’s first treble and a third European crown.',p:['Milito','Sneijder','Zanetti']},
+   {year:2021,t:'The Conte Season',x:'A first Scudetto in eleven years, wrestled away from Juventus.',p:['Lautaro','Lukaku','Barella']},
+   {year:2024,t:'The Second Star',x:'A 20th title placed a second golden star on Inter’s chest.',p:['Lautaro','Barella','Sommer']}]},
+ napoli:{id:'napoli',name:'Napoli',lg:'seriea',city:'Naples',founded:1926,stadium:'Diego Armando Maradona',colors:['#12a0d7','#f5f2ea'],pat:'plain',ink:'#f5f2ea',ac:'#39b6e8',ini:'NAP',
+  trophies:[T('lg','Serie A','LEAGUE',[1987,1990,2023,2025]),T('ci','Coppa Italia','COPPA',[1962,1976,1987,2012,2014,2020]),T('uel','UEFA Cup','EUROPA',[1989])],
+  moments:[
+   {year:1987,t:'Maradona and Paradise',x:'The first Scudetto arrived in a city that had waited forever; the party lasted for days.',p:['Maradona','Careca','De Napoli']},
+   {year:1990,t:'The Second Crown',x:'Maradona led a second league title on the eve of Italia ’90.',p:['Maradona','Careca','Alemao']},
+   {year:2023,t:'After 33 Years',x:'Osimhen’s goals delivered a third Scudetto, the first since the Maradona era.',p:['Osimhen','Kvaratskhelia','Kim']},
+   {year:2025,t:'The Fourth Star',x:'Conte brought the title back to Napoli through a tight final-day race.',p:['McTominay','Lukaku','Lobotka']}]},
+ bayern:{id:'bayern',name:'Bayern Munich',lg:'bund',city:'Munich',founded:1900,stadium:'Allianz Arena',colors:['#dc052d','#0066b2'],pat:'plain',ink:'#f5f2ea',ac:'#e8394d',ini:'FCB',
+  trophies:[T('ucl','UEFA Champions League','UCL',[1974,1975,1976,2001,2013,2020]),T('lg','Bundesliga','LEAGUE',[1932,1969,1972,1973,1974,1980,1981,1985,1986,1987,1989,1990,1994,1997,1999,2000,2001,2003,2005,2006,2008,2010,2013,2014,2015,2016,2017,2018,2019,2020,2021,2022,2023,2024,2025]),T('pk','DFB-Pokal','POKAL',[1957,1966,1967,1969,1971,1982,1984,1986,1998,2000,2003,2005,2006,2008,2010,2013,2014,2016,2019,2020]),T('wc','Intercontinental & Club World Cup','WORLD',[1976,2001,2013,2020])],
+  moments:[
+   {year:1972,t:'The Müller Machine',x:'The first Bundesliga title, lifted in the brand-new Olympiastadion.',p:['G. Muller','Beckenbauer','Maier']},
+   {year:1976,t:'The European Hat-trick',x:'Three straight European Cups from 1974 to 1976.',p:['Beckenbauer','G. Muller','Roth']},
+   {year:2001,t:'Kahn’s Redemption',x:'A year after the heartbreak in Barcelona, Kahn saved the decisive penalty in Milan.',p:['Kahn','Effenberg','Scholl']},
+   {year:2013,t:'The Heynckes Treble',x:'Robben’s late Wembley goal completed league, cup, and Champions League.',p:['Robben','Ribery','Lahm']},
+   {year:2020,t:'The Sextuple',x:'Flick’s side won everything there was to win: league, cup, Champions League, and every super cup.',p:['Lewandowski','Neuer','Muller']},
+   {year:2025,t:'The Year of Kane',x:'Harry Kane finally lifted his first major trophy as Bayern reclaimed the Bundesliga.',p:['Kane','Musiala','Kimmich']}]},
+ dortmund:{id:'dortmund',name:'Borussia Dortmund',lg:'bund',city:'Dortmund',founded:1909,stadium:'Signal Iduna Park',colors:['#fde100','#141414'],pat:'plain',ink:'#141414',ac:'#f2d33c',ini:'BVB',
+  trophies:[T('ucl','UEFA Champions League','UCL',[1997]),T('lg','Bundesliga','LEAGUE',[1956,1957,1963,1995,1996,2002,2011,2012]),T('pk','DFB-Pokal','POKAL',[1965,1989,2012,2017,2021]),T('cwc','European Cup Winners Cup','CWC',[1966])],
+  moments:[
+   {year:1966,t:'First European Trophy',x:'The European Cup Winners’ Cup won in Glasgow — a German first.',p:['Held','Emmerich','Libuda']},
+   {year:1995,t:'Back to the Summit',x:'A first league title in more than three decades.',p:['Chapuisat','Sammer','Moller']},
+   {year:1997,t:'The Golden Night in Munich',x:'Riedle struck twice past Juventus for a first Champions League.',p:['Riedle','Chapuisat','Sammer']},
+   {year:2012,t:'The Klopp Double',x:'League and cup, with the Yellow Wall roaring from ninety thousand seats.',p:['Lewandowski','Hummels','Gotze']}]},
+ leverkusen:{id:'leverkusen',name:'Bayer Leverkusen',lg:'bund',city:'Leverkusen',founded:1904,stadium:'BayArena',colors:['#e32221','#141414'],pat:'plain',ink:'#f5f2ea',ac:'#ef5b4d',ini:'B04',
+  trophies:[T('lg','Bundesliga','LEAGUE',[2024]),T('pk','DFB-Pokal','POKAL',[1993,2024]),T('uel','UEFA Cup','EUROPA',[1988])],
+  moments:[
+   {year:1988,t:'Völler’s Night',x:'The UEFA Cup final conquered on penalties at home.',p:['Voller','Cha','Kurz']},
+   {year:2024,t:'The Unbeaten Season',x:'Xabi Alonso led an unbeaten double — the first in Bundesliga history.',p:['Wirtz','Boniface','Grimaldo']}]},
+ psg:{id:'psg',name:'Paris Saint-Germain',lg:'ligue1',city:'Paris',founded:1970,stadium:'Parc des Princes',colors:['#004170','#da291c'],pat:'half',ink:'#f5f2ea',ac:'#5a8fd0',ini:'PSG',
+  trophies:[T('ucl','UEFA Champions League','UCL',[2025]),T('lg','Ligue 1','LEAGUE',[1986,1994,2013,2014,2015,2016,2018,2019,2020,2022,2023,2024,2025]),T('cdf','Coupe de France','COUPE',[1982,1983,1993,1995,1998,2004,2006,2010,2015,2016,2017,2018,2021,2024]),T('cwc','European Cup Winners Cup','CWC',[1996])],
+  moments:[
+   {year:1982,t:'First Cup',x:'A first Coupe de France won on penalties.',p:['Rocheteau','Susic','Pilorget']},
+   {year:1994,t:'First Champions',x:'A first league title with Raí as the playmaking brain.',p:['Rai','Weah','Ginola']},
+   {year:1996,t:'The Cup Winners’ Cup',x:'A 1-0 win over Rapid Wien in Brussels brought a first European trophy.',p:['Rai','Loko','Guerin']},
+   {year:2015,t:'The Ibra Era',x:'A first domestic quadruple opened the years of total dominance.',p:['Ibrahimovic','Cavani','Matuidi']},
+   {year:2025,t:'The First Star',x:'Luis Enrique’s young side overwhelmed Inter 5-0 in Munich for a first Champions League.',p:['Dembele','Vitinha','Doue']}]},
+ marseille:{id:'marseille',name:'Olympique Marseille',lg:'ligue1',city:'Marseille',founded:1899,stadium:'Velodrome',colors:['#2faee0','#f5f2ea'],pat:'plain',ink:'#f5f2ea',ac:'#54b8e0',ini:'OM',
+  trophies:[T('ucl','UEFA Champions League','UCL',[1993]),T('lg','Ligue 1','LEAGUE',[1937,1948,1971,1972,1989,1990,1991,1992,2009,2010]),T('cdf','Coupe de France','COUPE',[1924,1926,1927,1935,1938,1943,1969,1972,1976,1989])],
+  moments:[
+   {year:1924,t:'First Coupe',x:'OM became the first great club to lift the Coupe de France.',p:[]},
+   {year:1989,t:'The Papin Era Begins',x:'A first league title in seventeen years, with Papin as the goal machine.',p:['Papin','Mozer','Casoni']},
+   {year:1991,t:'Four in a Row',x:'OM matched the record of four straight league titles.',p:['Papin','Deschamps']},
+   {year:1993,t:'France’s One and Only',x:'Boli’s header beat Milan in Munich — still France’s only Champions League to this day.',p:['Boli','Deschamps','Abedi']},
+   {year:2010,t:'Deschamps Returns',x:'Deschamps came home and instantly led OM to the title.',p:['Valbuena','Lucho','Mandanda']}]},
+ monaco:{id:'monaco',name:'AS Monaco',lg:'ligue1',city:'Monaco',founded:1924,stadium:'Stade Louis II',colors:['#e63312','#f5f2ea'],pat:'half',ink:'#f5f2ea',ac:'#ef5b4d',ini:'ASM',
+  trophies:[T('lg','Ligue 1','LEAGUE',[1961,1963,1978,1982,1988,1997,2000,2017]),T('cdf','Coupe de France','COUPE',[1960,1963,1980,1985,1991])],
+  moments:[
+   {year:1963,t:'First Double',x:'League and cup won together for the first time.',p:[]},
+   {year:1988,t:'The Wenger Title',x:'A young Arsène Wenger guided Monaco to the championship.',p:[]},
+   {year:1997,t:'The Golden Kids',x:'Teenagers Henry and Trézéguet carried Monaco to the title.',p:['Henry','Trezeguet','Barthez']},
+   {year:2000,t:'Giuly’s Side',x:'An eighth title with Giuly and Nonda up front.',p:['Giuly','Nonda','Barthez']},
+   {year:2017,t:'The Mbappé Spring',x:'An eighteen-year-old Mbappé and Bernardo Silva outran the whole of Europe.',p:['Mbappe','Bernardo','Fabinho']}]},
+ lyon:{id:'lyon',name:'Olympique Lyonnais',lg:'ligue1',city:'Lyon',founded:1950,stadium:'Groupama Stadium',colors:['#1b2f5b','#da291c'],pat:'plain',ink:'#f5f2ea',ac:'#5a7fd0',ini:'OL',
+  trophies:[T('lg','Ligue 1','LEAGUE',[2002,2003,2004,2005,2006,2007,2008]),T('cdf','Coupe de France','COUPE',[1964,1967,1973,2008,2012])],
+  moments:[
+   {year:2002,t:'The Seven-in-a-Row Begins',x:'Seven straight league titles from 2002 to 2008 — a French record.',p:['Juninho','Govou','Coupet']},
+   {year:2008,t:'The Modern Peak',x:'A league-and-cup double closed a seven-year dominance never repeated since.',p:['Ben Arfa','Juninho','Benzema']}]},
+};
+
+/* BALLON D'OR 1956—2025 */
+const BRAW=[
+[1956,'Stanley Matthews','Blackpool','England','eng'],
+[1957,'Alfredo Di Stéfano','Real Madrid','Argentina','arg'],
+[1958,'Raymond Kopa','Real Madrid','France','fra'],
+[1959,'Alfredo Di Stéfano','Real Madrid','Argentina','arg'],
+[1960,'Luis Suárez','Barcelona','Spain','esp'],
+[1961,'Omar Sívori','Juventus','Argentina','arg'],
+[1962,'Josef Masopust','Dukla Prague','Czechoslovakia','cze'],
+[1963,'Lev Yashin','Dynamo Moscow','Soviet Union','ussr'],
+[1964,'Denis Law','Manchester United','Scotland','sco'],
+[1965,'Eusébio','Benfica','Portugal','por'],
+[1966,'Bobby Charlton','Manchester United','England','eng'],
+[1967,'Flórián Albert','Ferencváros','Hungary','hun'],
+[1968,'George Best','Manchester United','Northern Ireland','nir'],
+[1969,'Gianni Rivera','AC Milan','Italy','ita'],
+[1970,'Gerd Müller','Bayern Munich','West Germany','ger'],
+[1971,'Johan Cruyff','Ajax','Netherlands','ned'],
+[1972,'Franz Beckenbauer','Bayern Munich','West Germany','ger'],
+[1973,'Johan Cruyff','Ajax','Netherlands','ned'],
+[1974,'Johan Cruyff','Ajax','Netherlands','ned'],
+[1975,'Oleg Blokhin','Dynamo Kyiv','Soviet Union','ussr'],
+[1976,'Franz Beckenbauer','Bayern Munich','West Germany','ger'],
+[1977,'Allan Simonsen','Borussia Mönchengladbach','Denmark','den'],
+[1978,'Kevin Keegan','Hamburger SV','England','eng'],
+[1979,'Kevin Keegan','Hamburger SV','England','eng'],
+[1980,'Karl-Heinz Rummenigge','Bayern Munich','West Germany','ger'],
+[1981,'Karl-Heinz Rummenigge','Bayern Munich','West Germany','ger'],
+[1982,'Paolo Rossi','Juventus','Italy','ita'],
+[1983,'Michel Platini','Juventus','France','fra'],
+[1984,'Michel Platini','Juventus','France','fra'],
+[1985,'Michel Platini','Juventus','France','fra'],
+[1986,'Igor Belanov','Dynamo Kyiv','Soviet Union','ussr'],
+[1987,'Ruud Gullit','AC Milan','Netherlands','ned'],
+[1988,'Marco van Basten','AC Milan','Netherlands','ned'],
+[1989,'Marco van Basten','AC Milan','Netherlands','ned'],
+[1990,'Lothar Matthäus','Inter Milan','West Germany','ger'],
+[1991,'Jean-Pierre Papin','Marseille','France','fra'],
+[1992,'Marco van Basten','AC Milan','Netherlands','ned'],
+[1993,'Roberto Baggio','Juventus','Italy','ita'],
+[1994,'Hristo Stoichkov','Barcelona','Bulgaria','bul'],
+[1995,'George Weah','AC Milan','Liberia','lbr'],
+[1996,'Matthias Sammer','Borussia Dortmund','Germany','ger'],
+[1997,'Ronaldo Nazário','Inter Milan','Brazil','bra'],
+[1998,'Zinedine Zidane','Juventus','France','fra'],
+[1999,'Rivaldo','Barcelona','Brazil','bra'],
+[2000,'Luís Figo','Real Madrid','Portugal','por'],
+[2001,'Michael Owen','Liverpool','England','eng'],
+[2002,'Ronaldo Nazário','Real Madrid','Brazil','bra'],
+[2003,'Pavel Nedvěd','Juventus','Czech Republic','cze'],
+[2004,'Andriy Shevchenko','AC Milan','Ukraine','ukr'],
+[2005,'Ronaldinho','Barcelona','Brazil','bra'],
+[2006,'Fabio Cannavaro','Real Madrid','Italy','ita'],
+[2007,'Kaká','AC Milan','Brazil','bra'],
+[2008,'Cristiano Ronaldo','Manchester United','Portugal','por'],
+[2009,'Lionel Messi','Barcelona','Argentina','arg'],
+[2010,'Lionel Messi','Barcelona','Argentina','arg'],
+[2011,'Lionel Messi','Barcelona','Argentina','arg'],
+[2012,'Lionel Messi','Barcelona','Argentina','arg'],
+[2013,'Cristiano Ronaldo','Real Madrid','Portugal','por'],
+[2014,'Cristiano Ronaldo','Real Madrid','Portugal','por'],
+[2015,'Lionel Messi','Barcelona','Argentina','arg'],
+[2016,'Cristiano Ronaldo','Real Madrid','Portugal','por'],
+[2017,'Cristiano Ronaldo','Real Madrid','Portugal','por'],
+[2018,'Luka Modrić','Real Madrid','Croatia','cro'],
+[2019,'Lionel Messi','Barcelona','Argentina','arg'],
+[2021,'Lionel Messi','Barcelona','Argentina','arg'],
+[2022,'Karim Benzema','Real Madrid','France','fra'],
+[2023,'Lionel Messi','Paris Saint-Germain','Argentina','arg'],
+[2024,'Rodri','Manchester City','Spain','esp'],
+[2025,'Ousmane Dembélé','Paris Saint-Germain','France','fra']
+];
+let _cnt={};
+const BDOR=BRAW.map(r=>{_cnt[r[1]]=(_cnt[r[1]]||0)+1;return{year:r[0],name:r[1],club:r[2],nation:r[3],flag:r[4],win:_cnt[r[1]]}});
+BDOR.splice(BDOR.findIndex(e=>e.year===2019)+1,0,{year:2020,void:1,note:'No ceremony — the award was cancelled for the first time in history.'});
+BDOR.push({year:2026,soon:1});
+
+const YRAW=[
+[2019,'Alisson','Liverpool','Brazil','bra'],
+[2021,'Gianluigi Donnarumma','Paris Saint-Germain','Italy','ita'],
+[2022,'Thibaut Courtois','Real Madrid','Belgium','bel'],
+[2023,'Emiliano Martínez','Aston Villa','Argentina','arg'],
+[2024,'Emiliano Martínez','Aston Villa','Argentina','arg'],
+[2025,'Gianluigi Donnarumma','Manchester City','Italy','ita']
+];
+let _yc={};
+const YASHIN=YRAW.map(r=>{_yc[r[1]]=(_yc[r[1]]||0)+1;return{year:r[0],name:r[1],club:r[2],nation:r[3],flag:r[4],win:_yc[r[1]],cat:'YASHIN TROPHY'}});
+YASHIN.splice(1,0,{year:2020,void:1,note:'No award — the Yashin Trophy was shelved alongside the cancelled 2020 Ballon d’Or.'});
+YASHIN.push({year:2026,soon:1});
+BDOR.forEach(e=>e.cat='BALLON D\u2019OR');
+
+/* WORLD CUP */
+const WC=[
+[1930,'Uruguay','uru','Uruguay','Uruguay 4-2 Argentina','Thirteen teams and thirteen days — the first World Cup ended with the hosts lifting it.'],
+[1934,'Italy','ita','Italy','Italy 2-1 Czechoslovakia','The first World Cup on European soil, decided in extra time in Rome.'],
+[1938,'Italy','ita','France','Italy 4-2 Hungary','Italy retained the trophy as the world edged toward war.'],
+[1950,'Uruguay','uru','Brazil','Uruguay 2-1 Brazil','The Maracanazo — the decider that silenced two hundred thousand people in Rio.'],
+[1954,'West Germany','ger','Switzerland','West Germany 3-2 Hungary','The Miracle of Bern ended the aura of an unbeaten Hungary.'],
+[1958,'Brazil','bra','Sweden','Brazil 5-2 Sweden','A seventeen-year-old Pelé scored twice in the final.'],
+[1962,'Brazil','bra','Chile','Brazil 3-1 Czechoslovakia','Garrincha carried Brazil to a second crown.'],
+[1966,'England','eng','England','England 4-2 West Germany','A Geoff Hurst hat-trick and the ghost goal at Wembley.'],
+[1970,'Brazil','bra','Mexico','Brazil 4-1 Italy','The greatest team there has ever been — sealed by Carlos Alberto’s strike.'],
+[1974,'West Germany','ger','West Germany','West Germany 2-1 Netherlands','Cruyff’s Total Football fell to Beckenbauer’s Germany.'],
+[1978,'Argentina','arg','Argentina','Argentina 3-1 Netherlands','Kempes shone in a final drenched in Buenos Aires confetti.'],
+[1982,'Italy','ita','Spain','Italy 3-1 West Germany','Paolo Rossi rose from suspension to become top scorer and world champion.'],
+[1986,'Argentina','arg','Mexico','Argentina 3-2 West Germany','The Hand of God and the Goal of the Century in the same tournament; Maradona settled everything.'],
+[1990,'West Germany','ger','Italy','West Germany 1-0 Argentina','Brehme’s penalty settled a tactical final in Rome.'],
+[1994,'Brazil','bra','United States','Brazil 0-0 Italy (3-2 pens)','Baggio missed from the spot; Brazil became champions for a fourth time.'],
+[1998,'France','fra','France','France 3-0 Brazil','Zidane headed two goals in Saint-Denis.'],
+[2002,'Brazil','bra','Korea & Japan','Brazil 2-0 Germany','Ronaldo answered 1998 with two goals in the final — the fifth star.'],
+[2006,'Italy','ita','Germany','Italy 1-1 France (5-3 pens)','Zidane’s chip, Zidane’s headbutt, and Grosso’s decisive penalty in Berlin.'],
+[2010,'Spain','esp','South Africa','Spain 1-0 Netherlands','Iniesta, in the 116th minute, crowned tiki-taka.'],
+[2014,'Germany','ger','Brazil','Germany 1-0 Argentina','Götze’s volley in extra time shook the Maracanã.'],
+[2018,'France','fra','Russia','France 4-2 Croatia','A teenage Mbappé scored as France raised a second star.'],
+[2022,'Argentina','arg','Qatar','Argentina 3-3 France (4-2 pens)','The greatest final ever played; Messi finished football at Lusail.'],
+{year:2026,soon:1,host:'United States · Canada · Mexico',hostFlags:['usa','can','mex'],
+ note:'The first edition with 48 teams. A new world champion will be crowned on 19 July 2026.'}
+];
+
+/* EURO */
+const EURO=[
+[1960,'Soviet Union','ussr','France','USSR 2-1 Yugoslavia','Yashin stood tall in the first edition.'],
+[1964,'Spain','esp','Spain','Spain 2-1 USSR','Marcelino’s header decided it in Madrid.'],
+[1968,'Italy','ita','Italy','Italy 1-1 Yugoslavia (2-0 replay)','The only title ever decided by a full replay.'],
+[1972,'West Germany','ger','Belgium','West Germany 3-0 USSR','Müller struck twice in a German festival.'],
+[1976,'Czechoslovakia','cze','Yugoslavia','Czechoslovakia 2-2 West Germany (5-3 pens)','Panenka chipped the most famous penalty ever taken.'],
+[1980,'West Germany','ger','Italy','West Germany 2-1 Belgium','Hrubesch’s two goals settled it in Rome.'],
+[1984,'France','fra','France','France 2-0 Spain','Platini scored nine goals across the tournament, including in the final.'],
+[1988,'Netherlands','ned','West Germany','Netherlands 2-0 USSR','Van Basten’s volley from an impossible angle.'],
+[1992,'Denmark','den','Sweden','Denmark 2-0 Germany','Denmark, called up as a substitute nation, left as champions of Europe.'],
+[1996,'Germany','ger','England','Germany 2-1 Czech Republic','The first golden goal in history, struck by Bierhoff.'],
+[2000,'France','fra','Belgium & Netherlands','France 2-1 Italy','Trézéguet’s golden goal after Wiltord’s stoppage-time equaliser.'],
+[2004,'Greece','gre','Portugal','Greece 1-0 Portugal','Charisteas’ header completed the greatest shock in competition history.'],
+[2008,'Spain','esp','Austria & Switzerland','Spain 1-0 Germany','Torres’ goal started the Spanish empire.'],
+[2012,'Spain','esp','Poland & Ukraine','Spain 4-0 Italy','A third straight major title — unmatched in the modern era.'],
+[2016,'Portugal','por','France','Portugal 1-0 France','Éder’s extra-time winner, with Ronaldo leading from the touchline.'],
+[2020,'Italy','ita','Europe — final at Wembley','Italy 1-1 England (3-2 pens)','Donnarumma saved two penalties in a final played a year late.'],
+[2024,'Spain','esp','Germany','Spain 2-1 England','A fourth European crown, seized with youthful courage.'],
+{year:2028,soon:1,host:'United Kingdom & Ireland',hostFlags:['eng','sco','nir','irl'],
+ note:'The 18th edition will be staged across England, Scotland, Wales, Northern Ireland, and the Republic of Ireland.'}
+];
+
+/* NATIONS LEAGUE */
+const NL=[
+[2019,'Portugal','por','Portugal','Portugal 1-0 Netherlands','Gonçalo Guedes’ strike won the first edition.'],
+[2021,'France','fra','Italy','France 2-1 Spain','Benzema and Mbappé turned the final around in Milan.'],
+[2023,'Spain','esp','Netherlands','Spain 0-0 Croatia (4-3 pens)','Unai Simón saved two penalties in Rotterdam.'],
+[2025,'Portugal','por','Germany','Portugal 2-2 Spain (5-3 pens)','At forty, Ronaldo lifted a second Nations League crown in Munich.'],
+{year:2027,soon:1,host:'To be announced',note:'The next edition still awaits a host announcement.'}
+];
+
+/* ================= RAIL (horizontal scroll) ================= */
+function initRails(root=document){
+  $$('.rail',root).forEach(r=>{
+    if(r.dataset.init)return;r.dataset.init='1';
+    const wrap=r.closest('.rail-wrap');if(!wrap)return;
+    const prev=wrap.querySelector('.rbtn.prev'),next=wrap.querySelector('.rbtn.next'),bar=wrap.querySelector('.rprog i');
+    const upd=()=>{if(!bar)return;const max=r.scrollWidth-r.clientWidth;
+      const vis=Math.min(100,(r.clientWidth/r.scrollWidth)*100);
+      const pos=max>0?(r.scrollLeft/max)*(100-vis):0;
+      bar.style.width=Math.max(8,vis)+'%';bar.style.left=pos+'%'};
+    if(prev)prev.onclick=()=>r.scrollBy({left:-r.clientWidth*.7,behavior:'smooth'});
+    if(next)next.onclick=()=>r.scrollBy({left:r.clientWidth*.7,behavior:'smooth'});
+    r.addEventListener('scroll',upd);window.addEventListener('resize',upd);
+    let down=false,sx=0,sl=0,moved=0;
+    r.addEventListener('pointerdown',e=>{down=true;moved=0;sx=e.clientX;sl=r.scrollLeft;r.classList.add('grabbing');try{r.setPointerCapture(e.pointerId)}catch(_){}});
+    r.addEventListener('pointermove',e=>{if(!down)return;const dx=e.clientX-sx;if(Math.abs(dx)>moved)moved=Math.abs(dx);r.scrollLeft=sl-dx});
+    ['pointerup','pointercancel','pointerleave'].forEach(ev=>r.addEventListener(ev,()=>{down=false;r.classList.remove('grabbing')}));
+    r.addEventListener('click',e=>{if(moved>8){e.preventDefault();e.stopPropagation()}},true);
+    r.addEventListener('wheel',e=>{if(Math.abs(e.deltaY)>Math.abs(e.deltaX)){e.preventDefault();r.scrollLeft+=e.deltaY}},{passive:false});
+    requestAnimationFrame(upd);
+  });
+}
+
+/* ================= MODAL ================= */
+const modal=$('#modal'),moInner=$('#moInner');
+function openModal(html){moInner.innerHTML=html;modal.classList.add('on');applyPhotos(moInner)}
+function closeModal(){modal.classList.remove('on')}
+modal.addEventListener('click',e=>{if(e.target===modal)closeModal()});
+document.addEventListener('keydown',e=>{if(e.key==='Escape')closeModal()});
+
+/* ================= CARDS ================= */
+const CORNERS='<i class="cn tl"></i><i class="cn tr"></i><i class="cn bl"></i><i class="cn br"></i>';
+function medalCard(e,big){
+  const bcls=big?' big':'';
+  if(e.void)return '<div class="bd-card'+bcls+'">'+chainSVG()
+    +'<div class="plaque void">'+CORNERS+'<div class="plq-label">'+e.cat+'</div><div class="void-year">'+e.year+'</div>'
+    +'<p class="void-x">'+(e.note||'No ceremony — the award was cancelled for the first time in history.')+'</p></div></div>';
+  if(e.soon)return '<div class="bd-card'+bcls+'">'+chainSVG()
+    +'<div class="plaque soon">'+CORNERS+'<div class="plq-label">'+e.cat+'</div>'+ic('lock')
+    +'<div class="void-year">'+e.year+'</div>'
+    +'<p class="void-x">The inductees will be announced at the '+e.year+' October ceremony.</p>'
+    +'<span class="soon-badge">COMING SOON</span></div></div>';
+  return '<div class="bd-card'+bcls+'" data-bdor="'+e.year+'">'+chainSVG()
+    +'<div class="plaque">'+CORNERS
+    +'<div class="plq-label">'+e.cat+'</div>'
+    +'<div class="ph" style="aspect-ratio:4/5">'+phFb('PHOTO')+'<img data-key="'+e.imgKey+'" alt="'+e.name+'"></div>'
+    +'<div class="plq-year">'+e.year+'</div>'
+    +'<div class="plq-name">'+e.name+'</div>'
+    +'<div class="plq-win">WIN N\u00BA '+e.win+'</div>'
+    +'<div class="plq-club">'+flag(e.flag,'sm')+'<span>'+e.club+'</span></div>'
+    +'</div></div>';
+}
+function playerCard(p,top,label){
+  const cl=p.clubs.length===1?p.clubs[0]:p.clubs.length===2?p.clubs.join(' & '):p.clubs[0]+' & '+(p.clubs.length-1)+' other clubs';
+  return '<div class="bd-card pr" data-player="'+slug(p.name)+'">'+chainSVG()
+   +(top?'<div class="crown">'+ic('crown')+'</div>':'')
+   +'<div class="plaque">'+CORNERS
+   +'<div class="plq-label">'+label+'</div>'
+   +'<div class="ph" style="aspect-ratio:4/5">'+phFb('PHOTO')+'<img data-key="player:'+slug(p.name)+'" alt="'+p.name+'"></div>'
+   +'<div class="plq-wins">'+p.wins+'\u00D7<span>'+label+'</span></div>'
+   +'<div class="plq-name">'+p.name+'</div>'
+   +'<div class="yrchips">'+p.years.map(y=>'<b>'+y+'</b>').join('')+'</div>'
+   +'<div class="plq-club">'+flag(p.flag,'sm')+'<span>'+cl+'</span></div>'
+   +'</div></div>';
+}
+function groupWinners(data){
+  const m=new Map();
+  data.forEach(e=>{if(e.void||e.soon)return;
+    if(!m.has(e.name))m.set(e.name,{name:e.name,nation:e.nation,flag:e.flag,years:[],clubs:new Set()});
+    const p=m.get(e.name);p.years.push(e.year);p.clubs.add(e.club)});
+  return [...m.values()].map(p=>({...p,wins:p.years.length,firstYear:p.years[0],clubs:[...p.clubs]}))
+    .sort((a,b)=>b.wins-a.wins||a.firstYear-b.firstYear);
+}
+
+/* ================= PAGES: LEAGUES & CLUBS ================= */
+function head(kicker,title,sub){return '<div class="page-head"><div class="kicker">'+kicker+'</div><h1 class="title">'+title+'</h1><p class="sub">'+sub+'</p></div>'}
+function renderLeagues(){
+  $('#page-leagues').innerHTML='<div class="wrap">'+head('Step One','Choose a League',
+   'Europe’s five major leagues, each with its own identity and its greatest clubs. Choose one to continue.')
+   +LEAGUES.map(l=>'<div class="lg-row" data-go="clubs" data-arg="'+l.id+'">'
+     +'<div class="lg-crest">'+lgCrest(l)+'</div>'
+     +'<div><div class="lg-name">'+l.name+'</div><div class="lg-sub">'+l.country+' \u00B7 '+l.clubs.length+' clubs</div></div>'
+     +'<div class="row-arr">'+ic('arr')+'</div></div>').join('')
+   +'<div class="backln" data-go="home">Back to the homepage</div></div>';
+}
+function renderClubs(lgId){
+  const lg=LEAGUES.find(l=>l.id===lgId)||LEAGUES[0];
+  $('#page-clubs').innerHTML='<div class="wrap">'
+   +'<div class="page-head" style="display:flex;align-items:flex-end;gap:22px;flex-wrap:wrap">'
+   +'<div style="width:74px;flex:none">'+lgCrest(lg)+'</div>'
+   +'<div><div class="kicker">'+lg.country+'</div><h1 class="title" style="font-size:clamp(28px,4.5vw,52px)">'+lg.name+'</h1></div></div>'
+   +lg.clubs.map(id=>{const c=CLUBS[id];const n=uclCount(c);
+     return '<div class="cl-row" data-club="'+c.id+'">'
+     +'<div class="cl-crest">'+crest(c)+'</div>'
+     +'<div><div class="lg-name">'+c.name+'</div><div class="cl-sub">'+c.city+' \u00B7 since '+c.founded+' \u00B7 '+c.stadium+'</div></div>'
+     +'<div class="cl-right"><b>'+(n||'\u2014')+'\u00D7</b><span>UCL</span></div>'
+     +'<div class="row-arr">'+ic('arr')+'</div></div>'}).join('')
+   +'<div class="backln" data-go="leagues">All leagues</div></div>';
+  $('#page-clubs').style.setProperty('--acc',lg.id==='epl'?'#a06fae':lg.id==='laliga'?'#e05a4e':lg.id==='seriea'?'#6f9fd8':lg.id==='bund'?'#ef5b4d':'#d8b45a');
+}
+let TRO_CARDS=[],TRO_CHIP='all',CUR_CLUB=null;
+function renderClub(id){
+  const c=CLUBS[id];if(!c)return;CUR_CLUB=c;
+  const lg=LEAGUES.find(l=>l.id===c.lg);
+  const pg=$('#page-club');pg.style.setProperty('--acc',c.ac);
+  TRO_CARDS=[];
+  c.trophies.forEach(t=>t.years.forEach((y,i)=>{
+    TRO_CARDS.push({comp:t.id,hay:(t.name+' '+t.short).toLowerCase(),html:
+     '<article class="tr-card"><div class="ph" style="aspect-ratio:4/3">'+phFb('PHOTO')
+     +'<img data-key="t:'+c.id+':'+t.id+':'+y+'" alt="'+t.name+' '+y+'"></div>'
+     +'<div class="tr-body"><div class="tr-comp">'+t.short+'</div><div class="tr-year">'+y+'</div>'
+     +'<div class="tr-win">WIN N\u00BA '+(i+1)+'</div></div></article>'})}));
+  const uniq=[...new Map(c.trophies.map(t=>[t.id,t])).values()];
+  const chips=['<button class="chip on" data-tc="all">ALL</button>']
+    .concat(uniq.map(t=>'<button class="chip" data-tc="'+t.id+'">'+t.short+'</button>'));
+  const minY=c.founded,maxY=2025;
+  const firstM=c.moments[0]?c.moments[0].year:minY;
+  pg.innerHTML='<div class="wrap">'
+   +'<div class="club-hero"><div class="club-crest">'+crest(c)+'</div>'
+   +'<div class="club-meta"><div class="kicker">'+lg.name+'</div><h1 class="title" style="font-size:clamp(28px,5vw,54px)">'+c.name+'</h1>'
+   +'<div class="club-facts">'
+   +'<div><span>City</span><b>'+c.city+'</b></div>'
+   +'<div><span>Founded</span><b>'+c.founded+'</b></div>'
+   +'<div><span>Stadium</span><b>'+c.stadium+'</b></div>'
+   +'<div><span>Champions League</span><b>'+uclCount(c)+' titles</b></div>'
+   +'</div></div></div>'
+   +'<div class="sec-t"><i class="dia"></i>TROPHIES&nbsp;\u2014&nbsp;TYPE TO SEARCH</div>'
+   +'<div class="tsearch">'+ic('sch')+'<input id="trQ" type="text" placeholder="Search trophies — type UCL, league, cup\u2026"></div>'
+   +'<div class="chips" id="trChips">'+chips.join('')+'</div>'
+   +'<div class="rail-wrap"><div class="rail-btns"><button class="rbtn prev">'+ic('chl')+'</button><button class="rbtn next">'+ic('chr')+'</button></div>'
+   +'<div class="rail" id="trRail"></div><div class="rprog"><i></i></div></div>'
+   +'<p class="tr-count" id="trCount"></p>'
+   +'<div class="sec-t"><i class="dia"></i>TIME MACHINE&nbsp;\u2014&nbsp;HISTORY, YEAR BY YEAR</div>'
+   +'<div class="ym">'
+   +'<div class="ym-hint">'+ic('cal')+'SLIDE TO PICK A YEAR</div>'
+   +'<div class="ym-year" id="ymYear">'+firstM+'</div>'
+   +'<input type="range" id="ymRange" min="'+minY+'" max="'+maxY+'" value="'+firstM+'">'
+   +'<div class="ym-dots" id="ymDots"></div>'
+   +'<div class="ym-body"><div id="ymMain"></div><div class="ym-side" id="ymSide"></div></div>'
+   +'</div>'
+   +'<div class="backln" data-go="clubs" data-arg="'+lg.id+'">Back to '+lg.name+'</div></div>';
+  const rail=$('#trRail');
+  const filt=()=>{const q=($('#trQ').value||'').trim().toLowerCase();
+    const shown=TRO_CARDS.filter(x=>(TRO_CHIP==='all'||x.comp===TRO_CHIP)&&(!q||x.hay.includes(q)));
+    rail.innerHTML=shown.length?shown.map(x=>x.html).join(''):'<div class="rail-empty">No trophies match your search.</div>';
+    applyPhotos(rail);$('#trCount').textContent=shown.length+' trophies shown';updProg()};
+  const updProg=()=>{const bar=$('#page-club .rprog i');if(!bar)return;
+    const max=rail.scrollWidth-rail.clientWidth;
+    const vis=Math.min(100,(rail.clientWidth/Math.max(1,rail.scrollWidth))*100);
+    const pos=max>0?(rail.scrollLeft/max)*(100-vis):0;
+    bar.style.width=Math.max(8,vis)+'%';bar.style.left=pos+'%'};
+  $('#trQ').addEventListener('input',filt);
+  $('#trChips').addEventListener('click',e=>{const b=e.target.closest('[data-tc]');if(!b)return;
+    TRO_CHIP=b.dataset.tc;$$('#trChips .chip').forEach(x=>x.classList.toggle('on',x===b));filt()});
+  /* year dots for moments */
+  const dots=$('#ymDots');
+  dots.innerHTML=c.moments.map(m=>'<button class="ym-dot" style="left:'+((m.year-minY)/(maxY-minY)*100)+'%" data-y="'+m.year+'" title="'+m.t+'"></button>').join('');
+  dots.addEventListener('click',e=>{const d=e.target.closest('[data-y]');if(!d)return;
+    $('#ymRange').value=d.dataset.y;updYear()});
+  function updYear(){
+    const y=+$('#ymRange').value;$('#ymYear').textContent=y;
+    const m=c.moments.find(x=>x.year===y);const bd=BDOR.find(x=>x.year===y&&!x.void&&!x.soon);
+    let main='';
+    if(m){main='<div class="ym-m"><div class="ym-tag">ARCHIVE \u2014 '+y+'</div><h4>'+m.t+'</h4><p>'+m.x+'</p>'
+      +(m.p&&m.p.length?'<div class="ym-players">'+m.p.map(p=>'<span class="tagp">'+p+'</span>').join('')+'</div>':'')+'</div>'}
+    else{const near=c.moments.slice().sort((a,b)=>Math.abs(a.year-y)-Math.abs(b.year-y)).slice(0,3);
+      main='<div class="ym-empty">No record for '+y+' in this club’s archive. Try a nearby year:</div>'
+      +'<div class="ym-near">'+near.map(n=>'<button class="chip" data-near="'+n.year+'">'+n.year+' \u2014 '+n.t+'</button>').join('')+'</div>'}
+    $('#ymMain').innerHTML=main;
+    let sideNone;
+    if(y<1956)sideNone='The Ballon d’Or did not exist yet — it was born in 1956.';
+    else if(y===2020)sideNone='No winner — the 2020 ceremony was cancelled.';
+    else sideNone='No Ballon d’Or winner on record for this year.';
+    $('#ymSide').innerHTML='<div class="lb">BALLON D\u2019OR '+y+'</div>'
+      +(bd?'<div class="nm" data-go="bdor">'+bd.name+'</div><div class="cl">'+flag(bd.flag,'sm')+'<span>'+bd.club+'</span></div>'
+      :'<div class="none">'+sideNone+'</div>');
+  }
+  $('#ymRange').addEventListener('input',updYear);
+  $('#ymMain').addEventListener('click',e=>{const n=e.target.closest('[data-near]');if(!n)return;
+    $('#ymRange').value=n.dataset.near;updYear()});
+  filt();updYear();initRails(pg);applyPhotos(pg);
+}
+
+/* ================= BALLON D'OR PAGE ================= */
+let bTab='bdor',bMode='timeline',bDec='all';
+function renderBdorPage(){
+  const sec=$('#page-bdor');
+  const decades=['all','1950s','1960s','1970s','1980s','1990s','2000s','2010s','2020s'];
+  sec.innerHTML='<div class="wrap">'
+   +'<div class="page-head"><div class="kicker">Hall of Fame \u00B7 Est. 1956</div>'
+   +'<h1 class="title">BALLON D\u2019OR</h1>'
+   +'<p class="sub">Golden plaques hanging from chains — from Sir Stanley Matthews in 1956 to the next October night. Scroll sideways to travel through every year.</p></div>'
+   +'<div class="tabs" id="bTabs">'
+   +'<button class="tab on" data-t="bdor">Ballon d\u2019Or</button>'
+   +'<button class="tab" data-t="super">Super Ballon d\u2019Or</button>'
+   +'<button class="tab" data-t="yashin">Yashin Trophy</button></div>'
+   +'<div class="chips" id="bModes">'
+   +'<button class="chip on" data-m="timeline">Timeline</button>'
+   +'<button class="chip" data-m="most">Most Wins</button>'
+   +'<button class="chip" data-m="w3">3\u00D7 Winners</button>'
+   +'<button class="chip" data-m="w2">2\u00D7 Winners</button></div>'
+   +'<div class="chips" id="bDecs">'+decades.map(d=>'<button class="chip'+(d==='all'?' on':'')+'" data-d="'+d+'">'+(d==='all'?'ALL DECADES':d)+'</button>').join('')+'</div>'
+   +'<div class="rail-wrap"><div class="rail-btns"><button class="rbtn prev">'+ic('chl')+'</button><button class="rbtn next">'+ic('chr')+'</button></div>'
+   +'<div class="rail" id="bdRail"></div><div class="rprog"><i></i></div></div>'
+   +'</div>';
+  $('#bTabs').addEventListener('click',e=>{const b=e.target.closest('[data-t]');if(!b)return;
+    bTab=b.dataset.t;$$('#bTabs .tab').forEach(x=>x.classList.toggle('on',x===b));renderBdorList()});
+  $('#bModes').addEventListener('click',e=>{const b=e.target.closest('[data-m]');if(!b)return;
+    bMode=b.dataset.m;$$('#bModes .chip').forEach(x=>x.classList.toggle('on',x===b));renderBdorList()});
+  $('#bDecs').addEventListener('click',e=>{const b=e.target.closest('[data-d]');if(!b)return;
+    bDec=b.dataset.d;$$('#bDecs .chip').forEach(x=>x.classList.toggle('on',x===b));renderBdorList()});
+  renderBdorList();initRails(sec);
+}
+function renderBdorList(){
+  const rail=$('#bdRail');const isSuper=bTab==='super';
+  $('#bModes').style.display=isSuper?'none':'flex';
+  $('#bDecs').style.display=(isSuper||bMode!=='timeline')?'none':'flex';
+  if(isSuper){
+    const dist='<div class="super-wrap"><div class="bd-card big">'+chainSVG()
+     +'<div class="plaque">'+CORNERS+'<div class="plq-label">SUPER BALLON D\u2019OR</div>'
+     +'<div class="ph" style="aspect-ratio:4/5">'+phFb('PHOTO')+'<img data-key="super:1989" alt="Alfredo Di Stefano"></div>'
+     +'<div class="plq-year">1989</div><div class="plq-name">Alfredo Di Stéfano</div>'
+     +'<div class="plq-win">THE ONLY ONE EVER AWARDED</div>'
+     +'<div class="plq-club">'+flag('arg','sm')+'<span>Real Madrid</span></div></div></div>'
+     +'<div class="super-note"><h4>Once, Forever</h4>'
+     +'<p>The Super Ballon d\u2019Or has been awarded only <em>once</em> in history — in 1989, to <em>Alfredo Di Stéfano</em>, crowning the finest player among every Ballon d\u2019Or winner of the previous three decades. No one has received it since, and no one ever has followed.</p></div></div>';
+    rail.innerHTML=dist;applyPhotos(rail);return;
+  }
+  const data=bTab==='bdor'?BDOR:YASHIN;
+  const label=bTab==='bdor'?'BALLON D\u2019OR':'YASHIN TROPHY';
+  data.forEach(e=>e.cat=label);
+  if(bMode==='timeline'){
+    let src=data.slice();
+    if(bDec!=='all'){const d0=+bDec.slice(0,4),d1=d0+9;src=src.filter(e=>e.year>=d0&&e.year<=d1)}
+    src.forEach(e=>{e.imgKey=(bTab==='bdor'?'bdor:':'yashin:')+e.year});
+    rail.innerHTML=src.map(e=>medalCard(e)).join('')||'<div class="rail-empty">No editions in this decade.</div>';
+  }else{
+    const gs=groupWinners(data);
+    let list=bMode==='most'?gs:bMode==='w3'?gs.filter(p=>p.wins>=3):gs.filter(p=>p.wins===2);
+    const top=list.length?list[0].wins:0;
+    rail.innerHTML=list.length?list.map(p=>playerCard(p,p.wins===top&&bMode==='most',label)).join('')
+      :'<div class="rail-empty">No player holds this record yet.</div>';
+  }
+  applyPhotos(rail);
+}
+function bdorModal(year){
+  const data=BDOR.concat(YASHIN);
+  const e=data.find(x=>x.year===year&&!x.void&&!x.soon);if(!e)return;
+  const others=data.filter(x=>x.name===e.name&&x.year!==e.year&&!x.void&&!x.soon).map(x=>x.year);
+  openModal('<div class="mo-box"><button class="mo-x">'+ic('x')+'</button>'
+   +'<div class="plq-label">'+e.cat+' '+e.year+'</div>'
+   +'<div class="ph" style="aspect-ratio:4/5">'+phFb('PHOTO')+'<img data-key="bdor:'+e.year+'" alt="'+e.name+'"></div>'
+   +'<div class="mo-name">'+e.name+'</div>'
+   +'<div class="mo-meta">'+flag(e.flag,'sm')+'<span>'+e.nation+' \u00B7 '+e.club+'</span></div>'
+   +'<div class="mo-win">WIN N\u00BA '+e.win+(others.length?'<br>Also won in: '+others.join(', '):'')+'</div></div>');
+}
+function playerModal(sl){
+  const p=groupWinners(BDOR).find(x=>slug(x.name)===sl);if(!p)return;
+  openModal('<div class="mo-box"><button class="mo-x">'+ic('x')+'</button>'
+   +'<div class="plq-label">'+p.wins+'\u00D7 BALLON D\u2019OR</div>'
+   +'<div class="ph" style="aspect-ratio:4/5">'+phFb('PHOTO')+'<img data-key="player:'+slug(p.name)+'" alt="'+p.name+'"></div>'
+   +'<div class="mo-name">'+p.name+'</div>'
+   +'<div class="mo-meta">'+flag(p.flag,'sm')+'<span>'+p.nation+'</span></div>'
+   +'<div class="mo-win">Winning years: '+p.years.join(' \u00B7 ')+'<br>Clubs: '+p.clubs.join(', ')+'</div></div>');
+}
+
+/* ================= INTERNATIONAL PAGES ================= */
+function natCard(e,theme){
+  const lb=theme==='wc'?'WORLD CHAMPIONS':theme==='euro'?'EUROPEAN CHAMPIONS':'NATIONS LEAGUE WINNERS';
+  if(e.soon)return '<article class="nat-card soone">'
+   +'<div class="nat-top"><div class="nat-year">'+e.year+'</div>'+ic('lock')+'</div>'
+   +'<div class="nat-photo soonph" style="aspect-ratio:16/10">'+phFb('COMING SOON')+'</div>'
+   +'<div class="nat-info"><div class="nat-lb">'+lb+'</div>'
+   +'<div class="nat-name">Coming Soon</div>'
+   +(e.host?'<div class="nat-row">'+ic('pin')+'<span>HOST \u2014 '+e.host.toUpperCase()+'</span></div>':'')
+   +(e.hostFlags?'<div class="nat-row"><span class="nat-hostflags">'+e.hostFlags.map(f=>flag(f,'sm')).join('')+'</span></div>':'')
+   +(e.note?'<p class="nat-note">'+e.note+'</p>':'')
+   +'</div></article>';
+  const [year,nation,fl,host,final,note]=e;
+  return '<article class="nat-card">'
+   +'<div class="nat-top"><div class="nat-year">'+year+'</div>'+flag(fl,'big')+'</div>'
+   +'<div class="ph nat-photo" style="aspect-ratio:16/10">'+phFb('TEAM PHOTO')+'<img data-key="'+theme+':'+year+'" alt="'+nation+' '+year+'"></div>'
+   +'<div class="nat-info"><div class="nat-lb">'+lb+'</div>'
+   +'<div class="nat-name">'+nation+'</div>'
+   +'<div class="nat-row">'+ic('pin')+'<span>HOST \u2014 '+host.toUpperCase()+'</span></div>'
+   +'<div class="nat-row">'+ic('cup')+'<span>'+final.toUpperCase()+'</span></div>'
+   +'<p class="nat-note">'+note+'</p></div></article>';
+}
+function renderNationPage(secId,title,kicker,sub,data,theme){
+  const sec=$(secId);
+  sec.innerHTML='<div class="wrap">'
+   +'<div class="page-head"><div class="kicker">'+kicker+'</div><h1 class="title">'+title+'</h1>'
+   +'<p class="sub">'+sub+'</p></div>'
+   +'<div class="rail-wrap"><div class="rail-btns"><button class="rbtn prev">'+ic('chl')+'</button><button class="rbtn next">'+ic('chr')+'</button></div>'
+   +'<div class="rail">'+data.map(e=>natCard(e,theme)).join('')+'</div>'
+   +'<div class="rprog"><i></i></div></div></div>';
+  initRails(sec);applyPhotos(sec);
+}
+
+/* ================= ROUTER ================= */
+let curLeague='epl';
+function go(p,arg){
+  closeModal();$('#drawer').classList.remove('on');
+  if(p==='clubs'){curLeague=arg||curLeague;renderClubs(curLeague)}
+  if(p==='club'&&arg)renderClub(arg);
+  if(p==='leagues')renderLeagues();
+  $$('.page').forEach(x=>x.classList.remove('on'));
+  const t=$('#page-'+p);if(t)t.classList.add('on');
+  document.body.classList.add('opened');
+  window.scrollTo({top:0,behavior:'instant'in window?'instant':'auto'});
+  $$('.nav-links a').forEach(a=>a.classList.toggle('on',a.dataset.go===p||(p==='club'&&a.dataset.go==='leagues')||(p==='clubs'&&a.dataset.go==='leagues')));
+  requestAnimationFrame(()=>window.dispatchEvent(new Event('resize')));
+}
+
+/* ================= CLICK DELEGATION ================= */
+document.addEventListener('click',e=>{
+  const g=e.target.closest('[data-go]');if(g){go(g.dataset.go,g.dataset.arg);return}
+  const cl=e.target.closest('[data-club]');if(cl){go('club',cl.dataset.club);return}
+  const bd=e.target.closest('[data-bdor]');if(bd){bdorModal(+bd.dataset.bdor);return}
+  const pl=e.target.closest('[data-player]');if(pl){playerModal(pl.dataset.player);return}
+});
+ $('#burger').addEventListener('click',()=>$('#drawer').classList.toggle('on'));
+ $('#burger').innerHTML=ic('menu');
+
+/* ================= SPLASH & INIT ================= */
+(function(){
+  const t='FOOTBALL HISTORY';const el=$('#splashTitle');
+  el.innerHTML=[...t].map((ch,i)=>'<span style="animation-delay:'+(0.25+i*0.055)+'s">'+(ch===' '?'&nbsp;':ch)+'</span>').join('');
+  $('#openBtn').addEventListener('click',()=>{document.body.classList.add('opened');go('home')});
+  const names=['STANLEY MATTHEWS','ALFREDO DI STÉFANO','LEV YASHIN','JOHAN CRUYFF','FRANZ BECKENBAUER','MICHEL PLATINI','MARCO VAN BASTEN','RONALDO NAZÁRIO','ZINEDINE ZIDANE','RONALDINHO','LIONEL MESSI','CRISTIANO RONALDO','LUKA MODRIĆ','KARIM BENZEMA','RODRI','OUSMANE DEMBÉLÉ'];
+  const half=names.map(n=>'<span>'+n+'</span><i></i>').join('');
+  $('#mqIn').innerHTML=half+half;
+  renderBdorPage();
+  renderNationPage('#page-wc','WORLD CUP','Every Champion \u00B7 1930 \u2014 2022',
+   'From Uruguay 1930 to Argentina 2022 — every world champion with its host and final score. Scroll sideways; the photos are extra large because these are teams, not individuals.',WC,'wc');
+  renderNationPage('#page-euro','EURO','European Championship \u00B7 1960 \u2014 2024',
+   'The European Championship in silver: from the Soviet Union in 1960 to Spain in 2024, scrolled year by year.',EURO,'euro');
+  renderNationPage('#page-nations','NATIONS LEAGUE','UEFA Nations League \u00B7 2019 \u2014 Present',
+   'Europe’s youngest competition, in bronze: Portugal, France, Spain, and Portugal again.',NL,'nl');
+  renderLeagues();renderClubs('epl');renderClub('realmadrid');
+  applyPhotos();initRails();
+})();
+</script>
+</body>
+</html>
