@@ -1336,6 +1336,28 @@ var EXTRA = {
   /* ─── FOTO PEMAIN (modal) & TROFI KLUB — contoh ─── */
   // 'player:lionel-messi':'',
   // 't:realmadrid:ucl:1956':'',
+
+  /* ─── PRIX D'HONNEUR ─── */
+   'prix:1995:maradona':'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQHEMYJDnz97gxBT2WVmsbvOYS2fVlO6TFt7S3LZCcrmw&s=10',  // MARADONA — Prix d'Honneur 1995
+   'prix:2013:pele':'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRXfe0_QXFMaZWLO5Vn8RZsTwCWwTSaxWEvE4MQJ0bocj2rVzaxQiaJaPk&s=10',      // PELÉ — Ballon d'Or d'Honneur 2013
+  /* ─── PUSKÁS AWARD ─── */
+   'puskas:2009':'', // CRISTIANO RONALDO
+   'puskas:2010':'', // HAMIT ALTINTOP
+   'puskas:2011':'', // NEYMAR JR
+   'puskas:2012':'', // MIROSLAV STOCH
+   'puskas:2013':'', // ZLATAN IBRAHIMOVIC
+   'puskas:2014':'', // JAMES RODRIGUEZ
+   'puskas:2015':'', // WENDELL LIRA
+   'puskas:2016':'', // MOHD FAIZ SUBRI
+   'puskas:2017':'', // OLIVIER GIROUD
+   'puskas:2018':'', // MOHAMED SALAH
+   'puskas:2019':'', // DANIEL ZSORI
+   'puskas:2020':'', // SON HEUNG-MIN
+   'puskas:2021':'', // ERIK LAMELA
+   'puskas:2022':'', // MARCIN OLEKSY
+   'puskas:2023':'', // GUILHERME MADRUGA
+   'puskas:2024':'', // ALEJANDRO GARNACHO
+
 };
 var m; try{ m=PHOTO_MAP; }catch(e){ m=window.PHOTO_MAP||(window.PHOTO_MAP={}); }
 Object.assign(m,EXTRA);
@@ -1461,6 +1483,108 @@ function PH_run(){ PH_pend=false; if(PH_lock)return; PH_lock=true; try{PH_decora
 function PH_sched(){ if(PH_lock||PH_pend)return; PH_pend=true; if(window.requestAnimationFrame)requestAnimationFrame(PH_run); else setTimeout(PH_run,80); }
 try{ new MutationObserver(PH_sched).observe(document.documentElement,{childList:true,subtree:true}); }catch(e){}
 PH_sched();
+</script>
+
+<!-- ═══ PRIX D'HONNEUR + PUSKÁS AWARD — tempel sebelum </body> ═══ -->
+<style>
+#page-bdor .plaque .ph.slot{aspect-ratio:4/3;margin:2px 0 8px}
+#page-bdor .bd-card.big .plaque .ph.slot{aspect-ratio:16/10}
+</style>
+<script>
+(function(){
+'use strict';
+/* ── DATA PRIX D'HONNEUR (hapus baris Maradona jika tak diinginkan) ── */
+var PRIX=[
+ {k:'prix:1995:maradona',y:1995,l:"PRIX D'HONNEUR",n:'DIEGO MARADONA',g:'HONOURED ALONGSIDE PELÉ IN 1995',c:'Argentina',f:'arg'},
+ {k:'prix:2013:pele',y:2013,l:"BALLON D'OR D'HONNEUR",n:'PELÉ',g:'THE OFFICIAL HONORARY GOLDEN BALL',c:'Brazil',f:'bra'}
+];
+/* ── DATA PUSKÁS AWARD 2009–2024 ── */
+var PUSKAS=[
+ {y:2009,n:'CRISTIANO RONALDO',c:'Manchester United',f:'por',g:'40-yard thunderbolt vs Porto'},
+ {y:2010,n:'HAMIT ALTINTOP',c:'Bayern Munich',f:'',g:'The volley vs Kazakhstan'},
+ {y:2011,n:'NEYMAR JR',c:'Santos',f:'bra',g:'The solo run vs Flamengo'},
+ {y:2012,n:'MIROSLAV STOCH',c:'Fenerbahçe',f:'',g:'The volley vs Gençlerbirliği'},
+ {y:2013,n:'ZLATAN IBRAHIMOVIC',c:'Sweden',f:'',g:'30-yard overhead kick vs England'},
+ {y:2014,n:'JAMES RODRIGUEZ',c:'Colombia',f:'',g:'Chested volley vs Uruguay'},
+ {y:2015,n:'WENDELL LIRA',c:'Goiatuba',f:'bra',g:'The bicycle flick vs Atlético Goianiense'},
+ {y:2016,n:'MOHD FAIZ SUBRI',c:'Penang FA',f:'',g:'The knuckle free kick vs Pahang'},
+ {y:2017,n:'OLIVIER GIROUD',c:'Arsenal',f:'fra',g:'The scorpion flick vs Crystal Palace'},
+ {y:2018,n:'MOHAMED SALAH',c:'Liverpool',f:'',g:'The curling spin vs Everton'},
+ {y:2019,n:'DANIEL ZSORI',c:'Debrecen',f:'hun',g:'Bicycle kick on debut vs Fehérvár'},
+ {y:2020,n:'SON HEUNG-MIN',c:'Tottenham',f:'',g:'The coast-to-coast run vs Burnley'},
+ {y:2021,n:'ERIK LAMELA',c:'Tottenham',f:'arg',g:'The rabona vs Arsenal'},
+ {y:2022,n:'MARCIN OLEKSY',c:'Warta Poznań',f:'',g:'The amputee-football volley'},
+ {y:2023,n:'GUILHERME MADRUGA',c:'Botafogo-SP',f:'bra',g:'The scissor volley vs Novorizontino'},
+ {y:2024,n:'ALEJANDRO GARNACHO',c:'Manchester United',f:'arg',g:'The overhead kick vs Everton'}
+];
+function esc(s){return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;')}
+function chain(){try{if(typeof chainSVG==='function')return chainSVG()}catch(e){}
+ return '<svg class="bd-chain" viewBox="0 0 44 66" width="44" height="66" fill="none"><line x1="22" y1="0" x2="22" y2="6" stroke="#8a6f1f" stroke-width="2"/><ellipse cx="22" cy="14" rx="8" ry="10" stroke="#8a6f1f" stroke-width="4"/><ellipse cx="22" cy="31" rx="8" ry="10" stroke="#c9a227" stroke-width="4"/><ellipse cx="22" cy="48" rx="8" ry="10" stroke="#8a6f1f" stroke-width="4"/><ellipse cx="22" cy="59" rx="15" ry="6" stroke="#e8c96a" stroke-width="2.4"/></svg>'}
+function fl(code){try{if(code&&typeof flag==='function')return flag(code)||''}catch(e){}return ''}
+function fb(lbl){lbl=String(lbl||'PHOTO').toUpperCase();var L=lbl.length,fs=L>26?4.4:L>16?5.4:7,ls=L>26?1.4:L>16?2:3.5;
+ return '<div class="ph-fb"><svg viewBox="0 0 100 100" preserveAspectRatio="xMidYMid slice">'
+ +'<rect width="100" height="100" fill="#0f0c08"/>'
+ +'<g fill="rgba(201,162,39,.18)"><circle cx="50" cy="37" r="14"/><path d="M21 88c0-19 13-28 29-28s29 9 29 28z"/></g>'
+ +'<text x="50" y="96" text-anchor="middle" font-size="'+fs+'" letter-spacing="'+ls+'" fill="rgba(201,162,39,.55)" font-family="Jost,Arial">'+esc(lbl)+'</text>'
+ +'</svg></div>'}
+function plaque(o,big){
+ return '<div class="bd-card'+(big?' big':'')+'">'+chain()
+ +'<div class="plaque"><span class="cn tl"></span><span class="cn tr"></span><span class="cn bl"></span><span class="cn br"></span>'
+ +'<div class="plq-label">'+esc(o.l)+'</div>'
+ +'<div class="ph slot">'+fb(o.n+' '+o.y)+'<img data-key="'+o.k+'" alt="'+esc(o.n)+'"></div>'
+ +'<div class="plq-year">'+o.y+'</div>'
+ +'<div class="plq-name">'+esc(o.n)+'</div>'
+ +'<div class="plq-win">'+esc(o.g||'')+'</div>'
+ +'<div class="plq-club">'+fl(o.f)+esc(o.c)+'</div>'
+ +'</div></div>'}
+function bindRail(rw){
+ if(!rw)return;var rail=rw.querySelector('.rail'),bar=rw.querySelector('.rprog i');if(!rail||!bar)return;
+ rw.querySelectorAll('.rbtn').forEach(function(b){b.addEventListener('click',function(){
+   rail.scrollBy({left:(b.textContent==='‹'?-1:1)*rw.clientWidth*0.8,behavior:'smooth'})})});
+ function upd(){bar.style.width=(rail.clientWidth/rail.scrollWidth*100)+'%';bar.style.left=(rail.scrollLeft/rail.scrollWidth*100)+'%'}
+ rail.addEventListener('scroll',upd,{passive:true});setTimeout(upd,60);
+}
+function ensure(){
+ var page=document.getElementById('page-bdor');if(!page)return;
+ var wrap=page.querySelector('.wrap');if(!wrap||!wrap.children.length)return;
+ if(!document.getElementById('phx-prix-sec')){
+  var s1=document.createElement('div');s1.id='phx-prix-sec';
+  s1.innerHTML='<div class="sec-t"><span class="dia"></span>PRIX D&#8217;HONNEUR<span class="dia"></span></div>'
+   +'<div class="super-wrap">'+PRIX.map(function(o){return plaque(o,true)}).join('')
+   +'<div class="super-note"><h4>WHEN THE GOLD BOWED TO THE KING</h4>'
+   +'<p>For 39 years the Ballon d&#8217;Or belonged to Europe alone &#8212; Pelé and Maradona, the two greatest of them all, could never win it. So in <em>1995</em>, as the door finally opened to the world, France Football created the <em>Prix d&#8217;Honneur</em> and placed it in the hands of both legends. And in <em>2013</em> FIFA made it official, presenting Pelé the honorary <em>Ballon d&#8217;Or d&#8217;Honneur</em>. No votes. No debate. Just the golden ball, finally, bowing.</p></div></div>';
+  wrap.appendChild(s1);
+ }
+ if(!document.getElementById('phx-puskas-sec')){
+  var s2=document.createElement('div');s2.id='phx-puskas-sec';
+  s2.innerHTML='<div class="sec-t"><span class="dia"></span>FIFA PUSKÁS AWARD<span class="dia"></span></div>'
+   +'<p class="sub">The most beautiful goal on earth, every year since 2009 &#8212; named after the galloping major, Ferenc Puskás.</p>'
+   +'<div class="rail-wrap"><div class="rail-btns"><button class="rbtn" aria-label="left">&#8249;</button><button class="rbtn" aria-label="right">&#8250;</button></div>'
+   +'<div class="rail">'+PUSKAS.map(function(o){return plaque({k:'puskas:'+o.y,y:o.y,l:'PUSKÁS AWARD',n:o.n,g:o.g,c:o.c,f:o.f})}).join('')+'</div>'
+   +'<div class="rprog"><i></i></div></div>';
+  wrap.appendChild(s2);bindRail(s2.querySelector('.rail-wrap'));
+ }
+ /* chip navigasi di atas halaman bdor (jika ada baris chips) */
+ try{var ch=page.querySelector('.chips');
+  if(ch&&!ch.querySelector('[data-phx-chip]')){
+   [['PRIX D&#8217;HONNEUR','phx-prix-sec'],['PUSKÁS AWARD','phx-puskas-sec']].forEach(function(p){
+    var b=document.createElement('button');b.className='chip';b.setAttribute('data-phx-chip','1');b.textContent=p[0].replace('&#8217;',"\u2019");
+    b.addEventListener('click',function(){var t=document.getElementById(p[1]);if(t)t.scrollIntoView({behavior:'smooth'})});
+    ch.appendChild(b)})}
+ }catch(e){}
+ /* pasang foto dari PHOTO_MAP */
+ var map;try{map=PHOTO_MAP}catch(e){map=window.PHOTO_MAP||{}}
+ page.querySelectorAll('img[data-key]').forEach(function(im){
+  var src=map[im.getAttribute('data-key')];
+  if(src){im.style.display='';if(im.getAttribute('src')!==src){im.onerror=function(){im.style.display='none'};im.setAttribute('src',src)}}
+  else im.style.display='none'});
+}
+var pend=false;
+function sched(){if(pend)return;pend=true;(window.requestAnimationFrame||function(f){setTimeout(f,80)})(function(){pend=false;try{ensure()}catch(e){}})}
+if('MutationObserver' in window){new MutationObserver(sched).observe(document.documentElement,{childList:true,subtree:true})}
+else{setInterval(sched,1200)}
+sched();
+})();
 </script>
 
 </body>
