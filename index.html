@@ -347,6 +347,9 @@ h1.title{font-family:Cinzel,serif;font-weight:700;font-size:clamp(32px,6vw,70px)
 <div id="modal"><div id="moInner"></div></div>
 
 <script>
+
+
+
 /* =====================================================================
    PHOTOS — SWAP THEM HERE, ONE PLACE ONLY
    =====================================================================
@@ -1185,5 +1188,277 @@ document.addEventListener('click',e=>{
   applyPhotos();initRails();
 })();
 </script>
+
+<!-- ═══════════════════════════════════════════════════════════
+     ★ PHOTO PACK — tempel SEBELUM </body>, SETELAH script utama
+     ═══════════════════════════════════════════════════════════ -->
+<style>
+#page-bdor .plaque .ph.slot{aspect-ratio:4/3;margin:0 0 6px}
+#page-bdor .plaque .ph.slot.ply{aspect-ratio:1/1}
+.phx{position:relative;overflow:hidden;background:#0f0c08}
+.nat-photo.phx{aspect-ratio:16/10}
+.phx img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:2}
+.tr-card .ph.slot-tr{aspect-ratio:16/9}
+#modal .mo-box .ph.moph{aspect-ratio:1/1;margin:2px 0 16px}
+</style>
+<script>
+/* ═══════════ 1) SATU-SATUNYA TEMPAT NEMPEL LINK FOTO ═══════════
+   Hapus tanda // di depan baris, lalu paste link di antara '...'
+   Link boleh: 'https://i.imgur.com/abc.jpg' (lihat tips di bawah)
+              | 'photos/matthews.jpg' (file lokal)
+              | 'data:image/jpeg;base64,...'                          */
+(function(){
+var EXTRA = {
+  /* ─── BALLON D'OR ─── */
+   'bdor:1956':'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcShYW11qXXDgiUlp-G0g8JKBQfPuVTLOMPkE-y96nS5MZc3OOurimugfwY&s=10', // SIR STANLEY MATTHEWS
+  // 'bdor:1957':'', // ALFRED DI STEFANO
+  // 'bdor:1958':'', // RAYMOND KOPA
+  // 'bdor:1959':'', // ALFRED DI STEFANO
+  // 'bdor:1960':'', // LUIS SUAREZ
+  // 'bdor:1961':'', // OMAR SIVORI
+  // 'bdor:1962':'', // JOSEF MASOPUST
+  // 'bdor:1963':'', // LEV YASHIN
+  // 'bdor:1964':'', // DENIS LAW
+  // 'bdor:1965':'', // EUSEBIO
+  // 'bdor:1966':'', // BOBBY CHARLTON
+  // 'bdor:1967':'', // FLORIAN ALBERT
+  // 'bdor:1968':'', // GEORGE BEST
+  // 'bdor:1969':'', // GIANNI RIVERA
+  // 'bdor:1970':'', // GERD MULLER
+  // 'bdor:1971':'', // JOHAN CRUYFF
+  // 'bdor:1972':'', // FRANZ BECKENBAUER
+  // 'bdor:1973':'', // JOHAN CRUYFF
+  // 'bdor:1974':'', // JOHAN CRUYFF
+  // 'bdor:1975':'', // OLEG BLOKHIN
+  // 'bdor:1976':'', // FRANZ BECKENBAUER
+  // 'bdor:1977':'', // ALLAN SIMONSEN
+  // 'bdor:1978':'', // KEVIN KEEGAN
+  // 'bdor:1979':'', // KEVIN KEEGAN
+  // 'bdor:1980':'', // KARL-HEINZ RUMMENIGGE
+  // 'bdor:1981':'', // KARL-HEINZ RUMMENIGGE
+  // 'bdor:1982':'', // PAOLO ROSSI
+  // 'bdor:1983':'', // MICHEL PLATINI
+  // 'bdor:1984':'', // MICHEL PLATINI
+  // 'bdor:1985':'', // MICHEL PLATINI
+  // 'bdor:1986':'', // IGOR BELANOV
+  // 'bdor:1987':'', // RUUD GULLIT
+  // 'bdor:1988':'', // MARCO VAN BASTEN
+  // 'bdor:1989':'', // MARCO VAN BASTEN
+  // 'bdor:1990':'', // LOTHAR MATTHAUS
+  // 'bdor:1991':'', // JEAN-PIERRE PAPIN
+  // 'bdor:1992':'', // MARCO VAN BASTEN
+  // 'bdor:1993':'', // ROBERTO BAGGIO
+  // 'bdor:1994':'', // HRISTO STOICHKOV
+  // 'bdor:1995':'', // GEORGE WEAH
+  // 'bdor:1996':'', // MATTHIAS SAMMER
+  // 'bdor:1997':'', // RONALDO (R9)
+  // 'bdor:1998':'', // ZINEDINE ZIDANE
+  // 'bdor:1999':'', // RIVALDO
+  // 'bdor:2000':'', // LUIS FIGO
+  // 'bdor:2001':'', // MICHAEL OWEN
+  // 'bdor:2002':'', // RONALDO (R9)
+  // 'bdor:2003':'', // PAVEL NEDVED
+  // 'bdor:2004':'', // ANDRIY SHEVCHENKO
+  // 'bdor:2005':'', // RONALDINHO
+  // 'bdor:2006':'', // FABIO CANNAVARO
+  // 'bdor:2007':'', // KAKA
+  // 'bdor:2008':'', // CRISTIANO RONALDO
+  // 'bdor:2009':'', // LIONEL MESSI
+  // 'bdor:2010':'', // LIONEL MESSI
+  // 'bdor:2011':'', // LIONEL MESSI
+  // 'bdor:2012':'', // LIONEL MESSI
+  // 'bdor:2013':'', // CRISTIANO RONALDO
+  // 'bdor:2014':'', // CRISTIANO RONALDO
+  // 'bdor:2015':'', // LIONEL MESSI
+  // 'bdor:2016':'', // CRISTIANO RONALDO
+  // 'bdor:2017':'', // CRISTIANO RONALDO
+  // 'bdor:2018':'', // LUKA MODRIC
+  // 'bdor:2019':'', // LIONEL MESSI
+  // 'bdor:2021':'', // LIONEL MESSI
+  // 'bdor:2022':'', // KARIM BENZEMA
+  // 'bdor:2023':'', // LIONEL MESSI
+  // 'bdor:2024':'', // RODRI
+  /* ─── PIALA DUNIA ─── */
+  // 'wc:1930':'', // URUGUAY
+  // 'wc:1934':'', // ITALIA
+  // 'wc:1938':'', // ITALIA
+  // 'wc:1950':'', // URUGUAY
+  // 'wc:1954':'', // JERMAN BARAT
+  // 'wc:1958':'', // BRAZIL
+  // 'wc:1962':'', // BRAZIL
+  // 'wc:1966':'', // INGGRIS
+  // 'wc:1970':'', // BRAZIL
+  // 'wc:1974':'', // JERMAN BARAT
+  // 'wc:1978':'', // ARGENTINA
+  // 'wc:1982':'', // ITALIA
+  // 'wc:1986':'', // ARGENTINA
+  // 'wc:1990':'', // JERMAN BARAT
+  // 'wc:1994':'', // BRAZIL
+  // 'wc:1998':'', // PERANCIS
+  // 'wc:2002':'', // BRAZIL
+  // 'wc:2006':'', // ITALIA
+  // 'wc:2010':'', // SPANYOL
+  // 'wc:2014':'', // JERMAN
+  // 'wc:2018':'', // PERANCIS
+  // 'wc:2022':'', // ARGENTINA
+  /* ─── EURO ─── */
+  // 'euro:1960':'', // UNI SOVIET
+  // 'euro:1964':'', // SPANYOL
+  // 'euro:1968':'', // ITALIA
+  // 'euro:1972':'', // JERMAN BARAT
+  // 'euro:1976':'', // CZECHOSLOVAKIA
+  // 'euro:1980':'', // JERMAN BARAT
+  // 'euro:1984':'', // PERANCIS
+  // 'euro:1988':'', // BELANDA
+  // 'euro:1992':'', // DENMARK
+  // 'euro:1996':'', // JERMAN
+  // 'euro:2000':'', // PERANCIS
+  // 'euro:2004':'', // YUNANI
+  // 'euro:2008':'', // SPANYOL
+  // 'euro:2012':'', // SPANYOL
+  // 'euro:2016':'', // PORTUGAL
+  // 'euro:2020':'', // ITALIA
+  // 'euro:2024':'', // SPANYOL
+  /* ─── NATIONS LEAGUE ─── */
+  // 'nl:2019':'', // PORTUGAL
+  // 'nl:2021':'', // PERANCIS
+  // 'nl:2023':'', // SPANYOL
+  /* ─── YASHIN TROPHY & SUPER BALLON D'OR ─── */
+  // 'yashin:2019':'', // ALISSON
+  // 'yashin:2021':'', // DONNARUMMA
+  // 'yashin:2022':'', // COURTOIS
+  // 'yashin:2023':'', // E. MARTINEZ
+  // 'yashin:2024':'', // E. MARTINEZ
+  // 'super:1989':'',  // ALFRED DI STEFANO
+  /* ─── FOTO PEMAIN (modal) & TROFI KLUB — contoh ─── */
+  // 'player:lionel-messi':'',
+  // 't:realmadrid:ucl:1956':'',
+};
+var m; try{ m=PHOTO_MAP; }catch(e){ m=window.PHOTO_MAP||(window.PHOTO_MAP={}); }
+Object.assign(m,EXTRA);
+})();
+
+/* ═══════════ 2) MESIN FOTO — JANGAN DIUBAH ═══════════ */
+function $p(s,c){return (c||document).querySelector(s)}
+function $pall(s,c){return Array.prototype.slice.call((c||document).querySelectorAll(s))}
+function PH_txt(x){var s=(x&&x.textContent!==undefined)?x.textContent:(x||'');return String(s).replace(/\s+/g,' ').trim()}
+function PH_year(el){var m=PH_txt(el).match(/\d{4}/);return m?m[0]:null}
+function PH_slug(s){try{if(typeof slug==='function')return slug(s)}catch(e){}return String(s).toLowerCase().replace(/[^a-z0-9]+/g,'-').replace(/^-|-$/g,'')}
+function PH_map(){try{if(PHOTO_MAP)return PHOTO_MAP}catch(e){}return window.PHOTO_MAP||(window.PHOTO_MAP={})}
+
+/* placeholder berlabel (nama panjang otomatis mengecil) */
+function phFb(lbl){
+  lbl=String(lbl||'PHOTO').toUpperCase();
+  var L=lbl.length,fs=L>26?4.4:L>16?5.4:7,ls=L>26?1.4:L>16?2:3.5;
+  return '<div class="ph-fb"><svg viewBox="0 0 100 100" preserveAspectRatio="xMidYMid slice">'
+   +'<defs><pattern id="dgn" width="9" height="9" patternUnits="userSpaceOnUse" patternTransform="rotate(45)">'
+   +'<rect width="9" height="9" fill="transparent"/><line x1="0" y1="0" x2="0" y2="9" stroke="rgba(201,162,39,.10)" stroke-width="1"/></pattern></defs>'
+   +'<rect width="100" height="100" fill="url(#dgn)"/>'
+   +'<g fill="rgba(201,162,39,.18)"><circle cx="50" cy="37" r="14"/><path d="M21 88c0-19 13-28 29-28s29 9 29 28z"/></g>'
+   +'<text x="50" y="96" text-anchor="middle" font-size="'+fs+'" letter-spacing="'+ls+'" fill="rgba(201,162,39,.55)" font-family="Jost,Arial">'+lbl+'</text>'
+   +'</svg></div>';
+}
+function PH_apply(){
+  var map=PH_map();
+  $pall('img[data-key]').forEach(function(im){
+    var src=map[im.getAttribute('data-key')||''];
+    if(src){ im.style.display=''; if(im.getAttribute('src')!==src){ im.onerror=function(){im.style.display='none'}; im.setAttribute('src',src); } }
+    else im.style.display='none';
+  });
+}
+function applyPhotos(){ PH_apply(); } /* menimpa versi lama */
+
+var PH_cc={t:'',id:null};
+function PH_currentClub(){
+  var h=$p('#page-club .club-meta h1')||$p('#page-club h1');
+  if(!h)return null;
+  var t=PH_txt(h);
+  if(PH_cc.t===t)return PH_cc.id;
+  var id=null;
+  try{ if(typeof CLUBS!=='undefined'&&CLUBS){ for(var k in CLUBS){ if(String(CLUBS[k].name)===t){ id=CLUBS[k].id; break; } } } }catch(e){}
+  PH_cc={t:t,id:id}; return id;
+}
+
+function PH_decorate(){
+  /* Plakat Ballon d'Or / Yashin / Super */
+  $pall('#page-bdor .plaque').forEach(function(pl){
+    if(pl.dataset.phDone)return;
+    if(pl.classList.contains('void')||pl.classList.contains('soon')){pl.dataset.phDone='1';return}
+    if(pl.querySelector('.ph,.phx')){pl.dataset.phDone='1';return}
+    var yrEl=pl.querySelector('.plq-year'),nmEl=pl.querySelector('.plq-name'),lbEl=pl.querySelector('.plq-label');
+    var y=PH_year(yrEl),name=PH_txt(nmEl),label=PH_txt(lbEl),key=null;
+    if(y) key=/YASHIN/i.test(label)?'yashin:'+y:/SUPER/i.test(label)?'super:'+y:'bdor:'+y;
+    else if(name&&pl.querySelector('.yrchips')) key='player:'+PH_slug(name);
+    if(!key){pl.dataset.phDone='1';return}
+    var ph=document.createElement('div');
+    ph.className='ph slot'+(y?'':' ply');
+    ph.innerHTML=phFb(name||label||'PHOTO');
+    var im=document.createElement('img'); im.dataset.key=key; im.alt=name||key;
+    ph.appendChild(im);
+    if(yrEl) yrEl.before(ph); else pl.prepend(ph);
+    pl.dataset.phDone='1';
+  });
+  /* Kartu World Cup / EURO / Nations League */
+  [['#page-wc','wc'],['#page-euro','euro'],['#page-nations','nl']].forEach(function(cfg){
+    $pall(cfg[0]+' .nat-card').forEach(function(card){
+      if(card.dataset.phDone)return;
+      if(card.classList.contains('soone')){card.dataset.phDone='1';return}
+      var y=PH_year(card.querySelector('.nat-year'));
+      if(!y){card.dataset.phDone='1';return}
+      var name=PH_txt(card.querySelector('.nat-name'));
+      var ph=card.querySelector('.nat-photo');
+      if(!ph){
+        ph=document.createElement('div'); ph.className='nat-photo phx';
+        var info=card.querySelector('.nat-info');
+        if(info) info.before(ph); else card.prepend(ph);
+      } else ph.classList.add('phx');
+      if(!ph.querySelector('img')){
+        if(!ph.querySelector('.ph-fb')) ph.insertAdjacentHTML('afterbegin',phFb((name||cfg[1].toUpperCase())+' '+y));
+        var im=document.createElement('img'); im.dataset.key=cfg[1]+':'+y; im.alt=(name||cfg[1])+' '+y;
+        ph.appendChild(im);
+      }
+      card.dataset.phDone='1';
+    });
+  });
+  /* Kartu trofi klub */
+  var cid=PH_currentClub();
+  if(cid){
+    $pall('#page-club .tr-card').forEach(function(card){
+      if(card.dataset.phDone)return;
+      var y=PH_year(card.querySelector('.tr-year')),short=PH_txt(card.querySelector('.tr-comp')),tid=null;
+      try{ var list=(CLUBS[cid].trophies||[]); for(var i=0;i<list.length;i++){ if(list[i].short===short||list[i].id===String(short).toLowerCase()){tid=list[i].id;break} } }catch(e){}
+      if(!y||!tid){card.dataset.phDone='1';return}
+      var ph=card.querySelector('.ph');
+      if(!ph){ ph=document.createElement('div'); ph.className='ph slot-tr'; var body=card.querySelector('.tr-body'); if(body) body.before(ph); else card.prepend(ph); }
+      if(!ph.querySelector('img')){
+        if(!ph.querySelector('.ph-fb')) ph.insertAdjacentHTML('afterbegin',phFb(short+' '+y));
+        var im=document.createElement('img'); im.dataset.key='t:'+cid+':'+tid+':'+y; im.alt=short+' '+y;
+        ph.appendChild(im);
+      }
+      card.dataset.phDone='1';
+    });
+  }
+  /* Modal pemain */
+  $pall('#modal .mo-box').forEach(function(box){
+    if(box.dataset.phDone)return;
+    var nm=box.querySelector('.mo-name'); if(!nm)return;
+    var name=PH_txt(nm);
+    var ph=document.createElement('div'); ph.className='ph moph';
+    ph.innerHTML=phFb(name);
+    var im=document.createElement('img'); im.dataset.key='player:'+PH_slug(name); im.alt=name;
+    ph.appendChild(im);
+    nm.before(ph);
+    box.dataset.phDone='1';
+  });
+}
+
+/* jalankan otomatis setiap halaman dirender / modal dibuka */
+var PH_pend=false,PH_lock=false;
+function PH_run(){ PH_pend=false; if(PH_lock)return; PH_lock=true; try{PH_decorate();PH_apply()}catch(e){} PH_lock=false; }
+function PH_sched(){ if(PH_lock||PH_pend)return; PH_pend=true; if(window.requestAnimationFrame)requestAnimationFrame(PH_run); else setTimeout(PH_run,80); }
+try{ new MutationObserver(PH_sched).observe(document.documentElement,{childList:true,subtree:true}); }catch(e){}
+PH_sched();
+</script>
+
 </body>
 </html>
