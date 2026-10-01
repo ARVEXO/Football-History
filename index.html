@@ -1544,15 +1544,16 @@ try{ new MutationObserver(PH_sched).observe(document.documentElement,{childList:
 PH_sched();
 </script>
 
-<!-- ═══ AWARD ROOMS v3 — tempel sebelum </body> ═══ -->
+<!-- ═══ AWARD ROOMS v4 — tempel sebelum </body> ═══ -->
 <style>
 .phx-room{display:none;padding-top:4px}
 .phx-room.on{display:block;animation:pin .55s cubic-bezier(.22,.8,.3,1)}
 .phx-btns{margin-left:auto;display:flex;gap:10px;padding-left:12px}
 .phx-btns .rbtn{width:42px;height:42px;border-radius:50%;border:1px solid var(--line);background:transparent;color:var(--cream);cursor:pointer;display:grid;place-items:center;transition:.25s}
 .phx-btns .rbtn:hover{border-color:var(--acc);color:var(--acc)}
-.phx-room .plaque .ph.slot{aspect-ratio:var(--phx-slot-ratio,4/5);margin:2px 0 10px}
-.phx-room .ph.slot img{object-fit:contain;background:#0f0c08}
+/* FRAME DIPAKSA SAMA DENGAN PLAKAT BALLON D'OR — menang atas CSS lama */
+.phx-room .plaque .ph.slot{aspect-ratio:var(--phx-slot-ratio,.82) !important;margin:2px 0 10px !important}
+.phx-room .plaque .ph.slot img{object-fit:contain !important;background:#0f0c08}
 .phx-room .plq-label.phx-lbl{letter-spacing:.14em;font-size:10.5px;line-height:1.55}
 .phx-room .rail{user-select:none;-webkit-user-select:none}
 .phx-room .rail img{-webkit-user-drag:none}
@@ -1562,6 +1563,7 @@ PH_sched();
 <script>
 (function(){
 'use strict';
+if(window.__PHX4__)return;window.__PHX4__=true;
 try{Object.assign(FLAGS,{
  pol:{t:'h',c:['#fff','#dc143c']},
  nor:{t:'nordic',bg:'#ba0c2f',cr:'#00205b'},
@@ -1671,7 +1673,7 @@ function plq(o){
  return '<div class="bd-card big">'+chain()
   +'<div class="plaque"><span class="cn tl"></span><span class="cn tr"></span><span class="cn bl"></span><span class="cn br"></span>'
   +'<div class="plq-label'+(o.l.length>16?' phx-lbl':'')+'">'+esc(o.l)+'</div>'
-  +'<div class="ph slot">'+fb(o.n+' '+o.y)+'<img data-key="'+o.k+'" alt="'+esc(o.n)+'"></div>'
+  +'<div class="ph slot">'+fb(o.n+' '+o.y)+'<img data-key="'+o.k+'" alt="'+esc(o.n)+'" draggable="false"></div>'
   +'<div class="plq-year">'+o.y+'</div>'
   +'<div class="plq-name">'+esc(o.n)+'</div>'
   +(o.g?'<div class="plq-win">'+esc(o.g)+'</div>':'')
@@ -1733,37 +1735,13 @@ function applyMap(root){var map=getMap();if(!map)return;
   else if(im.style.display!=='none')im.style.display='none';});}
 function hideOthers(pid){
  var st=STATE[pid],wrap=pageEl(pid).querySelector('.wrap');if(!wrap)return;
- var chips=chipsEl(pid),room=document.getElementById('phx-room-'+pid+'-'+st.active);
+ var chips=chipsEl(pid),room=document.getElementById('phx4-room-'+pid+'-'+st.active);
  st.hidden=[];
  Array.prototype.slice.call(wrap.children).forEach(function(el){
   if(el===room||el===chips||el.classList.contains('page-head'))return;
   if(el.classList.contains('phx-room')){el.classList.remove('on');return}
   if(el.style.display!=='none'){st.hidden.push(el);el.style.display='none'}});
  if(room)room.classList.add('on');}
-function bindRoom(room){
- if(room.dataset.bound)return;room.dataset.bound='1';
- var rail=room.querySelector('.rail');
- var l=room.querySelector('.phx-l'),r=room.querySelector('.phx-r'),bar=room.querySelector('.rprog i');
- function go(d){if(rail)rail.scrollBy({left:d*room.clientWidth*.8,behavior:'smooth'})}
- if(l)l.addEventListener('click',function(){go(-1)});
- if(r)r.addEventListener('click',function(){go(1)});
- if(rail){
-  var down=false,sx=0,sl=0;
-  rail.addEventListener('pointerdown',function(e){if(e.pointerType&&e.pointerType!=='mouse')return;if(e.button)return;down=true;sx=e.clientX;sl=rail.scrollLeft;rail.classList.add('grabbing')});
-  window.addEventListener('pointermove',function(e){if(!down)return;rail.scrollLeft=sl-(e.clientX-sx)});
-  window.addEventListener('pointerup',function(){down=false;rail.classList.remove('grabbing')});
-  rail.addEventListener('dragstart',function(e){e.preventDefault()});
-  var upd=function(){if(!bar||!rail.scrollWidth)return;
-   var w=Math.max(12,rail.clientWidth/rail.scrollWidth*100);
-   var p=rail.scrollWidth>rail.clientWidth+4?rail.scrollLeft/(rail.scrollWidth-rail.clientWidth):0;
-   bar.style.width=w+'%';bar.style.left=(p*(100-w))+'%'};
-  rail.addEventListener('scroll',upd,{passive:true});
-  window.addEventListener('resize',upd);
-  [80,300,900,2000].forEach(function(t){setTimeout(upd,t)});
- }
- var back=room.querySelector('.phx-back');
- if(back)back.addEventListener('click',function(){deactivate(room.getAttribute('data-page')||'bdor')});
-}
 function activate(pid,rid){
  var st=STATE[pid],chips=chipsEl(pid);if(!pageEl(pid))return;
  st.active=rid;st.last=null;
@@ -1772,8 +1750,8 @@ function activate(pid,rid){
    if(c.hasAttribute('data-room-btn'))c.classList.toggle('on',c.getAttribute('data-room-btn')===rid);
    else c.classList.remove('on')});}
  hideOthers(pid);
- var room=document.getElementById('phx-room-'+pid+'-'+rid);
- if(room){bindRoom(room);window.scrollTo({top:0,behavior:'smooth'})}}
+ var room=document.getElementById('phx4-room-'+pid+'-'+rid);
+ if(room)window.scrollTo({top:0,behavior:'smooth'});}
 function deactivate(pid){
  var st=STATE[pid],pg=pageEl(pid);if(!pg||!st.active){st.active=null;return}
  st.hidden.forEach(function(el){el.style.display=''});st.hidden=[];
@@ -1784,58 +1762,53 @@ function deactivate(pid){
   if(home)home.classList.add('on');
   else if(st.last&&st.last.isConnected)st.last.classList.add('on');}
  st.active=null;st.last=null;}
-function neutralize(){
- ['phx-prix-sec','phx-puskas-sec'].forEach(function(id){
-  var el=document.getElementById(id);
-  if(el&&el.style.display!=='none')el.style.display='none'});}
+function normTxt(s){return String(s).toUpperCase().replace(/[\u2018\u2019']/g,'').replace(/[^A-Z0-9]+/g,' ').trim()}
 function ensure(pid){
  var pg=pageEl(pid),wrap=pg&&pg.querySelector('.wrap');
  if(!wrap||!wrap.children.length)return;
- if(pid==='bdor')neutralize();
+ /* bersihkan sisa script lama (v1/v2/v3) */
+ pg.querySelectorAll('[id^="phx-room-"]:not([data-v4])').forEach(function(r){r.remove()});
+ ['phx-prix-sec','phx-puskas-sec'].forEach(function(id){var el=document.getElementById(id);if(el)el.remove()});
  var chips=chipsEl(pid),created=false;
  if(!chips){chips=document.createElement('div');chips.className='chips';
   var head=wrap.querySelector('.page-head');
   if(head&&head.parentNode===wrap)head.after(chips);else wrap.insertBefore(chips,wrap.firstChild);
   created=true;}
+ var mine={};Object.keys(DEFS[pid]).forEach(function(rid){mine[normTxt(DEFS[pid][rid].btn)]=1});
+ Array.prototype.slice.call(chips.querySelectorAll('.chip,.tab')).forEach(function(c){
+  if(!c.hasAttribute('data-room-btn')&&mine[normTxt(c.textContent)])c.remove();});
  if(created&&!chips.querySelector('[data-room-btn="home"]')){
   var hb=document.createElement('button');hb.className='chip on';hb.setAttribute('data-room-btn','home');
   hb.textContent=pid==='bdor'?"BALLON D'OR":'WORLD CUP';
-  hb.addEventListener('click',function(){if(STATE[pid].active)deactivate(pid)});
   chips.appendChild(hb);}
  Object.keys(DEFS[pid]).forEach(function(rid){
   var def=DEFS[pid][rid];
-  if(!document.getElementById('phx-room-'+pid+'-'+rid)){
-   var r=document.createElement('div');r.className='phx-room';r.id='phx-room-'+pid+'-'+rid;
-   r.setAttribute('data-page',pid);r.innerHTML=def.html();wrap.appendChild(r);}
+  if(!document.getElementById('phx4-room-'+pid+'-'+rid)){
+   var r=document.createElement('div');r.className='phx-room';r.id='phx4-room-'+pid+'-'+rid;
+   r.setAttribute('data-v4','1');r.setAttribute('data-page',pid);r.innerHTML=def.html();wrap.appendChild(r);}
   if(!chips.querySelector('[data-room-btn="'+rid+'"]')){
    var b=document.createElement('button');b.className='chip';b.setAttribute('data-room-btn',rid);
-   b.textContent=def.btn;
-   b.addEventListener('click',function(){if(STATE[pid].active===rid)deactivate(pid);else activate(pid,rid)});
-   chips.appendChild(b);}});
- if(pid==='bdor'){Array.prototype.slice.call(chips.querySelectorAll('.chip,.tab')).forEach(function(c){
-  if(!c.hasAttribute('data-room-btn')&&/PRIX|PUSKAS|PUSK\u00C1S/i.test(c.textContent)&&c.style.display!=='none')c.style.display='none';});}
+   b.setAttribute('data-page',pid);b.textContent=def.btn;chips.appendChild(b);}});
  if(STATE[pid].active){
   hideOthers(pid);
-  var rm=document.getElementById('phx-room-'+pid+'-'+STATE[pid].active);
-  if(rm){bindRoom(rm);
-   var ac=chips.querySelector('[data-room-btn="'+STATE[pid].active+'"]');
-   if(ac&&!ac.classList.contains('on'))ac.classList.add('on');}}
+  var ac=chips.querySelector('[data-room-btn="'+STATE[pid].active+'"]');
+  if(ac&&!ac.classList.contains('on'))ac.classList.add('on');}
  applyMap(pg);}
 
-/* ═══ SALIN UKURAN FRAME DARI PLAKAT BALLON D'OR ═══ */
-var measured=false;
+/* ═══ SALIN RASIO FRAME DARI PLAKAT BALLON D'OR ═══ */
+var mTry=0,measured=false;
 function measure(){
- if(measured)return;
+ if(measured||mTry>40)return;mTry++;
  var pg=pageEl('bdor');if(!pg)return;
  var s=pg.querySelector('.plaque .ph.slot:not(.ply)')||pg.querySelector('.plaque .ph');
  if(!s)return;
  var r=s.getBoundingClientRect();
- if(r.width>50&&r.height>50){
+ if(r.width>60&&r.height>60){
   var ratio=r.width/r.height;
-  if(ratio>0.45&&ratio<1.5){
+  if(ratio>0.5&&ratio<1.4){
    document.documentElement.style.setProperty('--phx-slot-ratio',ratio.toFixed(4));measured=true}}}
 
-/* ═══ FOTO FILTER OTOMATIS — player:KEY memakai foto terbaru pemain ═══ */
+/* ═══ FOTO FILTER OTOMATIS (player:KEY → foto terbaru pemain) ═══ */
 var PERS={bdor:1,yashin:1,super:1,prix:1,puskas:1,gmuller:1,socrates:1,kopa:1,thebest:1,gboot:1,gglove:1};
 var IDX={};
 function mk(s){return String(s).toLowerCase().replace(/[^a-z0-9]+/g,'-').replace(/^-+|-+$/g,'')}
@@ -1850,22 +1823,97 @@ function nameOf(im){
  var host=im.closest('.plaque,.bd-card,.mo-box,.nat-card');
  if(host){var n=host.querySelector('.plq-name,.mo-name,.rk-name,.nat-name');if(n)return n.textContent}
  return im.getAttribute('alt')||'';}
-function buildIdx(){
+function resolvePhotos(){
+ var map=getMap();if(!map)return;
  document.querySelectorAll('img[data-key]').forEach(function(im){
   var k=im.getAttribute('data-key')||'',p=k.split(':');
   if(!PERS[p[0]])return;
   var year=parseInt(p[1],10)||0,name=nameOf(im);
-  if(name)addIdx(name,year,k);});}
-function resolvePhotos(){
- var map=getMap();if(!map)return;
- buildIdx();
+  if(name)addIdx(name,year,k);});
  document.querySelectorAll('img[data-key]').forEach(function(im){
   var k=im.getAttribute('data-key')||'';
-  if(k.slice(0,7)!=='player:')return;
-  if(map[k])return;
+  if(k.slice(0,7)!=='player:'||map[k])return;
   var s=k.slice(7);if(!s)return;
   var hit=IDX[s]||IDX[s.replace(/-/g,'')]||IDX[fold(s)]||IDX[fold(s).replace(/-/g,'')];
   if(hit&&map[hit.k])map[k]=map[hit.k];});}
+
+/* ═══════════ INTERAKSI — SEMUA VIA DELEGATION (kebal re-render) ═══════════ */
+function railFor(btn){
+ var room=btn.closest('.phx-room');if(!room)return null;
+ if(btn.classList.contains('phx-l')||btn.classList.contains('phx-r'))return room.querySelector('.rail');
+ var wrap=btn.closest('.rail-wrap');return wrap?wrap.querySelector('.rail'):room.querySelector('.rail');}
+function scrollRoom(rail,d){
+ if(!rail)return;var step=Math.max(320,rail.clientWidth*.8);
+ if(rail.scrollBy)rail.scrollBy({left:d*step,behavior:'smooth'});
+ else rail.scrollLeft+=d*step;}
+function updBar(rail){
+ var wrap=rail.closest('.rail-wrap'),bar=wrap&&wrap.querySelector('.rprog i');if(!bar)return;
+ var max=rail.scrollWidth-rail.clientWidth;
+ var w=Math.max(12,rail.clientWidth/Math.max(1,rail.scrollWidth)*100);
+ var p=max>4?rail.scrollLeft/max:0;
+ bar.style.width=w+'%';bar.style.left=(p*(100-w))+'%';}
+document.addEventListener('click',function(e){
+ var t=e.target;if(!t||!t.closest)return;
+ var nav=t.closest('[data-go]');
+ if(nav){deactivate('bdor');deactivate('wc');return}
+ var L=t.closest('.phx-l'),R=t.closest('.phx-r');
+ if(L||R){scrollRoom(railFor(L||R),L?-1:1);return}
+ var rb=t.closest('.rbtn');
+ if(rb&&rb.closest('.phx-room')){
+  var tx=(rb.textContent||'').trim();
+  if(tx==='\u2039')scrollRoom(railFor(rb),-1);
+  else if(tx==='\u203A')scrollRoom(railFor(rb),1);
+  return}
+ var bk=t.closest('.phx-back');
+ if(bk){var rm=bk.closest('.phx-room');
+  if(rm){var pid=(rm.getAttribute('data-page')||(rm.id.match(/^phx4-room-(\w+)-/)||[])[1]);if(pid&&STATE[pid])deactivate(pid)}
+  return}
+ var ch=t.closest('[data-room-btn]');
+ if(ch){e.preventDefault();e.stopPropagation();
+  var pg=ch.closest('.page'),p2=pg?pg.id.replace('page-',''):ch.getAttribute('data-page');
+  if(!p2||!STATE[p2])return;
+  var rid=ch.getAttribute('data-room-btn');
+  if(rid==='home'){if(STATE[p2].active)deactivate(p2)}
+  else if(STATE[p2].active===rid)deactivate(p2);
+  else activate(p2,rid);
+  return}
+ var c=t.closest('.chip,.tab');
+ if(c&&!c.hasAttribute('data-room-btn')){
+  var pg3=t.closest('.page');
+  if(pg3&&(pg3.id==='page-bdor'||pg3.id==='page-wc'))deactivate(pg3.id.slice(5));}
+},true);
+/* drag mouse di rail room */
+var drag=null;
+document.addEventListener('pointerdown',function(e){
+ if(e.pointerType==='touch')return;
+ var t=e.target;if(!t||!t.closest)return;
+ if(t.closest('.phx-room button'))return;
+ var rail=t.closest('.phx-room .rail');if(!rail)return;
+ drag={rail:rail,x:e.clientX,sl:rail.scrollLeft,id:e.pointerId};
+ rail.classList.add('grabbing');},true);
+document.addEventListener('pointermove',function(e){
+ if(!drag||e.pointerId!==drag.id)return;
+ drag.rail.scrollLeft=drag.sl-(e.clientX-drag.x);},true);
+function endDrag(e){
+ if(!drag)return;
+ if(e&&e.pointerId!==undefined&&e.pointerId!==drag.id)return;
+ drag.rail.classList.remove('grabbing');drag=null;}
+document.addEventListener('pointerup',endDrag,true);
+document.addEventListener('pointercancel',endDrag,true);
+/* wheel → scroll horizontal di dalam rail room */
+document.addEventListener('wheel',function(e){
+ var t=e.target;if(!t||!t.closest)return;
+ var rail=t.closest('.phx-room .rail');if(!rail)return;
+ var dy=e.deltaY,dx=e.deltaX;
+ if(Math.abs(dy)<=Math.abs(dx))return;
+ var max=rail.scrollWidth-rail.clientWidth;if(max<=4)return;
+ var going=dy>0?1:-1;
+ if((going>0&&rail.scrollLeft<max-1)||(going<0&&rail.scrollLeft>1)){
+  e.preventDefault();rail.scrollLeft+=dy;}},{passive:false});
+/* progress bar mengikuti scroll (scroll tidak bubble → pakai capture) */
+document.addEventListener('scroll',function(e){
+ var el=e.target;
+ if(el&&el.classList&&el.classList.contains('rail')&&el.closest('.phx-room'))updBar(el);},true);
 
 /* ═══ LOOP ═══ */
 var pend=false;
@@ -1877,15 +1925,7 @@ function sched(){if(pend)return;pend=true;
   try{applyMap(document)}catch(e){}})}
 if('MutationObserver' in window)new MutationObserver(sched).observe(document.documentElement,{childList:true,subtree:true});
 else setInterval(sched,1500);
-document.addEventListener('click',function(e){
- var t=e.target;if(!t||!t.closest)return;
- var nav=t.closest('[data-go]');
- if(nav){deactivate('bdor');deactivate('wc');return}
- var c=t.closest('.chip,.tab');
- if(c&&!c.hasAttribute('data-room-btn')){
-  var pg=t.closest('.page');
-  if(pg&&(pg.id==='page-bdor'||pg.id==='page-wc'))deactivate(pg.id.slice(5));}
-},true);
+[100,600,1500,3000].forEach(function(t){setTimeout(sched,t)});
 sched();
 })();
 </script>
