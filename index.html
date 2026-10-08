@@ -1318,7 +1318,7 @@ var EXTRA = {
    'euro:2004':'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRMpMV0M0FNLdcxHCB1sLNBYYBsFxGbHwrXK5t_ezyxXLEVeW5e3lJJPSiI&s=10', // YUNANI
    'euro:2008':'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSgJAdoNucS6ntsuhEr56invHhq7vmAWGYDZUjCZlnleQ&s=10', // SPANYOL
    'euro:2012':'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSqvN2DiIQjABSrKfPXp9hazAPmhyD-HM0Gf1xJRBIbJA&s=10', // SPANYOL
-   'euro:2016':'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSqvN2DiIQjABSrKfPXp9hazAPmhyD-HM0Gf1xJRBIbJA&s=10', // PORTUGAL
+   'euro:2016':'https://e0.365dm.com/16/07/2048x1152/cristiano-ronaldo-trophy_3741697.jpg?20160710225907', // PORTUGAL
    'euro:2020':'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQc6Fm7jTZ6J6XHNDEABwXxOa5gbANdNe7bYsD2D2H5Tw&s=10', // ITALIA
    'euro:2024':'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSA6Ie_GwSZEeADpJdID4rUYm1Ilgud_xFI0Fmj4RyfQOBSZeg0TUiIvHZE&s=10', // SPANYOL
   /* ─── NATIONS LEAGUE ─── */
@@ -1938,6 +1938,465 @@ function sched(){if(pend)return;pend=true;
 if('MutationObserver' in window)new MutationObserver(sched).observe(document.documentElement,{childList:true,subtree:true});
 else setInterval(sched,1500);
 [100,600,1500,3000].forEach(function(t){setTimeout(sched,t)});
+sched();
+})();
+</script>
+
+<!-- ═══ CLUB SYSTEM v2 — tempel sebelum </body> ═══ -->
+<style>
+.phc2-chips{margin:16px 0 4px}
+.phc2-story{margin-top:6px}
+.phc2-story p{color:var(--muted);font-weight:300;line-height:1.9;font-size:15.5px;max-width:840px;margin:0 0 14px}
+.phc2-story em{color:var(--gold2);font-style:normal}
+.phc2-recs{display:flex;gap:14px;flex-wrap:wrap;margin:18px 0 6px}
+.phc2-rec{flex:1 1 240px;border:1px solid var(--line);background:var(--panel);padding:16px 18px}
+.phc2-rec .lb{font-size:9px;letter-spacing:.32em;color:var(--gold);text-transform:uppercase}
+.phc2-rec .nm{font-family:Cinzel,serif;font-size:19px;margin:8px 0 3px}
+.phc2-rec .vl{color:var(--muted);font-size:12px;letter-spacing:.1em}
+.phc2-tl{margin-top:8px}
+#phc2-modal{position:fixed;inset:0;z-index:1250;display:none;place-items:center;background:rgba(5,4,2,.82);backdrop-filter:blur(6px);padding:20px}
+#phc2-modal.on{display:grid}
+.phc2-box{width:min(430px,94vw);max-height:88vh;overflow:auto;background:linear-gradient(180deg,#20180a,#130f09);border:1px solid var(--gold3);padding:26px;position:relative;animation:pin .35s}
+.phc2-x{position:absolute;top:14px;right:14px;background:none;border:1px solid var(--line);color:var(--cream);width:36px;height:36px;cursor:pointer;display:grid;place-items:center;z-index:5}
+.phc2-x:hover{border-color:var(--gold);color:var(--gold2)}
+.phc2-kv{display:flex;gap:12px;padding:9px 0;border-top:1px solid var(--line);font-size:13px}
+.phc2-kv b{flex:0 0 104px;font-size:9px;letter-spacing:.26em;color:var(--gold2);text-transform:uppercase;padding-top:3px}
+.phc2-kv span{color:var(--cream);font-weight:300;line-height:1.65}
+.phc2-rail{user-select:none;-webkit-user-select:none;cursor:grab}
+.phc2-rail.grabbing{cursor:grabbing}
+.phc2-rail img{-webkit-user-drag:none}
+</style>
+<script>
+(function(){
+'use strict';
+if(window.__CLUBV2__)return;window.__CLUBV2__=1;
+
+/* ═══ 1. CUSTOM LOGOS — override crest & lgCrest with richer designs ═══ */
+function crest2(c,w){
+ w=w||100;
+ const[c1,c2]=[c.colors[0],c.colors[1]],pat=c.pat||'plain';
+ const uid='p2'+c.id;
+ let s='<svg viewBox="0 0 100 112" style="width:'+w+'%;height:auto;display:block">'
+  +'<defs><linearGradient id="'+uid+'g" x1="0" y1="0" x2="0" y2="1">'
+  +'<stop offset="0" stop-color="rgba(255,255,255,.14)"/><stop offset=".45" stop-color="rgba(255,255,255,0)"/><stop offset="1" stop-color="rgba(0,0,0,.28)"/></linearGradient>'
+  +'<clipPath id="'+uid+'c"><path d="'+SHIELD+'"/></clipPath></defs><g clip-path="url(#'+uid+'c)">'
+  +'<path d="'+SHIELD+'" fill="'+c1+'"/>';
+ if(pat==='stripes'){for(let i=0;i<4;i++){if(i%2)s+='<rect x="'+(10+i*20)+'" y="0" width="20" height="112" fill="'+c2+'"/>'}}
+ else if(pat==='half'){s+='<path d="M50 6 L90 19 V52 C90 76 73 92 50 104 Z" fill="'+c2+'"/>'}
+ else if(pat==='sash'){s+='<path d="M2 66 L66 2 L86 2 L2 86 Z" fill="'+c2+'" opacity=".92"/>'}
+ s+='<path d="'+SHIELD+'" fill="url(#'+uid+'g)"/></g>'
+  +'<path d="'+SHIELD+'" fill="none" stroke="'+(c.border||'rgba(0,0,0,.5)')+'" stroke-width="4"/>'
+  +'<path d="'+SHIELD+'" fill="none" stroke="rgba(232,201,106,.45)" stroke-width="1.4" transform="translate(3.2,3.6) scale(.936)"/>';
+ const n=uclCount(c);
+ if(n>0&&n<=5){const sx=50-(n-1)*8/2;for(let i=0;i<n;i++)s+='<polygon points="'+starPts(sx+i*8,80,3.4)+'" fill="#e8c96a"/>'}
+ else if(n>5)s+='<text x="50" y="84" text-anchor="middle" font-size="11" font-family="Cinzel" fill="#e8c96a">'+n+'\u00D7</text>';
+ const fs=c.ini.length>=3?19:28;
+ s+='<text x="50" y="53" text-anchor="middle" dominant-baseline="central" font-family="Cinzel" font-weight="700" font-size="'+fs+'" fill="'+(c.ink||'#f5f2ea')+'"'+(c.ts?' stroke="'+c.ts+'" stroke-width="2.5" paint-order="stroke"':'')+'>'+c.ini+'</text>'
+  +'<text x="50" y="97" text-anchor="middle" font-size="7.5" letter-spacing="2" font-family="Jost" fill="rgba(255,255,255,.75)">'+c.founded+'</text></svg>';
+ return s;}
+function lgCrest2(l){
+ const c=l.color;let shape='';
+ switch(l.shape){
+  case 'diamond':shape='<path d="M50 10 L94 54 L50 98 L6 54 Z" fill="'+c+'"/>';break;
+  case 'roundel':shape='<circle cx="50" cy="54" r="46" fill="'+c+'"/>';break;
+  case 'shield':shape='<path d="M50 8 L90 22 V55 C90 78 72 90 50 100 C28 90 10 78 10 55 V22 Z" fill="'+c+'"/>';break;
+  case 'bar':shape='<rect x="12" y="24" width="76" height="60" rx="12" fill="'+c+'"/>';break;
+  case 'hex':shape='<path d="M50 8 L90 30 V78 L50 100 L10 78 V30 Z" fill="'+c+'"/>';break;
+  default:shape='<circle cx="50" cy="54" r="46" fill="'+c+'"/>';}
+ return '<svg viewBox="0 0 100 108" style="width:100%;height:auto;display:block">'+shape
+  +'<circle cx="50" cy="54" r="40" fill="rgba(0,0,0,.18)"/>'
+  +'<circle cx="50" cy="54" r="40" fill="none" stroke="rgba(255,255,255,.4)" stroke-width="2"/>'
+  +'<circle cx="50" cy="54" r="33" fill="none" stroke="rgba(232,201,106,.55)" stroke-width="1.2"/>'
+  +'<rect x="45.5" y="16" width="9" height="9" transform="rotate(45 50 20.5)" fill="#e8c96a"/>'
+  +'<text x="50" y="56" text-anchor="middle" dominant-baseline="central" font-family="Cinzel" font-weight="700" font-size="26" fill="#f3ecd8">'+l.badge+'</text>'
+  +'<text x="50" y="82" text-anchor="middle" font-size="7.5" letter-spacing="2.5" font-family="Jost" fill="rgba(255,255,255,.8)">'+String(l.country).toUpperCase()+'</text></svg>';}
+try{window.crest=crest2;window.lgCrest=lgCrest2}catch(e){}
+
+/* ═══ 2. MORE CLUBS + LEAGUES ═══ */
+const NT=(id,name,short,years)=>({id,name,short,years});
+const NEWLG=[
+ {id:'ere',name:'Eredivisie',country:'Netherlands',color:'#d7452a',shape:'bar',badge:'ER',clubs:['ajax','psv','feyenoord']},
+ {id:'primeira',name:'Primeira Liga',country:'Portugal',color:'#0b6b3a',shape:'shield',badge:'PT',clubs:['benfica','porto','sporting']}];
+const NC={
+ astvilla:{id:'astvilla',name:'Aston Villa',lg:'epl',city:'Birmingham',founded:1874,stadium:'Villa Park',colors:['#670e36','#95bfe3'],pat:'plain',ink:'#f5f2ea',ini:'AV',trophies:[NT('ucl','European Cup','UCL',[1982]),NT('lg','Premier League','LEAGUE',[1894,1896,1897,1899,1900,1910,1981]),NT('fa','FA Cup','FA CUP',[1887,1895,1897,1905,1913,1957]),NT('lc','League Cup','LEAGUE CUP',[1961,1975,1977,1994,1996])]},
+ forest:{id:'forest',name:'Nottingham Forest',lg:'epl',city:'Nottingham',founded:1865,stadium:'City Ground',colors:['#dd0000','#ffffff'],pat:'plain',ink:'#f5f2ea',ini:'NFFC',trophies:[NT('ucl','European Cup','UCL',[1979,1980]),NT('lg','Premier League','LEAGUE',[1978]),NT('fa','FA Cup','FA CUP',[1898,1959]),NT('lc','League Cup','LEAGUE CUP',[1978,1979,1989,1990])]},
+ everton:{id:'everton',name:'Everton',lg:'epl',city:'Liverpool',founded:1878,stadium:'Goodison Park',colors:['#003399','#ffffff'],pat:'plain',ink:'#f5f2ea',ini:'EFC',trophies:[NT('lg','Premier League','LEAGUE',[1891,1915,1928,1932,1939,1963,1970,1985,1987]),NT('fa','FA Cup','FA CUP',[1906,1933,1966,1984,1995]),NT('cwc','European Cup Winners Cup','CWC',[1985])]},
+ westham:{id:'westham',name:'West Ham United',lg:'epl',city:'London',founded:1895,stadium:'London Stadium',colors:['#7a263a','#1bb1e7'],pat:'plain',ink:'#f5f2ea',ini:'WHU',trophies:[NT('fa','FA Cup','FA CUP',[1964,1975,1980]),NT('cwc','European Cup Winners Cup','CWC',[1965]),NT('conf','UEFA Conference League','CONF',[2023])]},
+ sevilla:{id:'sevilla',name:'Sevilla',lg:'laliga',city:'Seville',founded:1890,stadium:'Ram\u00F3n S\u00E1nchez-Pizju\u00E1n',colors:['#d40026','#ffffff'],pat:'plain',ink:'#f5f2ea',ini:'SFC',trophies:[NT('uel','UEFA Europa League','EUROPA',[2006,2007,2014,2015,2016,2020,2023]),NT('lg','La Liga','LEAGUE',[1946]),NT('cdr','Copa del Rey','COPA',[1935,1939,1948,2007,2010])]},
+ sociedad:{id:'sociedad',name:'Real Sociedad',lg:'laliga',city:'San Sebasti\u00E1n',founded:1909,stadium:'Reale Arena',colors:['#0067b1','#ffffff'],pat:'half',ink:'#f5f2ea',ini:'RSO',trophies:[NT('lg','La Liga','LEAGUE',[1981,1982]),NT('cdr','Copa del Rey','COPA',[1909,1987,2020])]},
+ roma:{id:'roma',name:'AS Roma',lg:'seriea',city:'Rome',founded:1927,stadium:'Stadio Olimpico',colors:['#8e1f2f','#f0bc42'],pat:'plain',ink:'#f5f2ea',ini:'ASR',trophies:[NT('lg','Serie A','LEAGUE',[1942,1983,2001]),NT('ci','Coppa Italia','COPPA',[1964,1969,1980,1981,1984,1986,1991,2007,2008]),NT('conf','UEFA Conference League','CONF',[2022])]},
+ lazio:{id:'lazio',name:'Lazio',lg:'seriea',city:'Rome',founded:1900,stadium:'Stadio Olimpico',colors:['#87d8f7','#0a2240'],pat:'plain',ink:'#0a2240',ini:'SSL',trophies:[NT('lg','Serie A','LEAGUE',[1974,2000]),NT('ci','Coppa Italia','COPPA',[1958,1998,2000,2004,2009,2013,2019]),NT('cwc','European Cup Winners Cup','CWC',[1999])]},
+ fiorentina:{id:'fiorentina',name:'Fiorentina',lg:'seriea',city:'Florence',founded:1926,stadium:'Artemio Franchi',colors:['#5c2d91','#ffffff'],pat:'plain',ink:'#f5f2ea',ini:'ACF',trophies:[NT('lg','Serie A','LEAGUE',[1956,1969]),NT('ci','Coppa Italia','COPPA',[1966,1975,1996,2001]),NT('cwc','European Cup Winners Cup','CWC',[1961])]},
+ parma:{id:'parma',name:'Parma',lg:'seriea',city:'Parma',founded:1913,stadium:'Ennio Tardini',colors:['#ffd700','#0a3d8f'],pat:'half',ink:'#0a3d8f',ini:'PCF',trophies:[NT('ci','Coppa Italia','COPPA',[1992,1999,2002]),NT('uel','UEFA Cup','EUROPA',[1995,1999]),NT('cwc','European Cup Winners Cup','CWC',[1993])]},
+ gladbach:{id:'gladbach',name:'Borussia M\u00F6nchengladbach',lg:'bund',city:'M\u00F6nchengladbach',founded:1900,stadium:'Borussia-Park',colors:['#ffffff','#000000'],pat:'plain',ink:'#111111',ini:'BMG',trophies:[NT('lg','Bundesliga','LEAGUE',[1970,1971,1975,1976,1977]),NT('uel','UEFA Cup','EUROPA',[1975,1979]),NT('dfb','DFB-Pokal','POKAL',[1960,1973])]},
+ bremen:{id:'bremen',name:'Werder Bremen',lg:'bund',city:'Bremen',founded:1899,stadium:'Weserstadion',colors:['#1d9053','#ffffff'],pat:'plain',ink:'#f5f2ea',ini:'SVW',trophies:[NT('lg','Bundesliga','LEAGUE',[1965,1988,1993,2004]),NT('dfb','DFB-Pokal','POKAL',[1961,1991,1994,1999,2004,2009]),NT('cwc','European Cup Winners Cup','CWC',[1992])]},
+ stuttgart:{id:'stuttgart',name:'VfB Stuttgart',lg:'bund',city:'Stuttgart',founded:1893,stadium:'MHPArena',colors:['#ffffff','#e32219'],pat:'plain',ink:'#111111',ini:'VFB',trophies:[NT('lg','Bundesliga','LEAGUE',[1984,1992,2007]),NT('dfb','DFB-Pokal','POKAL',[1954,1958,1997])]},
+ hamburg:{id:'hamburg',name:'Hamburger SV',lg:'bund',city:'Hamburg',founded:1887,stadium:'Volksparkstadion',colors:['#0a3d8f','#000000'],pat:'plain',ink:'#f5f2ea',ini:'HSV',trophies:[NT('ucl','European Cup','UCL',[1983]),NT('lg','Bundesliga','LEAGUE',[1979,1982,1983]),NT('dfb','DFB-Pokal','POKAL',[1963,1976,1987])]},
+ stetienne:{id:'stetienne',name:'AS Saint-\u00C9tienne',lg:'ligue1',city:'Saint-\u00C9tienne',founded:1933,stadium:'Geoffroy-Guichard',colors:['#0a7d43','#ffffff'],pat:'plain',ink:'#f5f2ea',ini:'ASSE',trophies:[NT('lg','Ligue 1','LEAGUE',[1957,1964,1967,1968,1969,1970,1974,1975,1976,1981]),NT('cfr','Coupe de France','COUPE',[1962,1968,1970,1974,1975,1977])]},
+ nantes:{id:'nantes',name:'FC Nantes',lg:'ligue1',city:'Nantes',founded:1943,stadium:'Stade de la Beaujoire',colors:['#fddf00','#00954c'],pat:'plain',ink:'#003d20',ini:'FCN',trophies:[NT('lg','Ligue 1','LEAGUE',[1965,1966,1973,1977,1980,1983,1995,2001]),NT('cfr','Coupe de France','COUPE',[1979,1999,2000])]},
+ lille:{id:'lille',name:'LOSC Lille',lg:'ligue1',city:'Lille',founded:1944,stadium:'Stade Pierre-Mauroy',colors:['#e01e13','#0a2240'],pat:'plain',ink:'#f5f2ea',ini:'LOSC',trophies:[NT('lg','Ligue 1','LEAGUE',[1933,1946,1954,2011,2021]),NT('cfr','Coupe de France','COUPE',[1946,1947,1948,1953,1955])]},
+ ajax:{id:'ajax',name:'Ajax',lg:'ere',city:'Amsterdam',founded:1900,stadium:'Johan Cruijff ArenA',colors:['#d2122e','#ffffff'],pat:'plain',ink:'#f5f2ea',ini:'AJX',trophies:[NT('ucl','European Cup','UCL',[1971,1972,1973,1995]),NT('lg','Eredivisie','LEAGUE',[1957,1960,1966,1967,1968,1970,1972,1973,1977,1979,1980,1982,1983,1985,1990,1994,1995,1996,1998,2002,2004,2011,2012,2013,2014,2019,2021,2022]),NT('cwc','European Cup Winners Cup','CWC',[1987]),NT('uel','UEFA Cup','EUROPA',[1992])]},
+ psv:{id:'psv',name:'PSV',lg:'ere',city:'Eindhoven',founded:1913,stadium:'Philips Stadion',colors:['#ed1c24','#ffffff'],pat:'plain',ink:'#f5f2ea',ini:'PSV',trophies:[NT('ucl','European Cup','UCL',[1988]),NT('lg','Eredivisie','LEAGUE',[1929,1935,1951,1963,1975,1976,1978,1986,1987,1988,1989,1991,1992,1997,2000,2001,2003,2005,2007,2008,2015,2016,2018,2024,2025]),NT('uel','UEFA Cup','EUROPA',[1978])]},
+ feyenoord:{id:'feyenoord',name:'Feyenoord',lg:'ere',city:'Rotterdam',founded:1908,stadium:'De Kuip',colors:['#d40026','#ffffff'],pat:'half',ink:'#f5f2ea',ini:'FEY',trophies:[NT('ucl','European Cup','UCL',[1970]),NT('uel','UEFA Cup','EUROPA',[1974,2002]),NT('lg','Eredivisie','LEAGUE',[1961,1962,1965,1969,1971,1974,1984,1993,1999,2017,2023])]},
+ benfica:{id:'benfica',name:'Benfica',lg:'primeira',city:'Lisbon',founded:1904,stadium:'Est\u00E1dio da Luz',colors:['#e00914','#ffffff'],pat:'plain',ink:'#f5f2ea',ini:'SLB',trophies:[NT('ucl','European Cup','UCL',[1961,1962]),NT('lg','Primeira Liga','LEAGUE',[1936,1937,1938,1942,1945,1950,1955,1957,1960,1961,1963,1964,1965,1967,1968,1969,1971,1972,1973,1975,1976,1981,1983,1984,1987,1989,1991,1994,2005,2010,2014,2015,2016,2017,2019,2023]),NT('cdv','Ta\u00E7a de Portugal','TA\u00C7A',[1940,1943,1944,1949,1951,1952,1953,1955,1957,1959,1962,1964,1969,1970,1980,1981,1983,1985,1987,1991,1993,1996,2004,2014,2017])]},
+ porto:{id:'porto',name:'FC Porto',lg:'primeira',city:'Porto',founded:1893,stadium:'Est\u00E1dio do Drag\u00E3o',colors:['#00418f','#ffffff'],pat:'plain',ink:'#f5f2ea',ini:'FCP',trophies:[NT('ucl','European Cup','UCL',[1987,2004]),NT('uel','UEFA Cup / Europa League','EUROPA',[2003,2011]),NT('lg','Primeira Liga','LEAGUE',[1935,1939,1940,1956,1959,1978,1979,1985,1986,1988,1990,1992,1993,1995,1996,1997,1998,1999,2003,2004,2006,2007,2008,2009,2011,2012,2013,2018,2020,2022])]},
+ sporting:{id:'sporting',name:'Sporting CP',lg:'primeira',city:'Lisbon',founded:1906,stadium:'Est\u00E1dio Jos\u00E9 Alvalade',colors:['#008057','#ffffff'],pat:'plain',ink:'#f5f2ea',ini:'SCP',trophies:[NT('lg','Primeira Liga','LEAGUE',[1941,1944,1947,1948,1949,1951,1952,1953,1954,1958,1962,1966,1970,1974,1980,1982,2000,2002,2021,2024]),NT('cdv','Ta\u00E7a de Portugal','TA\u00C7A',[1941,1945,1946,1948,1954,1958,1962,1963,1971,1973,1974,1978,1982,1987,1995,2002,2007,2008,2015,2019,2021]),NT('cwc','European Cup Winners Cup','CWC',[1964])]}};
+try{NEWLG.forEach(l=>{const e=LEAGUES.find(x=>x.id===l.id);if(e)Object.assign(e,l);else LEAGUES.push(l)});
+ Object.keys(NC).forEach(id=>{if(!CLUBS[id])CLUBS[id]=NC[id];const lg=LEAGUES.find(x=>x.id===NC[id].lg);if(lg&&!lg.clubs.includes(id))lg.clubs.push(id)});}catch(e){}
+
+/* ═══ 3. STORIES — "para1 | para2" ═══ */
+const ST={
+ manutd:"Born in 1878 as the railway-works team of Newton Heath, Manchester United became football\u2019s great romance. Sir Matt Busby rebuilt the club from the ashes of the 1958 Munich air disaster and crowned it European champion in 1968 \u2014 ten years almost to the day. | Under Sir Alex Ferguson, pressure turned to folklore: thirteen league titles, two more European Cups, and the impossible 1999 Treble, won in ninety-nine seconds of stoppage time. Old Trafford earned its name \u2014 the Theatre of Dreams.",
+ liverpool:"Founded in 1892 after a rent dispute at Anfield, Liverpool became Bill Shankly\u2019s canvas: he painted a creed \u2014 pass, press, believe \u2014 and gave the game its anthem, You\u2019ll Never Walk Alone. | Bob Paisley added six European nights in nine seasons; Istanbul 2005 restored the faith; Klopp\u2019s sixth in 2019 and the 2020 title after thirty long years returned the crown to the Kop.",
+ arsenal:"Born in 1886 among the munitions works of Woolwich, Arsenal were raised to greatness by Herbert Chapman, whose thirties machine won three straight titles and forced football to take tactics seriously. | The 1971 Double, George Graham\u2019s defensive art and Ars\u00E8ne Wenger\u2019s Invincibles \u2014 49 league games unbeaten in 2004 \u2014 made North London a home of elegance and steel.",
+ chelsea:"Founded at Stamford Bridge in 1905, Chelsea spent half a century as stylish underachievers until Ted Drake\u2019s 1955 title broke the seal. | Jos\u00E9 Mourinho made them a superpower \u2014 record points and back-to-back crowns \u2014 Drogba\u2019s boot delivered the 2012 miracle in Munich, and Kant\u00E9 and Havertz raised the second star in 2021.",
+ mancity:"City began in 1880 as a church team in Gorton and waited more than a century for its coronation. Then came 93:20 \u2014 Ag\u00FCero\u2019s last-kick title in 2012. | The Abu Dhabi years followed: six titles in seven, the 2023 Treble with Haaland\u2019s goals and Rodri\u2019s winner, and the first four-in-a-row in English history.",
+ tottenham:"Spurs, founded 1882, made their name on style: the 1961 Double, the first European trophy for an English club in 1963, and Hoddle\u2019s white artistry. | Two UEFA Cups, Kane\u2019s goals and the finest stadium in England keep the cockerel crowing in North London.",
+ realmadrid:"Crowned with a royal title in 1902, Real Madrid became football\u2019s eternal dynasty when Santiago Bernab\u00E9u signed Di St\u00E9fano: five European Cups in a row, then the Ye-y\u00E9 sixth in 1966. | After thirty-two years of longing, La S\u00E9ptima came in 1998; Zidane coached three straight; Ramos made La D\u00E9cima real; Vin\u00EDcius lifted the fifteenth at Wembley 2024. No club has ever ruled Europe longer.",
+ barcelona:"Founded in 1899 by Joan Gamper and twelve friends, Bar\u00E7a became m\u00E9s que un club \u2014 a flag as much as a team. Cruyff brought the dream, La Masia the philosophy. | Guardiola\u2019s sextuple of 2009 and Messi\u2019s 672 goals made the Camp Nou the greatest stage of the tiki-taka age \u2014 with Yamal the new dawn of 2025.",
+ atletico:"The other Madrid, born in 1903, built its legend on defiance: Luis Aragon\u00E9s as player and boss, the double of 1996, and under Simeone two league crowns \u2014 2014 and 2021 \u2014 stolen from two giants. | Three European finals ended in heartbreak, never in surrender. Atl\u00E9tico is football\u2019s proudest bruise.",
+ juventus:"The Old Lady, founded in 1897 by schoolboys, turned black and white into Italy\u2019s religion: the Agnelli dynasty, Platini\u2019s magic and a record shelf of scudetti. | Conte\u2019s unbeaten 2011-12 began nine titles in a row. The 1985 and 1996 European Cups remain the page she still chases.",
+ acmilan:"Milan, founded 1899 by Englishmen, wore red and black from the start. Sacchi\u2019s 1989-90 revolution reimagined pressing; Capello\u2019s immortals dominated; Maldini\u2019s dynasty carried the rossoneri to seven European Cups \u2014 second only to Real Madrid.",
+ inter:"Born in 1908 from a schism over foreigners, Internazionale embraced the world. Herrera\u2019s Grande Inter won back-to-back European Cups with catenaccio and catwalk cool. | Mourinho\u2019s 2010 Treble crowned the new millennium, and the twentieth star fell in 2024.",
+ napoli:"The south\u2019s standard-bearer since 1926, Napoli had won nothing until Maradona descended in 1984 and delivered two miracles \u2014 1987 and 1990 \u2014 that turned a city into a religion. | Osimhen and Kvaratskhelia wrote the third chapter: the 2023 Scudetto, ending a thirty-three-year wait.",
+ bayern:"Founded in 1900 by eleven rebels, Bayern became Germany\u2019s eternal measure. Beckenbauer, M\u00FCller and Maier won three European Cups in a row in the seventies. | Kahn\u2019s 2001, Robben\u2019s 2013 Treble and Flick\u2019s sextuple of 2020 extended the record \u2014 thirty-plus Meisterschalen and counting.",
+ dortmund:"Yellow and black since 1909, Dortmund\u2019s 1997 European Cup began a legend of the people. Klopp\u2019s counter-pressing stole two titles from Bavaria and packed the Yellow Wall into folklore. | The 2013 Wembley final \u2014 lost narrowly to Bayern \u2014 remains the loudest heartbreak in Europe.",
+ leverkusen:"The factory club of the Bayer works spent decades as football\u2019s bridesmaids \u2014 Neverkusen, they cruelly called it. Then Xabi Alonso arrived. | The 2023-24 season went unbeaten: the first Bundesliga title in history, with the DFB-Pokal beside it. History rewritten in one golden year.",
+ psg:"Paris\u2019s club, founded 1970, only became royalty when Qatari investment landed in 2011: a dozen Ligue 1 crowns and every French record that matters. | And at last, the European crown \u2014 the 2025 Champions League, won 5-0 in Munich, the most one-sided final ever played.",
+ marseille:"L\u2019OM, 1899, the people\u2019s club of the Vieux-Port. Tapie\u2019s dream machine conquered France and then Europe itself: Marseille 1993 \u2014 the first, still only, European Cup in French hands, won in Bari against Milan.",
+ monaco:"The principality\u2019s club punches eternally above its size: Wenger\u2019s 1988 side, the 2004 final run, and the 2017 title that launched Mbapp\u00E9 at seventeen. Red and white, elegant and tireless.",
+ lyon:"Founded in 1950, OL\u2019s golden age came in the 2000s: seven straight titles, Juninho\u2019s impossible free kicks, and an academy that stocked France for a generation.",
+ athletic:"Founded by English shipworkers in 1898, Athletic\u2019s pride is absolute: only Basque-born players, ever. Eight league titles, the early twentieth century\u2019s first superpower, and San Mam\u00E9s \u2014 La Catedral \u2014 still roaring.",
+ valencia:"Mestalla, 1919, orange and black. Two European Cup finals in 2000 and 2001, titles in 2002 and 2004 \u2014 Valencia remain Spain\u2019s great romantics.",
+ astvilla:"Aston Villa, 1874, one of England\u2019s founding giants: six league titles before the Great War, and the 1982 European Cup in Rotterdam \u2014 Withe\u2019s winner against Bayern.",
+ forest:"Nottingham Forest, 1865 \u2014 one of the world\u2019s oldest clubs. Then Brian Clough happened: promotion, the 1978 title, and back-to-back European Cups in 1979 and 1980, with zero apologies.",
+ everton:"The People\u2019s Club of the Mersey, 1878: nine league titles, Dixie Dean\u2019s sixty goals in a single season, and a golden 1980s team.",
+ westham:"West Ham, 1895, the Academy of Football: Moore, Hurst and Peters won England the 1966 World Cup; the Hammers themselves lifted the 1965 Cup Winners\u2019 Cup and the 2023 Conference League.",
+ sevilla:"Sevilla, 1890 \u2014 Spain\u2019s oldest club still standing. In the 2000s they became Europe\u2019s Europa League institution: seven trophies, more than any club alive.",
+ sociedad:"Real Sociedad of Donostia, 1909: back-to-back titles in 1981-82 with Arconada in goal, and a 2021 Copa won in the Basque derby \u2014 la Real, elegant and unbreakable.",
+ roma:"AS Roma, 1927, the Wolves of the Tiber: Totti\u2019s lifetime of loyalty, the 1983 and 2001 scudetti, and the 2022 Conference League \u2014 the first European trophy in Roman history.",
+ lazio:"Lazio, 1900, the sky-blues of Rome: Chinaglia\u2019s seventies crown, the centenary Scudetto of 2000 with Nesta and Crespo, and the 1999 Cup Winners\u2019 Cup.",
+ fiorentina:"Fiorentina, 1926, the viola of the Arno: the 1956 and 1969 titles, Batistuta\u2019s thunderbolts, and a purple half-century of beautiful, near-miss football.",
+ parma:"Parma, 1913 \u2014 a tiny city, giant dreams. The 1990s golden decade with Buffon, Cannavaro and Zola: two UEFA Cups, the 1993 Cup Winners\u2019 Cup, three Coppe Italia.",
+ gladbach:"Borussia M\u00F6nchengladbach, 1900, the Foals: five titles in the seventies, G\u00FCnter Netzer\u2019s hair and Hennes Weisweiler\u2019s machine, two UEFA Cups.",
+ bremen:"Werder Bremen, 1899: four championships, the 1992 Cup Winners\u2019 Cup, and the 2004 double with Ailton up top \u2014 the Green-Whites of the Weser.",
+ stuttgart:"VfB Stuttgart, 1893: three Bundesliga titles, the Swabian identity, and a white-and-red academy that keeps feeding Germany.",
+ hamburg:"HSV, 1887, the dinosaur \u2014 never relegated until 2018. Three German titles, the 1983 European Cup against Juventus in Athens, and Kevin Keegan\u2019s golden years.",
+ stetienne:"AS Saint-\u00C9tienne, Les Verts: ten French titles and the 1976 European Cup final \u2014 the era when Geoffroy-Guichard\u2019s cauldron shook all of France.",
+ nantes:"FC Nantes, the Canaries: eight titles built on youth and the celebrated jeu \u00E0 la nantaise \u2014 football as geometry and grace.",
+ lille:"LOSC Lille: five titles across three eras \u2014 the forties dynasty, the 2011 double with Eden Hazard, and 2021\u2019s shock crown stolen from PSG.",
+ ajax:"Ajax, 1900, the beating heart of Total Football. Michels and Cruyff won three straight European Cups (1971-73); Van Gaal\u2019s generation added the fourth in 1995. | Thirty-six Dutch titles and the world\u2019s most famous academy complete the canon.",
+ psv:"PSV, 1913, the Philips workers\u2019 club: twenty-five titles, the 1988 European Cup on penalties in Stuttgart, and a production line from Gullit to Rom\u00E1rio to Van Nistelrooy.",
+ feyenoord:"Feyenoord, 1908, Rotterdam\u2019s people\u2019s club: the first Dutch European Cup in 1970, two UEFA Cups, and De Kuip \u2014 arguably football\u2019s most beloved stadium.",
+ benfica:"Benfica, 1904, the Eagles of Lisbon: thirty-eight league titles and, with Eus\u00E9bio, the back-to-back European Cups of 1961-62. | The Guttmann curse \u2014 no European Cup since \u2014 remains football\u2019s most haunting promise.",
+ porto:"FC Porto, 1893, the Dragons of the north: thirty league titles, Madjer\u2019s heel in Vienna 1987, and Mourinho\u2019s 2004 miracle in Gelsenkirchen.",
+ sporting:"Sporting CP, 1906, the Lions: nineteen titles, the 1964 Cup Winners\u2019 Cup \u2014 and the academy that produced Cristiano Ronaldo and Lu\u00EDs Figo."};
+const REC={
+ manutd:["Wayne Rooney",253,"Ryan Giggs","~160 assists"],liverpool:["Ian Rush",346,"Steven Gerrard","~90 assists"],
+ arsenal:["Thierry Henry",228,"Cesc F\u00E0bregas","~100 assists"],chelsea:["Frank Lampard",211,"Cesar Azpilicueta","~70 assists"],
+ mancity:["Sergio Ag\u00FCero",260,"Kevin De Bruyne","~170 assists"],tottenham:["Harry Kane",280,"Christian Eriksen","~110 assists"],
+ realmadrid:["Cristiano Ronaldo",450,"Mladen? \u2014 no: Karim Benzema","~150 assists"],barcelona:["Lionel Messi",672,"Lionel Messi","~300 assists"],
+ atletico:["Luis Aragon\u00E9s",172,"Koke","~100 assists"],juventus:["Alessandro Del Piero",290,"Alex Del Piero","~100 assists"],
+ acmilan:["Gunnar Nordahl",225,"Gianni Rivera","~120 assists"],inter:["Giuseppe Meazza",197,"Mario Corso","~110 assists"],
+ napoli:["Dries Mertens",148,"Marek Ham\u0161\u00EDk","~110 assists"],bayern:["Gerd M\u00FCller",566,"Thomas M\u00FCller","~170 assists"],
+ psg:["Edinson Cavani",200,"Marco Verratti","~90 assists"],athletic:["Telmo Zarra",332,"Iribar (games)","614 appearances"],
+ benfica:["Eus\u00E9bio",473,"Jos\u00E9 \u00C1guas","~130 assists"],sporting:["Fernando Peyroteo",331,"\u2014","\u2014"],
+ ajax:["Ruud Geels / Klaas-Jan Huntelaar","151","\u2014","\u2014"],psv:["Phillip Cocu / Van Nistelrooy","110","\u2014","\u2014"],
+ feyenoord:["Ove Kindvall",186,"\u2014","\u2014"],porto:["Fernando Gomes",347,"\u2014","\u2014"],
+ sevilla:["\u2014","\u2014","\u2014","\u2014"],roma:["Francesco Totti",307,"Francesco Totti","~190 assists"]};
+
+/* ═══ 4. YEAR DETAILS — [manager, captain, star man, what happened] ═══ */
+const D2={};
+[["realmadrid:ucl:1956","Jos\u00E9 Villalonga","Miguel Mu\u00F1oz","Alfredo Di St\u00E9fano","4-3 vs Stade de Reims in Paris \u2014 the very first European Cup, decided in a storm."],
+["realmadrid:ucl:1957","Jos\u00E9 Villalonga","Miguel Mu\u00F1oz","Alfredo Di St\u00E9fano","2-0 vs Fiorentina at the Bernab\u00E9u \u2014 the crown defended at home."],
+["realmadrid:ucl:1958","Luis Carniglia","Jos\u00E9 Mar\u00EDa Z\u00E1rraga","Alfredo Di St\u00E9fano","3-2 aet vs Milan in Brussels \u2014 Schiaffino levelled, Gento won it."],
+["realmadrid:ucl:1959","Luis Carniglia","Jos\u00E9 Mar\u00EDa Z\u00E1rraga","Alfredo Di St\u00E9fano","2-0 vs Stade de Reims again, in Stuttgart \u2014 four in a row."],
+["realmadrid:ucl:1960","Miguel Mu\u00F1oz","Jos\u00E9 Mar\u00EDa Z\u00E1rraga","Ferenc Pusk\u00E1s (4 goals)","7-3 vs Eintracht Frankfurt at Wembley \u2014 the greatest final ever played."],
+["realmadrid:ucl:1966","Miguel Mu\u00F1oz","Francisco Gento","Amancio","2-1 vs Partizan in Brussels \u2014 the all-Spanish Ye-y\u00E9 team."],
+["realmadrid:ucl:1998","Jupp Heynckes","Fernando Hierro","Predrag Mijatovi\u0107","1-0 vs Juventus in Amsterdam \u2014 the seventh star after 32 years."],
+["realmadrid:ucl:2000","Vicente del Bosque","Fernando Hierro","Ra\u00FAl","3-0 vs Valencia in Paris \u2014 an all-Madrid final."],
+["realmadrid:ucl:2002","Vicente del Bosque","Fernando Hierro","Zinedine Zidane","2-1 vs Leverkusen in Glasgow \u2014 the Hampden volley."],
+["realmadrid:ucl:2014","Carlo Ancelotti","Iker Casillas","Sergio Ramos","4-1 aet vs Atl\u00E9tico in Lisbon \u2014 La D\u00E9cima, 93rd minute and beyond."],
+["realmadrid:ucl:2016","Zinedine Zidane","Sergio Ramos","Cristiano Ronaldo","1-1 (5-3 p) vs Atl\u00E9tico in Milan \u2014 La Und\u00E9cima."],
+["realmadrid:ucl:2017","Zinedine Zidane","Sergio Ramos","Cristiano Ronaldo","4-1 vs Juventus in Cardiff \u2014 first club to defend the modern UCL. Ronaldo: 12 goals."],
+["realmadrid:ucl:2018","Zinedine Zidane","Sergio Ramos","Gareth Bale","3-1 vs Liverpool in Kyiv \u2014 the bicycle kick, then three in a row."],
+["realmadrid:ucl:2022","Carlo Ancelotti","Marcelo","Vin\u00EDcius J\u00FAnior","1-0 vs Liverpool in Paris \u2014 La Catorce; Courtois a wall."],
+["realmadrid:ucl:2024","Carlo Ancelotti","Nacho","Vin\u00EDcius J\u00FAnior","2-0 vs Dortmund at Wembley \u2014 the fifteenth."],
+["acmilan:ucl:1963","Nereo Rocco","Cesare Maldini","Jos\u00E9 Altafini","2-1 vs Benfica at Wembley \u2014 Altafini twice."],
+["acmilan:ucl:1969","Nereo Rocco","Gianni Rivera","Pierino Prati","4-1 vs Ajax in Madrid \u2014 a hat-trick in the final."],
+["acmilan:ucl:1989","Arrigo Sacchi","Franco Baresi","Ruud Gullit","4-0 vs Steaua in Barcelona \u2014 Gullit and Van Basten destroy the script. Van Basten: 10 goals."],
+["acmilan:ucl:1990","Arrigo Sacchi","Franco Baresi","Frank Rijkaard","1-0 vs Benfica in Vienna \u2014 back-to-back."],
+["acmilan:ucl:1994","Fabio Capello","Franco Baresi (suspended)","Daniele Massaro","4-0 vs Barcelona in Athens \u2014 the most one-sided final of the nineties."],
+["acmilan:ucl:2003","Carlo Ancelotti","Paolo Maldini","Andriy Shevchenko","0-0 (3-2 p) vs Juventus in Manchester \u2014 an all-Italian first."],
+["acmilan:ucl:2007","Carlo Ancelotti","Paolo Maldini","Kak\u00E1","2-1 vs Liverpool in Athens \u2014 revenge for Istanbul. Kak\u00E1: 10 goals."],
+["bayern:ucl:1974","Udo Lattek","Franz Beckenbauer","Franz Beckenbauer","1-1, then 4-0 vs Atl\u00E9tico in the Brussels replay."],
+["bayern:ucl:1975","Dettmar Cramer","Franz Beckenbauer","Sepp Maier","2-0 vs Leeds in Paris \u2014 Roth and M\u00FCller."],
+["bayern:ucl:1976","Dettmar Cramer","Franz Beckenbauer","Franz Roth","1-0 vs Saint-\u00C9tienne in Glasgow \u2014 Roth again, the third star."],
+["bayern:ucl:2001","Ottmar Hitzfeld","Oliver Kahn","Oliver Kahn","1-1 (5-4 p) vs Valencia in Milan \u2014 Kahn saves three."],
+["bayern:ucl:2013","Jupp Heynckes","Philipp Lahm","Arjen Robben","2-1 vs Dortmund at Wembley \u2014 the Treble, an all-German final."],
+["bayern:ucl:2020","Hansi Flick","Manuel Neuer","Robert Lewandowski","1-0 vs PSG in Lisbon \u2014 the sextuple; a perfect 11 wins from 11. Lewandowski: 15 goals."],
+["liverpool:ucl:1977","Bob Paisley","Emlyn Hughes","Kevin Keegan","3-1 vs M\u00F6nchengladbach in Rome \u2014 the first of six."],
+["liverpool:ucl:1978","Bob Paisley","Emlyn Hughes","Kenny Dalglish","1-0 vs Club Brugge at Wembley \u2014 retained."],
+["liverpool:ucl:1981","Bob Paisley","Phil Thompson","Alan Kennedy","1-0 vs Real Madrid in Paris \u2014 the third in five seasons."],
+["liverpool:ucl:1984","Joe Fagan","Graeme Souness","Ian Rush","1-1 (4-2 p) vs Roma in Rome \u2014 won in their own city."],
+["liverpool:ucl:2005","Rafael Ben\u00EDtez","Steven Gerrard","Steven Gerrard","3-3 (3-2 p) vs Milan \u2014 Istanbul. Six minutes that broke football."],
+["liverpool:ucl:2019","J\u00FCrgen Klopp","Jordan Henderson","Mohamed Salah","2-0 vs Tottenham in Madrid \u2014 the sixth."],
+["barcelona:ucl:1992","Johan Cruyff","Jos\u00E9 Mari Bakero","Ronald Koeman","1-0 aet vs Sampdoria at Wembley \u2014 the Dream Team\u2019s first crown."],
+["barcelona:ucl:2006","Frank Rijkaard","Carles Puyol","Ronaldinho","2-1 vs Arsenal in Paris \u2014 the comeback, Belletti\u2019s winner."],
+["barcelona:ucl:2009","Pep Guardiola","Carles Puyol","Lionel Messi","2-0 vs Man United in Rome \u2014 the sextuple year begins."],
+["barcelona:ucl:2011","Pep Guardiola","Carles Puyol","Lionel Messi","3-1 vs Man United at Wembley \u2014 tiki-taka perfected. Messi: 12 goals."],
+["barcelona:ucl:2015","Luis Enrique","Xavi","Lionel Messi","3-1 vs Juventus in Berlin \u2014 MSN\u2019s Treble, Xavi\u2019s farewell."],
+["ajax:ucl:1971","Rinus Michels","Velibor Vasovi\u0107","Johan Cruyff","2-0 vs Panathinaikos at Wembley \u2014 Total Football crowns itself."],
+["ajax:ucl:1972","\u0160tefan Kov\u00E1cs","Velibor Vasovi\u0107","Johan Cruyff","2-0 vs Inter in Rotterdam \u2014 Total Football beats catenaccio."],
+["ajax:ucl:1973","\u0160tefan Kov\u00E1cs","Piet Keizer","Johan Cruyff","1-0 vs Juventus in Belgrade \u2014 three in a row."],
+["ajax:ucl:1995","Louis van Gaal","Danny Blind","Patrick Kluivert","1-0 vs Milan in Vienna \u2014 the teenager decides it."],
+["inter:ucl:1964","Helenio Herrera","Armando Picchi","Sandro Mazzola","3-1 vs Real Madrid in Vienna \u2014 Grande Inter announces itself."],
+["inter:ucl:1965","Helenio Herrera","Armando Picchi","Sandro Mazzola","1-0 vs Benfica at San Siro \u2014 back-to-back at home."],
+["inter:ucl:2010","Jos\u00E9 Mourinho","Javier Zanetti","Diego Milito","2-0 vs Bayern in Madrid \u2014 the Treble, 45 years in the waiting."],
+["manutd:ucl:1968","Sir Matt Busby","Bobby Charlton","George Best","4-1 aet vs Benfica at Wembley \u2014 ten years after Munich, England\u2019s first."],
+["manutd:ucl:1999","Alex Ferguson","Peter Schmeichel (Keane suspended)","Sheringham & Solskj\u00E6r","2-1 vs Bayern in Barcelona \u2014 99 seconds of stoppage time, the Treble."],
+["manutd:ucl:2008","Alex Ferguson","Ryan Giggs","Cristiano Ronaldo","1-1 (6-5 p) vs Chelsea in Moscow \u2014 Van der Sar\u2019s save, the third star."],
+["juventus:ucl:1985","Giovanni Trapattoni","Gaetano Scirea","Michel Platini","1-0 vs Liverpool at Heysel \u2014 a first crown, on the saddest night in European football."],
+["juventus:ucl:1996","Marcello Lippi","Gianluca Vialli","Gianluca Vialli","1-1 (4-2 p) vs Ajax in Rome \u2014 the Old Lady\u2019s second."],
+["benfica:ucl:1961","B\u00E9la Guttmann","Jos\u00E9 \u00C1guas","Jos\u00E9 \u00C1guas","3-2 vs Barcelona in Bern \u2014 the Eagles end Spain\u2019s reign. \u00C1guas: 11 goals."],
+["benfica:ucl:1962","B\u00E9la Guttmann","Jos\u00E9 \u00C1guas","Eus\u00E9bio","5-3 vs Real Madrid in Amsterdam \u2014 eighteen, and already eternal."],
+["forest:ucl:1979","Brian Clough","John McGovern","Trevor Francis","1-0 vs Malm\u00F6 in Munich \u2014 six weeks after signing, Francis headed history."],
+["forest:ucl:1980","Brian Clough","John McGovern","John Robertson","1-0 vs Hamburg in Madrid \u2014 back-to-back, Clough\u2019s immortality."],
+["porto:ucl:1987","Artur Jorge","Fernando Gomes","Rabah Madjer","2-1 vs Bayern in Vienna \u2014 the back-heel of the century."],
+["porto:ucl:2004","Jos\u00E9 Mourinho","Jorge Costa","Deco","3-0 vs Monaco in Gelsenkirchen \u2014 the impossible season."],
+["chelsea:ucl:2012","Roberto Di Matteo","Frank Lampard (Terry suspended)","Didier Drogba","1-1 (4-3 p) vs Bayern in their own stadium \u2014 the Munich miracle."],
+["chelsea:ucl:2021","Thomas Tuchel","C\u00E9sar Azpilicueta","N\u2019Golo Kant\u00E9","1-0 vs Man City in Porto \u2014 Kant\u00E9 plays two men at once."],
+["mancity:ucl:2023","Pep Guardiola","\u0130lkay G\u00FCndo\u011Fan","Rodri","1-0 vs Inter in Istanbul \u2014 the Treble sealed."],
+["hamburg:ucl:1983","Ernst Happel","Ditmar Jakobs","Felix Magath","1-0 vs Juventus in Athens \u2014 Magath\u2019s bounce, the Dinosaur\u2019s crown."],
+["astvilla:ucl:1982","Tony Barton","Dennis Mortimer","Peter Withe","1-0 vs Bayern in Rotterdam \u2014 triumph on a shoestring."],
+["psv:ucl:1988","Guus Hiddink","Ronald Koeman","Ronald Koeman","0-0 (6-5 p) vs Benfica in Stuttgart \u2014 Koeman converts the last."],
+["feyenoord:ucl:1970","Ernst Happel","Rinus Isra\u00EBl","Willem van Hanegem","2-1 aet vs Celtic in Milan \u2014 Holland\u2019s first European Cup."],
+["psg:ucl:2025","Luis Enrique","Marquinhos","Ousmane Demb\u00E9l\u00E9","5-0 vs Inter in Munich \u2014 the most one-sided final ever played."],
+["realmadrid:lg:2012","Jos\u00E9 Mourinho","Iker Casillas","Cristiano Ronaldo","100 points \u2014 the record season. Ronaldo: 46 goals."],
+["realmadrid:lg:2017","Zinedine Zidane","Sergio Ramos","Cristiano Ronaldo","League and UCL in the same season \u2014 the double."],
+["barcelona:lg:2009","Pep Guardiola","Carles Puyol","Lionel Messi","The sextuple season."],
+["barcelona:lg:2011","Pep Guardiola","Carles Puyol","Lionel Messi","Tiki-taka perfected."],
+["bayern:lg:2020","Hansi Flick","Manuel Neuer","Robert Lewandowski","The sextuple season. Lewandowski: 34 goals."],
+["mancity:lg:2023","Pep Guardiola","\u0130lkay G\u00FCndo\u011Fan","Erling Haaland","The Treble season. Haaland: 36 goals \u2014 a Premier League record."],
+["liverpool:lg:2020","J\u00FCrgen Klopp","Jordan Henderson","Mohamed Salah","The first title in thirty years."],
+["juventus:lg:2012","Antonio Conte","Gianluigi Buffon","Andrea Pirlo","Unbeaten \u2014 23 wins, 15 draws."],
+["napoli:lg:2023","Luciano Spalletti","Giovanni Di Lorenzo","Victor Osimhen","The third Scudetto \u2014 the south erupts. Osimhen: 26 goals."],
+["leverkusen:lg:2024","Xabi Alonso","Lukas Hradecky","Florian Wirtz","Unbeaten \u2014 the first invincible Bundesliga season."],
+["arsenal:lg:2004","Ars\u00E8ne Wenger","Patrick Vieira","Thierry Henry","The Invincibles. Henry: 30 goals."],
+["manutd:lg:2013","Alex Ferguson","Nemanja Vidi\u0107","Robin van Persie","The thirteenth \u2014 Ferguson\u2019s farewell."],
+["inter:lg:2024","Simone Inzaghi","Lautaro Mart\u00EDnez","Lautaro Mart\u00EDnez","La Seconda Stella. Lautaro: 24 goals."],
+["psg:lg:2024","Luis Enrique","Marquinhos","Kylian Mbapp\u00E9","Mbapp\u00E9\u2019s farewell crown."],
+["sevilla:uel:2006","Juande Ramos","Javi Navarro","Jes\u00FAs Navas","4-0 vs Middlesbrough \u2014 the first of seven."],
+["sevilla:uel:2007","Juande Ramos","Javi Navarro","Fr\u00E9d\u00E9ric Kanout\u00E9","2-2 (3-1 p) vs Espanyol in Glasgow \u2014 retained."],
+["sevilla:uel:2014","Unai Emery","Ivan Rakiti\u0107","Ivan Rakiti\u0107","0-0 (4-2 p) vs Benfica in Turin."],
+["sevilla:uel:2015","Unai Emery","Ivan Rakiti\u0107","Carlos Bacca","3-2 vs Dnipro in Warsaw \u2014 Bacca twice."],
+["sevilla:uel:2016","Unai Emery","Vicente Iborra","Kevin Gameiro","3-1 vs Liverpool in Basel \u2014 a fifth, a record."],
+["sevilla:uel:2020","Julen Lopetegui","Jes\u00FAs Navas","Lucas Ocampos","3-2 vs Inter in Cologne \u2014 Navas lifts it at last."],
+["sevilla:uel:2023","Jos\u00E9 Luis Mendilibar","Ivan Rakiti\u0107","Yassine Bounou","1-1 (4-1 p) vs Roma in Budapest \u2014 the seventh, untouchable."],
+["roma:conf:2022","Jos\u00E9 Mourinho","Lorenzo Pellegrini","Nicol\u00F2 Zaniolo","1-0 vs Feyenoord in Tirana \u2014 Rome\u2019s first European trophy."],
+["westham:conf:2023","David Moyes","Declan Rice","Jarrod Bowen","2-1 vs Fiorentina in Prague \u2014 the first trophy in 43 years."]];
+D2.forEach(r=>{D2d[r[0]]?0:D2d[r[0]]=r.slice(1)});
+var D2d=window.__P2D__=window.__P2D__||{};
+D2.forEach(r=>{if(!D2d[r[0]])D2d[r[0]]=r.slice(1)});
+
+/* ═══ 5. HELPERS ═══ */
+const esc=s=>String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+const C=id=>{try{return CLUBS[id]}catch(e){return null}};
+const LG=id=>{try{return LEAGUES.find(l=>l.id===id)}catch(e){return null}};
+const tc=(c,tid)=>{const t=(c.trophies||[]).find(t=>t.id===tid);return t?t.years.length:0};
+function map(){try{return PHOTO_MAP}catch(e){return window.PHOTO_MAP||{}}}
+function paint(root){const m=map();(root||document).querySelectorAll('img[data-key]').forEach(im=>{
+ const s=m[im.getAttribute('data-key')];
+ if(s){im.style.display='';if(im.getAttribute('src')!==s){im.onerror=()=>{im.style.display='none'};im.setAttribute('src',s)}}
+ else if(im.style.display!=='none')im.style.display='none';});}
+function fb(lbl){lbl=String(lbl||'PHOTO').toUpperCase();const L=lbl.length,fs=L>30?3.6:L>18?4.6:5.6;
+ return '<div class="ph-fb"><svg viewBox="0 0 100 100" preserveAspectRatio="xMidYMid slice"><rect width="100" height="100" fill="#0f0c08"/><g fill="rgba(201,162,39,.16)"><circle cx="50" cy="34" r="12.5"/><path d="M24 84c0-17 11.5-25.5 26-25.5S76 67 76 84z"/></g><text x="50" y="96" text-anchor="middle" font-size="'+fs+'" letter-spacing="1.2" fill="rgba(201,162,39,.6)" font-family="Jost,Arial">'+esc(lbl)+'</text></svg></div>';}
+function chain(){try{if(typeof chainSVG==='function')return chainSVG()}catch(e){}return ''}
+function updBar(rail){const bar=rail.parentElement.querySelector('.rprog i');if(!bar)return;
+ const max=rail.scrollWidth-rail.clientWidth,w=Math.max(12,rail.clientWidth/Math.max(1,rail.scrollWidth)*100);
+ bar.style.width=w+'%';bar.style.left=(max>4?rail.scrollLeft/max*(100-w):0)+'%';}
+
+/* ═══ 6. LEAGUES PAGE — filter chips reorder the league rows ═══ */
+function leaguesUI(){
+ const pg=document.getElementById('page-leagues');if(!pg||!pg.classList.contains('on'))return;
+ const wrap=pg.querySelector('.wrap');if(!wrap)return;const rows=[...wrap.querySelectorAll('.lg-row')];
+ if(!rows.length)return;
+ let chips=wrap.querySelector('.phc2-chips');
+ if(!chips){chips=document.createElement('div');chips.className='chips phc2-chips';
+  const head=wrap.querySelector('.page-head');
+  if(head&&head.parentNode===wrap)head.after(chips);else wrap.insertBefore(chips,wrap.firstChild);
+  chips.innerHTML='<button type="button" class="chip on" data-p2lf="def">ALL LEAGUES</button>'
+   +'<button type="button" class="chip" data-p2lf="lg">MOST TITLES</button>'
+   +'<button type="button" class="chip" data-p2lf="ucl">MOST UCL</button>';}
+ rows.forEach(r=>{const l=LGName(r);if(!l||r.dataset.p2sub)return;r.dataset.p2sub='1';
+  const n=CL(l).reduce((s,id)=>s+tc(C(id)||{},'lg'),0);
+  const sub=r.querySelector('.lg-sub');
+  if(sub&&!sub.textContent.includes('titles'))sub.innerHTML=esc(sub.textContent)+' \u00B7 '+n+' titles';});
+ paint(pg);}
+function LGName(r){const n=r.querySelector('.lg-name');return n?n.textContent.trim():''}
+function CL(l){return l.clubs||[]}
+function sortLeagues(mode){
+ const pg=document.getElementById('page-leagues');const wrap=pg.querySelector('.wrap');
+ const rows=[...wrap.querySelectorAll('.lg-row')];if(!rows.length)return;
+ const parent=rows[0].parentElement;
+ const val=r=>{const l=LEAGUES.find(x=>x.name===LGName(r));if(!l)return -1;
+  return CL(l).reduce((s,id)=>s+tc(C(id)||{},mode==='ucl'?'ucl':'lg'),0)};
+ const arr=rows.map(r=>({r,v:val(r),o:LEAGUES.findIndex(x=>x.name===LGName(r))}));
+ if(mode==='def')arr.sort((a,b)=>a.o-b.o);else arr.sort((a,b)=>b.v-a.v||a.o-b.o);
+ arr.forEach(x=>parent.appendChild(x.r));
+ pg.querySelectorAll('[data-p2lf]').forEach(c=>c.classList.toggle('on',c.getAttribute('data-p2lf')===mode));}
+
+/* ═══ 7. CLUBS PAGE — sort chips ═══ */
+function clubsUI(){
+ const pg=document.getElementById('page-clubs');if(!pg||!pg.classList.contains('on'))return;
+ const wrap=pg.querySelector('.wrap');const rows=[...wrap.querySelectorAll('.cl-row')];
+ if(!rows.length)return;
+ let chips=wrap.querySelector('.phc2-chips');
+ if(!chips){chips=document.createElement('div');chips.className='chips phc2-chips';
+  const head=wrap.querySelector('.page-head');
+  if(head&&head.parentNode===wrap)head.after(chips);else wrap.insertBefore(chips,wrap.firstChild);
+  chips.innerHTML='<button type="button" class="chip on" data-p2cf="def">DEFAULT</button>'
+   +'<button type="button" class="chip" data-p2cf="lg">MOST TITLES</button>'
+   +'<button type="button" class="chip" data-p2cf="ucl">MOST UCL</button>';}
+ paint(pg);}
+function CName(r){const n=r.querySelector('.cl-name');return n?n.textContent.trim():''}
+function sortClubs(mode){
+ const pg=document.getElementById('page-clubs');const wrap=pg.querySelector('.wrap');
+ const rows=[...wrap.querySelectorAll('.cl-row')];if(!rows.length)return;
+ const parent=rows[0].parentElement;
+ const all=Object.values(CLUBS);
+ const val=r=>{const c=all.find(x=>x.name===CName(r));if(!c)return -1;return tc(c,mode==='ucl'?'ucl':'lg')};
+ const arr=rows.map(r=>{const c=all.find(x=>x.name===CName(r));
+  const l=c?LEAGUES.find(x=>x.id===c.lg):null;
+  const o=l?l.clubs.indexOf(c.id):0;return{r,v:val(r),o}});
+ if(mode==='def')arr.sort((a,b)=>a.o-b.o);else arr.sort((a,b)=>b.v-a.v||a.o-b.o);
+ arr.forEach(x=>parent.appendChild(x.r));
+ pg.querySelectorAll('[data-p2cf]').forEach(c=>c.classList.toggle('on',c.getAttribute('data-p2cf')===mode));}
+
+/* ═══ 8. CLUB PAGE — story + records + trophy timeline ═══ */
+function clubUI(){
+ const pg=document.getElementById('page-club');if(!pg||!pg.classList.contains('on'))return;
+ const h=pg.querySelector('.club-meta h1');if(!h)return;
+ const c=Object.values(CLUBS).find(x=>x.name===h.textContent.trim());if(!c)return;
+ if(pg.dataset.p2c===c.id)return;
+ pg.dataset.p2c=c.id;
+ pg.querySelectorAll('[data-p2]').forEach(e=>e.remove());
+ const wrap=pg.querySelector('.wrap');
+ /* extra facts: country + league + founded already there; add COUNTRY if missing */
+ const lg=LG(c.lg);
+ const facts=pg.querySelector('.club-facts');
+ if(facts&&!facts.dataset.p2f){facts.dataset.p2f='1';
+  if(lg&&!/COUNTRY/i.test(facts.textContent)){
+   facts.insertAdjacentHTML('afterbegin','<div><span>Country</span><b>'+esc(lg.country)+'</b></div>');}}
+ /* story */
+ let html='<div class="sec-t" data-p2="1" style="margin-top:44px"><span class="dia"></span>THE STORY<span class="dia"></span></div>'
+  +'<div class="phc2-story" data-p2="1">';
+ const st=ST[c.id];
+ if(st)st.split(' | ').forEach(p=>html+='<p>'+p+'</p>');
+ else html+='<p>'+esc(c.name)+' of '+esc(c.city)+' \u2014 founded <em>'+c.founded+'</em>, home of <em>'+esc(c.stadium)+'</em>. The full chronicle is being written into the archive.</p>';
+ const rec=REC[c.id];
+ if(rec&&rec[0]&&rec[0]!=='\u2014')html+='<div class="phc2-recs"><div class="phc2-rec"><div class="lb">All-Time Top Scorer</div><div class="nm">'+esc(rec[0])+'</div><div class="vl">'+esc(String(rec[1]))+'</div></div><div class="phc2-rec"><div class="lb">All-Time Playmaker</div><div class="nm">'+esc(rec[2])+'</div><div class="vl">'+esc(rec[3])+'</div></div></div>';
+ html+='</div>';
+ /* timeline */
+ const chips=c.trophies.map(t=>'<button type="button" class="chip" data-p2tf="'+t.id+'">'+esc(t.short)+'</button>').join('');
+ html+='<div class="sec-t" data-p2="1" style="margin-top:44px"><span class="dia"></span>TROPHY TIMELINE<span class="dia"></span></div>'
+  +'<p class="sub" data-p2="1">Drag left &amp; right \u2014 or scroll. Click any trophy for the full detail.</p>'
+  +'<div class="chips" data-p2="1"><button type="button" class="chip on" data-p2tf="all">ALL</button>'+chips+'</div>'
+  +'<div class="rail-wrap" data-p2="1"><div class="rail phc2-rail" id="p2tl">';
+ let n=0;
+ c.trophies.forEach(t=>{t.years.forEach((y,i)=>{n++;
+  html+='<div class="bd-card big" data-p2t="'+c.id+':'+t.id+':'+y+'">'+chain()
+   +'<div class="plaque"><span class="cn tl"></span><span class="cn tr"></span><span class="cn bl"></span><span class="cn br"></span>'
+   +'<div class="plq-label" style="letter-spacing:.22em">'+esc(t.short)+'</div>'
+   +'<div class="ph slot" style="aspect-ratio:var(--phx-slot-ratio,.82);margin:2px 0 10px;background:#0f0c08">'
+   +fb(t.short+' '+y)
+   +'<img data-key="t:'+c.id+':'+t.id+':'+y+'" alt="'+esc(t.short)+' '+y+'" draggable="false" style="object-fit:contain"></div>'
+   +'<div class="plq-year">'+y+'</div><div class="plq-name">'+esc(c.name)+'</div>'
+   +'<div class="plq-win">WIN N\u00BA '+(i+1)+'</div>'
+   +'<div class="plq-club">'+esc(t.name)+'</div></div></div>';});});
+ if(!n)html+='<div class="rail-empty">No trophies archived yet.</div>';
+ html+='</div><div class="rprog"><i></i></div></div>';
+ wrap.insertAdjacentHTML('beforeend',html);
+ paint(pg);
+ const rail=document.getElementById('p2tl');if(rail)setTimeout(()=>updBar(rail),80);}
+
+/* ═══ 9. DETAIL MODAL ═══ */
+function openT(key){
+ const p=key.split(':'),c=C(p[0]);if(!c)return;
+ const t=(c.trophies||[]).find(t=>t.id===p[1]);if(!t)return;
+ const d=D2d[key];
+ let html='<button type="button" class="phc2-x" data-p2x="1">\u2715</button>'
+  +'<div class="plq-label" style="margin-top:2px">'+esc(t.name)+'</div>'
+  +'<div class="ph slot" style="aspect-ratio:16/10;margin:10px 0 4px;background:#0f0c08">'+fb(t.short+' '+p[2])
+  +'<img data-key="t:'+key+'" alt="" style="object-fit:contain"></div>'
+  +'<div class="plq-year" style="font-size:40px;margin:2px 0 0">'+p[2]+'</div>'
+  +'<div class="mo-name" style="font-size:19px;margin:0 0 10px">'+esc(c.name)+'</div>';
+ if(d){html+='<div class="phc2-kv"><b>Manager</b><span>'+esc(d[0])+'</span></div>'
+  +'<div class="phc2-kv"><b>Captain</b><span>'+esc(d[1])+'</span></div>'
+  +'<div class="phc2-kv"><b>Star Man</b><span>'+esc(d[2])+'</span></div>'
+  +'<div class="phc2-kv"><b>The Night</b><span>'+esc(d[3])+'</span></div>';}
+ else html+='<div class="phc2-kv"><b>Archive</b><span>Details of this triumph are not yet in the archive \u2014 the photo slot above is ready for it.</span></div>';
+ const box=document.getElementById('p2box');box.innerHTML=html;paint(box);
+ document.getElementById('p2modal').classList.add('on');}
+function closeT(){document.getElementById('p2modal').classList.remove('on')}
+
+/* ═══ 10. EVENTS — drag scroll, wheel scroll, clicks ═══ */
+let drag=null,suppress=false;
+document.addEventListener('pointerdown',e=>{
+ if(e.pointerType==='touch')return;
+ const t=e.target;if(!t||!t.closest)return;
+ const rail=t.closest('.phc2-rail');if(!rail)return;
+ drag={rail,x:e.clientX,sl:rail.scrollLeft,moved:0};
+ rail.classList.add('grabbing');},true);
+document.addEventListener('pointermove',e=>{if(!drag)return;
+ const dx=e.clientX-drag.x;if(Math.abs(dx)>drag.moved)drag.moved=Math.abs(dx);
+ drag.rail.scrollLeft=drag.sl-dx;},true);
+function endDrag(){if(drag){if(drag.moved>8)suppress=true;drag.rail.classList.remove('grabbing');drag=null}
+ if(suppress)setTimeout(()=>suppress=false,0);}
+document.addEventListener('pointerup',endDrag,true);
+document.addEventListener('pointercancel',endDrag,true);
+document.addEventListener('wheel',e=>{
+ const t=e.target;if(!t||!t.closest)return;
+ const rail=t.closest('.phc2-rail');if(!rail)return;
+ if(Math.abs(e.deltaY)<=Math.abs(e.deltaX))return;
+ if(rail.scrollWidth-rail.clientWidth<8)return;
+ e.preventDefault();rail.scrollLeft+=e.deltaY;},{passive:false});
+document.addEventListener('scroll',e=>{const el=e.target;
+ if(el&&el.classList&&el.classList.contains('phc2-rail'))updBar(el);},true);
+document.addEventListener('click',function(e){
+ if(suppress){e.stopPropagation();e.preventDefault();return}
+ const t=e.target;if(!t||!t.closest)return;
+ if(t.closest('[data-p2x]')){closeT();return}
+ const md=t.closest('#p2modal');if(md&&md===t){closeT();return}
+ const tp=t.closest('[data-p2t]');if(tp){openT(tp.getAttribute('data-p2t'));return}
+ const lf=t.closest('[data-p2lf]');if(lf){sortLeagues(lf.getAttribute('data-p2lf'));return}
+ const cf=t.closest('[data-p2cf]');if(cf){sortClubs(cf.getAttribute('data-p2cf'));return}
+ const tf=t.closest('[data-p2tf]');if(tf){
+  const pg=tf.closest('.page'),mode=tf.getAttribute('data-p2tf');
+  pg.querySelectorAll('[data-p2tf]').forEach(x=>x.classList.toggle('on',x===tf));
+  const rail=document.getElementById('p2tl');
+  rail.querySelectorAll('.bd-card').forEach(card=>{
+   const k=card.getAttribute('data-p2t').split(':')[1];
+   card.style.display=(mode==='all'||k===mode)?'':'none';});
+  rail.scrollLeft=0;updBar(rail);return}
+},true);
+
+/* ═══ 11. PHOTO-KEY HELPER — console: CLUB_PHOTOS.copy() ═══ */
+(function(){const K=[];
+ Object.values(CLUBS).forEach(c=>(c.trophies||[]).forEach(t=>t.years.forEach(y=>K.push('t:'+c.id+':'+t.id+':'+y))));
+ window.CLUB_PHOTOS={all:K,
+  print(){K.forEach(k=>console.log(k));return K.length+' keys'},
+  copy(){navigator.clipboard.writeText(K.join('\n')).then(()=>console.log(K.length+' photo keys copied \u2014 paste into EXTRA and add links'))}};})();
+
+/* ═══ 12. LOOP ═══ */
+let pend=false;
+function sched(){if(pend)return;pend=true;
+ (window.requestAnimationFrame||function(f){setTimeout(f,60)})(function(){pend=false;
+  try{leaguesUI();clubsUI();clubUI();paint(document)}catch(e){}})}
+if('MutationObserver' in window)new MutationObserver(sched).observe(document.documentElement,{childList:true,subtree:true});
+else setInterval(sched,1500);
+[80,500,1400].forEach(t=>setTimeout(sched,t));
+document.body.insertAdjacentHTML('beforeend','<div id="p2modal"><div class="phc2-box" id="p2box"></div></div>');
 sched();
 })();
 </script>
